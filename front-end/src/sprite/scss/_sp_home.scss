@@ -1,0 +1,47 @@
+
+$sprite-meta-home: (
+  "name": "home",
+  "width": 993px,
+  "height": 497px
+);
+$sprite-map-home: (
+  
+  "baz-icon-01": (
+    "width": 496.16,
+    "height": 496.16,
+    "bg-top": 0,
+    "bg-left": 0,
+  ),
+    
+  "baz-icon-02": (
+    "width": 496.16,
+    "height": 496.16,
+    "bg-top": 0.9986313501328397,
+    "bg-left": 0,
+  ),
+    
+);
+
+@mixin get-sprite-home($name, $width, $height) {
+
+  $sprite-width: map-get($sprite-meta-home, "width");
+  $sprite-height: map-get($sprite-meta-home, "height");
+  $image: map-get($sprite-map-home, $name);
+  $image-width: map-get($image, "width");
+  $image-height: map-get($image, "height");
+  $image-bg-top: map-get($image, "bg-top");
+  $image-bg-left: map-get($image, "bg-left");
+  
+  $bg-width: ($sprite-width / $image-width) * $width;
+  $bg-height: ($sprite-height / $image-height) * $height;
+  $bg-top: $image-bg-top * 100;
+  $bg-left: $image-bg-left * 100;
+
+  display: inline-block;
+  width: #{$width}px;
+  height: #{$height}px;
+  background: url(~/img/sprite/_sp_home.svg) no-repeat;
+  background-position: #{$bg-top}#{"%"} #{$bg-left}#{"%"};
+  background-size: $bg-width $bg-height;
+  vertical-align: top;
+}

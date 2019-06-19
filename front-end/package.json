@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel -p 3000 ./public/index.html --open",
-    "prod": "parcel build index.html"
+    "prod": "parcel build index.html",
+    "sprite": "node src/sprite/sprite.js"
   },
   "dependencies": {
     "@types/react": "^16.8.20",
@@ -18,6 +19,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "css-loader": "^3.0.0",
+    "easy-spriter": "^1.0.0",
     "eslint": "^5.16.0",
     "eslint-config-naver": "^2.1.0",
     "eslint-plugin-jsx": "^0.0.2",

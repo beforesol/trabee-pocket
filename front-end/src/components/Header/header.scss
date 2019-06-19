@@ -1,3 +1,9 @@
+@import '../../sprite/scss/sp_header';
+
 .header {
   background-color: blue;
+  &:before {
+    @include get-sprite-header('bar-icon-01', 60, 60);
+    content: '';
+  }
 }
