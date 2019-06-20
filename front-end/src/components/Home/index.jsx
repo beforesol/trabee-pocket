@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
+import axios from 'axios';
+
 import './home.scss';
 
-interface Props {
-
-}
-
-interface State {
-  type: string;
-}
-
-class Home extends React.Component<Props, State> {
-  state:State = {
+class Home extends React.Component {
+  state = {
     type: 'green'
   };
+
+  componentDidMount() {
+    axios.get('api/tests/1')
+      .then( response => { console.log(response.data); } ) // SUCCESS
+      .catch( response => { console.log(response); } ); // ERROR
+  }
 
   render() {
     const { type } = this.state;
