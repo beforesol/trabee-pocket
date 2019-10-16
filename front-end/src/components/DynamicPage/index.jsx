@@ -15,31 +15,29 @@ class DynamicPage extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    // const name = this.nameRef.current.value;
-    // const id = this.IDRef.current.value;
+    const name = this.nameRef.current.value;
+    const id = this.IDRef.current.value;
 
-    console.log('hi');
-    // axios.post('/api/users', {
-    //   user: {
-    //     name,
-    //     id
-    //   }
-    // })
-    //   .then(response => {
-    //     if (response.data.result === 0) {
-    //       alert('Error, please, try again')
-    //     }
-    //     if (response.data.result === 1) {
-    //       alert('Success')
-    //     }
-    //   })
-    //   .catch( response => { console.log(response) } )
+    axios.post('/api/users', {
+      user: {
+        name,
+        id
+      }
+    })
+      .then(response => {
+        if (response.data.result === 0) {
+          alert('Error, please, try again');
+        }
+        if (response.data.result === 1) {
+          alert('Success');
+        }
+      })
+      .catch(response => { console.log(response); });
   }
 
   checkData = () => {
     const name = this.CheckNameRef.current.value;
 
-    console.log('hi');
     axios.post('/api/users/checkUsers', {
       user: {
         name

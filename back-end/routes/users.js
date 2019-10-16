@@ -26,7 +26,7 @@ router.post('/', function (req, res, next) {
 router.post('/checkUsers', function (req, res, next) {
   User.findOne({name: req.body.user.name}, function(err, user) {
     if (err) return res.status(500).json({error: err});
-    if(!user) return res.status(404).json({error: 'user not found'});
+    if(!user) return res.json({error: 'user not found'});
     res.json(user);
   })
 })

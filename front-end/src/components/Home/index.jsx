@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import * as React from 'react';
 import Header from '../Header';
 import classNames from 'classnames/bind';
-// import axios from 'axios';
+import axios from 'axios';
+
 const style = require('./home.scss');
 
 const cx = classNames.bind(style);
@@ -13,9 +14,9 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    // axios.get('api/tests/1')
-    //   .then( response => { console.log(response.data); } ) // SUCCESS
-    //   .catch( response => { console.log(response); } ); // ERROR
+    axios.get('api/tests/2')
+      .then(response => { console.log(response.data); }) // SUCCESS
+      .catch(response => { console.log(response); }); // ERROR
   }
 
   render() {
