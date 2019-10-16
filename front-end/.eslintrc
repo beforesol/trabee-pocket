@@ -26,7 +26,10 @@
         "componentDidUpdate",
         "componentWillUnmount"
       ]
-    }]
+    }],
+    "no-console": 0,
+    "comma-dangle": 0,
+    "import/first": 0
   },
   "plugins": ["react", "jsx"],
   "parser": "babel-eslint"

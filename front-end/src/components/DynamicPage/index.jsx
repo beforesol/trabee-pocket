@@ -2,12 +2,11 @@ import * as React from 'react';
 import axios from 'axios';
 
 class DynamicPage extends React.PureComponent {
-
   nameRef = React.createRef();
   IDRef = React.createRef();
   CheckNameRef = React.createRef();
 
-  componentDidMount () {
+  componentDidMount() {
     // axios.get('/api/tests')
     //   .then(response => {
     //     console.log(response);
@@ -16,8 +15,8 @@ class DynamicPage extends React.PureComponent {
   }
 
   handleSubmit = () => {
-    const name = this.nameRef.current.value;
-    const id = this.IDRef.current.value;
+    // const name = this.nameRef.current.value;
+    // const id = this.IDRef.current.value;
 
     console.log('hi');
     // axios.post('/api/users', {
@@ -51,7 +50,7 @@ class DynamicPage extends React.PureComponent {
           console.log(response.data);
         }
       )
-      .catch( response => { console.log(response) } )
+      .catch(response => { console.log(response); });
   }
 
   render() {

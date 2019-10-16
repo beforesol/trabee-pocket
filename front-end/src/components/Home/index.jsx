@@ -1,10 +1,10 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom';
+import * as React from 'react';
 import Header from '../Header';
-import axios from 'axios';
-
 import classNames from 'classnames/bind';
+// import axios from 'axios';
 const style = require('./home.scss');
+
 const cx = classNames.bind(style);
 
 class Home extends React.Component {
@@ -30,7 +30,7 @@ class Home extends React.Component {
         </p>
       </div>
     );
-  };
-};
+  }
+}
 
 export default Home;
