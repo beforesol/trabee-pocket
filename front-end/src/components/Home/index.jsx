@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import Header from '../Header';
 import axios from 'axios';
 
-// import './home.scss';
+import classNames from 'classnames/bind';
+const style = require('./home.scss');
+const cx = classNames.bind(style);
 
 class Home extends React.Component {
   state = {
@@ -20,7 +22,7 @@ class Home extends React.Component {
     const { type } = this.state;
 
     return (
-      <div className="home">
+      <div className={cx('home')}>
         <Header type={ type } />
         <p>Hello World of React and Webpack!</p>
         <p>

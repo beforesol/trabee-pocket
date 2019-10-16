@@ -1,9 +1,12 @@
 import * as React from 'react';
-// import './header.scss';
+
+import classNames from 'classnames/bind';
+const style = require('./header.scss');
+const cx = classNames.bind(style);
 
 const Header = ({ type }) => {
   return (
-    <div className="header" style={{'backgroundColor': type}}>
+    <div className={cx('header')} style={{'backgroundColor': type}}>
       header
     </div>
   );

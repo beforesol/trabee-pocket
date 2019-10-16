@@ -3,7 +3,7 @@
 .header {
   background-color: blue;
   &:before {
-    @include get-sprite-header('bar-icon-01', 60, 60);
+    @include get-sprite-header('bar-icon-01', 60);
     content: '';
   }
 }

@@ -1,7 +1,32 @@
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 const port = process.env.PORT || 3000;
+
+const commonCssLoaderOptions = {
+  importLoaders: 2,
+  url: false
+};
+
+const cssLoaderOptions = {
+  ...commonCssLoaderOptions,
+  modules: false
+};
+
+const scssLoaderOptions = {
+  ...commonCssLoaderOptions,
+  modules: true,
+  localIdentName: '[local]--[hash:base64:5]'
+};
+
+const postCssLoaderOptions = {
+  ident: 'postcss',
+  plugins: () => [
+    autoprefixer(),
+  ],
+};
 
 module.exports = {
   mode: 'development',
@@ -21,32 +46,22 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.css$/,
+        test: /\.(css)$/,
+        include: path.resolve(__dirname, './src'),
         use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              camelCase: true,
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                ctx: {
-                  autoprefixer: {
-                    browsers: 'last 2 versions'
-                  }
-                }
-              }
-            }
-          }
-        ]
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: cssLoaderOptions },
+        ],
+      },
+      {
+        test: /\.(scss)$/,
+        include: path.resolve(__dirname, './src'),
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: scssLoaderOptions },
+          { loader: 'postcss-loader', options: postCssLoaderOptions },
+          { loader: 'sass-loader' },
+        ],
       }
     ]
   },

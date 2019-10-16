@@ -1,47 +1,54 @@
 
 $sprite-meta-header: (
   "name": "header",
-  "width": 993px,
-  "height": 497px
+  "width": 1033,
+  "height": 517
 );
 $sprite-map-header: (
   
   "bar-icon-01": (
-    "width": 496.16,
-    "height": 496.16,
-    "bg-top": 0,
-    "bg-left": 0,
+    "width": 496.15999999999997,
+    "height": 496.15999999999997,
+    "bg-top": -10,
+    "bg-left": -10,
   ),
     
   "bar-icon-02": (
-    "width": 496.16,
-    "height": 496.16,
-    "bg-top": 0.9986313501328397,
-    "bg-left": 0,
+    "width": 496.15999999999997,
+    "height": 496.15999999999997,
+    "bg-top": -10,
+    "bg-left": -526.16,
   ),
     
 );
 
-@mixin get-sprite-header($name, $width, $height) {
+@mixin get-sprite-header($name, $width: null) {
 
-  $sprite-width: map-get($sprite-meta-header, "width");
-  $sprite-height: map-get($sprite-meta-header, "height");
-  $image: map-get($sprite-map-header, $name);
-  $image-width: map-get($image, "width");
-  $image-height: map-get($image, "height");
-  $image-bg-top: map-get($image, "bg-top");
-  $image-bg-left: map-get($image, "bg-left");
-  
-  $bg-width: ($sprite-width / $image-width) * $width;
-  $bg-height: ($sprite-height / $image-height) * $height;
-  $bg-top: $image-bg-top * 100;
-  $bg-left: $image-bg-left * 100;
+  $sp-w: map-get($sprite-meta-header, "width");
+  $sp-h: map-get($sprite-meta-header, "height");
+  $img: map-get($sprite-map-header, $name);
+  $img-w: map-get($img, "width");
+  $img-h: map-get($img, "height");
+  $img-r: $img-w / $img-h;
+  $img-bgt: map-get($img, "bg-top");
+  $img-bgl: map-get($img, "bg-left");
+
+  @if $width == null {
+    $width: $img-w;
+  }
+
+  $height: $width / $img-r;
+
+  $bgw: floor($width * ($sp-w / $img-w));
+  $bgh: floor($height * ($sp-h / $img-h));
+  $bgl: ($bgw / $sp-w) * $img-bgl;
+  $bgt: ($bgh / $sp-h) * $img-bgt; 
 
   display: inline-block;
   width: #{$width}px;
   height: #{$height}px;
-  background: url(~/img/sprite/_sp_header.svg) no-repeat;
-  background-position: #{$bg-top}#{"%"} #{$bg-left}#{"%"};
-  background-size: $bg-width $bg-height;
+  background: url(public/img/sprite/_sp_header.svg) no-repeat;
+  background-position: #{$bgl}#{"px"} #{$bgt}#{"px"};
+  background-size: #{$bgw}px #{$bgh}px;
   vertical-align: top;
 }

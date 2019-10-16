@@ -11,6 +11,10 @@ const spriter = new SuperEasySpriter({
   },
   options: {
     filePrefix: '_sp_',
-    bgRootUrl: '~/img/sprite'
+    bgRootUrl: 'public/img/sprite'
   }
+});
+
+spriter.compile(() => {
+  console.log('sprite done!');
 });
