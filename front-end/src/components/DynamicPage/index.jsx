@@ -8,11 +8,11 @@ class DynamicPage extends React.PureComponent {
   CheckNameRef = React.createRef();
 
   componentDidMount () {
-    axios.get('/api/tests')
-      .then(response => {
-        console.log(response);
-      }) // SUCCESS
-      .catch( response => { console.log(response); } ); // ERROR
+    // axios.get('/api/tests')
+    //   .then(response => {
+    //     console.log(response);
+    //   }) // SUCCESS
+    //   .catch( response => { console.log(response); } ); // ERROR
   }
 
   handleSubmit = () => {
@@ -20,21 +20,21 @@ class DynamicPage extends React.PureComponent {
     const id = this.IDRef.current.value;
 
     console.log('hi');
-    axios.post('/api/users', {
-      user: {
-        name,
-        id
-      }
-    })
-      .then(response => {
-        if (response.data.result === 0) {
-          alert('Error, please, try again')
-        }
-        if (response.data.result === 1) {
-          alert('Success')
-        }
-      })
-      .catch( response => { console.log(response) } )
+    // axios.post('/api/users', {
+    //   user: {
+    //     name,
+    //     id
+    //   }
+    // })
+    //   .then(response => {
+    //     if (response.data.result === 0) {
+    //       alert('Error, please, try again')
+    //     }
+    //     if (response.data.result === 1) {
+    //       alert('Success')
+    //     }
+    //   })
+    //   .catch( response => { console.log(response) } )
   }
 
   checkData = () => {
