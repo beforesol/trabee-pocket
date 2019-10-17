@@ -14,7 +14,8 @@ const tests = require('./routes/test'); //add
 const app = express();
 
 // mongoose.connect('mongodb://localhost:270217/trabee-web');
-mongoose.connect('mongodb://localhost:27918/trabee-web');
+// mongoose.connect('mongodb://localhost:27918/trabee-web');
+mongoose.connect('mongodb+srv://user:2017@cluster0-hqi94.mongodb.net/trabee-web?retryWrites=true&w=majority');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
