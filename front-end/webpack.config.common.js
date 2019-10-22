@@ -30,7 +30,7 @@ const postCssLoaderOptions = {
 
 module.exports = {
   mode: 'development',
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: ['@babel/polyfill', './src/index.js', './public/css/base.css'],
   resolve: {
     extensions: ['.jsx', '.js', '.json']
   },
@@ -50,7 +50,7 @@ module.exports = {
       },
       {
         test: /\.(css)$/,
-        include: path.resolve(__dirname, './src'),
+        include: path.resolve(__dirname, './public/css'),
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', options: cssLoaderOptions },
