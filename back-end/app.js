@@ -50,3 +50,19 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+var request = require('request');
+
+var url = 'http://apis.data.go.kr/1262000/CountryBasicService/getCountryBasicList';
+var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + encodeURIComponent('6UuRcLliRjeNtE%2BFMDAGWD4xS8IjaSeK1lvwKz2gxSYosN9qk1qx47WZhmSQqk2N7WGNvWk%2Blh9pEZannSf9oA%3D%3D'); /* 공공데이터 포털에서 발급받은 인증키 */
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('197'); /* 한페이지의 결과 */
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* 페이지번호 */
+
+request({
+  url: url + queryParams,
+  method: 'GET'
+}, function (error, response, body) {
+  console.log('Status', response.statusCode);
+  console.log('Headers', JSON.stringify(response.headers));
+  console.log('Reponse received', body);
+});

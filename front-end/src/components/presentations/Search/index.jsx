@@ -1,50 +1,67 @@
-import * as React from 'react';
+import React, { useReducer, useCallback, useRef } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 
 const style = require('./search.scss');
 const cx = classNames.bind(style);
 
-class Search extends React.PureComponent {
-  searchInputRef = React.createRef();
-
-
-  _onSubmit = () => {
-    console.log('onSubmit');
-  }
-
-  _onReset = () => {
-    console.log('onReset');
-  }
-
-  render() {
-    return (
-      <form
-        role="search"
-        id="searchForm"
-        className={cx('search_form')}
-        onSubmit={this._onSubmit}>
-        <div className={cx('input_wrap')}>
-          <span className={cx('blind')}>search</span>
-          <input
-            type="text"
-            name="query"
-            placeholder="국가명 또는 국가 코드"
-            className={cx('input')}
-            ref={this.searchInputRef}
-            autoFocus={true}
-            autoComplete="off"
-          />
-          <button
-            type="button"
-            className={cx('btn_reset')}
-            onClick={this._onReset}>
-            <span className={cx('blind')}>delete</span>
-          </button>
-        </div>
-      </form>
-    );
+function reducer(state, action) {
+  switch (action.type) {
+  case 'CHANGE':
+    return {
+      ...state,
+      inputText: action.value
+    };
+  default:
+    return state;
   }
 }
+
+const Search = () => {
+  const searchInputRef = useRef(null);
+  const [state, dispatch] = useReducer(reducer, {
+    inputText: ''
+  });
+
+  console.log(state.inputText);
+
+  const _onSubmit = useCallback(() => {
+    console.log('onSubmit');
+  }, []); // 컴포넌트가 처음 렌더링 될 때만 함수 생성
+
+  const _onReset = () => {
+    console.log('onReset');
+  };
+
+  return (
+    <form
+      role="search"
+      id="searchForm"
+      className={cx('search_form')}
+      onSubmit={_onSubmit}>
+      <div className={cx('input_wrap')}>
+        <span className={cx('blind')}>search</span>
+        <input
+          type="text"
+          name="query"
+          placeholder="국가명 또는 국가 코드"
+          className={cx('input')}
+          ref={searchInputRef}
+          autoFocus={true}
+          autoComplete="off"
+          onChange={e => {
+            dispatch({ type: 'CHANGE', value: e.currentTarget.value });
+          }}
+        />
+        <button
+          type="button"
+          className={cx('btn_reset')}
+          onClick={_onReset}>
+          <span className={cx('blind')}>delete</span>
+        </button>
+      </div>
+    </form>
+  );
+};
 
 export default hot(Search);
