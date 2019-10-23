@@ -1,0 +1,37 @@
+@import '../../../sprite/scss/sp_select';
+
+.search_form {
+  .input_wrap {
+    position: relative;
+    height: 35px;
+    padding: 0 30px 0 30px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    &:before {
+      position: absolute;
+      top: 10px;
+      left: 7px;
+      @include get-sprite-select('icon_search', 15);
+      content: '';
+    }
+  }
+  input {
+    width: 100%;
+    height: 100%;
+    &::placeholder {
+      font-size: 15px
+    }
+  }
+  .btn_reset {
+    position: absolute;
+    padding: 8px;
+    top: 3px;
+    right: 0;
+    &:before {
+      display: inline-block;
+      @include get-sprite-select('icon_cancel', 13);
+      vertical-align: top;
+      content: '';
+    }
+  }
+}

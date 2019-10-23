@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import * as React from 'react';
+
 import classNames from 'classnames/bind';
-
 const style = require('./home.scss');
-
 const cx = classNames.bind(style);
 
 class Home extends React.Component {

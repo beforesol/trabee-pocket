@@ -63,6 +63,10 @@ table {
 input {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  outline: none;
 }
 
 dl,
