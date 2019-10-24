@@ -17,7 +17,7 @@ request({
     items.forEach(item => {
       const country = {
         id: item.id[0],
-        name: item.countryEnName[0],
+        name: item.countryName[0],
         en: item.countryEnName[0],
         imgUrl: item.imgUrl[0]
       }

@@ -29,13 +29,14 @@
     }
   }
   .wrapper {
-    padding: 0 20px;
+    padding: 0 20px 130px;
   }
   .selected_area {
     position: fixed;
     left: 0;
     bottom: 0;
     right: 0;
+    background-color: #fff;
     .selected_country {
       padding: 17px 0 0 19px;
       height: 60px;

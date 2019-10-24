@@ -10,6 +10,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const tests = require('./routes/test'); //add
+const selectRouter = require('./routes/select');
 
 const app = express();
 
@@ -31,7 +32,8 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/tests',tests); //add
+app.use('/api/tests', tests); //add
+app.use('/api/select', selectRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
