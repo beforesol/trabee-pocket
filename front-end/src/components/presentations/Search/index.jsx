@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useRef } from 'react';
+import React, { useReducer, useCallback, useRef, useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 
@@ -22,8 +22,11 @@ const Search = () => {
   const [state, dispatch] = useReducer(reducer, {
     inputText: ''
   });
+  const [searchText, setSearchText] = useState(null);
 
-  console.log(state.inputText);
+  useEffect(() => {
+    console.log(state.inputText);
+  }, [searchText]);
 
   const _onSubmit = useCallback(() => {
     console.log('onSubmit');
@@ -49,8 +52,9 @@ const Search = () => {
           ref={searchInputRef}
           autoFocus={true}
           autoComplete="off"
-          onChange={e => {
-            dispatch({ type: 'CHANGE', value: e.currentTarget.value });
+          onChange={() => {
+            dispatch({ type: 'CHANGE', value: searchInputRef.current.value });
+            setSearchText(searchInputRef.current.value);
           }}
         />
         <button
