@@ -1,40 +1,26 @@
-import React, { useReducer, useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 
 const style = require('./search.scss');
 const cx = classNames.bind(style);
 
-function reducer(state, action) {
-  switch (action.type) {
-  case 'CHANGE':
-    return {
-      ...state,
-      inputText: action.value
-    };
-  default:
-    return state;
-  }
-}
+const Search = ({ handleChangeInput, handleResetInput }) => {
+  const [searchText, setSearchText] = useState('');
 
-const Search = () => {
-  const searchInputRef = useRef('');
-  const [state, dispatch] = useReducer(reducer, {
-    inputText: ''
-  });
-  const [searchText, setSearchText] = useState(null);
-
-  useEffect(() => {
-    console.log(state.inputText);
-  }, [searchText]);
+  const _onChange = e => {
+    setSearchText(e.currentTarget.value);
+    handleChangeInput(e.currentTarget.value);
+  };
 
   const _onSubmit = useCallback(() => {
     console.log('onSubmit');
   }, []); // 컴포넌트가 처음 렌더링 될 때만 함수 생성
 
   const _onReset = () => {
-    searchInputRef.current.value = '';
     setSearchText('');
+    handleResetInput('');
   };
 
   return (
@@ -50,13 +36,10 @@ const Search = () => {
           name="query"
           placeholder="국가명 또는 국가 코드"
           className={cx('input')}
-          ref={searchInputRef}
+          value={searchText}
           autoFocus={true}
           autoComplete="off"
-          onChange={() => {
-            dispatch({ type: 'CHANGE', value: searchInputRef.current.value });
-            setSearchText(searchInputRef.current.value);
-          }}
+          onChange={ e => _onChange(e) }
         />
         {
           searchText && (
@@ -71,6 +54,11 @@ const Search = () => {
       </div>
     </form>
   );
+};
+
+Search.propTypes = {
+  handleChangeInput: PropTypes.func,
+  handleResetInput: PropTypes.func
 };
 
 export default hot(Search);

@@ -4,27 +4,35 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 
-import { Search, Country } from '../../components/presentations';
+import { Search, Continent, Country } from '../../components/presentations';
 
 const style = require('./select.scss');
 const cx = classNames.bind(style);
 
 const Select = () => {
   const [continents, setContinent] = useState(null);
+  const [countries, setCountries] = useState(null);
   const [activeCountry, setActiveCountry] = useState(null);
   const [activeCountryData, setActiveCountryData] = useState(null);
+  const [recommendCountries, setRecommendCounries] = useState(null);
 
   useEffect(() => {
     axios.get('/api/select').then(response => {
+      const countriesArray = [];
+
       setContinent(response.data);
 
       response.data.forEach(continent => {
         continent.countries.forEach(country => {
+          countriesArray.push(country);
+
           if (country.name === activeCountry) {
             setActiveCountryData(country);
           }
         });
       });
+
+      setCountries(countriesArray);
     });
   }, []);
 
@@ -40,6 +48,16 @@ const Select = () => {
     }
   }, [activeCountry]);
 
+  const handleChangeInput = text => {
+    const recommendCountryArray = countries.filter(country => country.name.indexOf(text) !== -1);
+
+    setRecommendCounries(recommendCountryArray);
+  };
+
+  const handleResetInput = () => {
+    setRecommendCounries(null);
+  };
+
   return (
     <div className={cx('select')}>
       <div className={cx('header')}>
@@ -48,12 +66,25 @@ const Select = () => {
         <Link to="/" className={cx('btn_close')}><span className={cx('blind')}>닫기</span></Link>
       </div>
       <div className={cx('wrapper')}>
-        <Search />
-        <Country
-          continents={continents}
-          activeCountry={activeCountry}
-          setActiveCountry={setActiveCountry}
+        <Search
+          handleChangeInput={handleChangeInput}
+          handleResetInput={handleResetInput}
         />
+        <>
+          { recommendCountries ? (
+            <Country
+              countries={recommendCountries}
+              activeCountry={activeCountry}
+              setActiveCountry={setActiveCountry}
+            />
+          ) : (
+            <Continent
+              continents={continents}
+              activeCountry={activeCountry}
+              setActiveCountry={setActiveCountry}
+            />
+          )}
+        </>
       </div>
       <div className={cx('selected_area')}>
         <div className={cx('selected_country')}>

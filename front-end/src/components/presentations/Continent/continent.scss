@@ -1,0 +1,31 @@
+@import '../../../sprite/scss/sp_select';
+
+.continent_area {
+  margin-top: 20px;
+  .continent {
+    & + .continent {
+      margin-top: 20px;
+    }
+  }
+  .continent_name {
+    font-size: 16px;
+    &:after {
+      display: inline-block;
+      @include get-sprite-select('icon_arrow_down', 10);
+      margin: 4px 0 0 6px;
+      vertical-align: top;
+      content: '';
+    }
+    & ~ :global(.country) {
+      display: none;
+    }
+    &[aria-selected=true] {
+      &:after {
+        @include get-sprite-select('icon_arrow_up', 10);
+      }
+      & ~ :global(.country) {
+        display: block;
+      }
+    }
+  }
+}
