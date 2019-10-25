@@ -11,7 +11,7 @@ const cx = classNames.bind(style);
 
 const Select = () => {
   const [continents, setContinent] = useState(null);
-  const [activeCountry, setActiveCountry] = useState('가나');
+  const [activeCountry, setActiveCountry] = useState(null);
   const [activeCountryData, setActiveCountryData] = useState(null);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Select = () => {
             <img src={activeCountryData.imgUrl} alt={activeCountryData.name} className={cx('image')} />
           )}
         </div>
-        <button type="button" className={cx('btn_selected', 'selected')}>선택완료</button>
+        <button type="button" className={cx('btn_selected', { 'selected': activeCountry })}>선택완료</button>
       </div>
     </div>
   );
