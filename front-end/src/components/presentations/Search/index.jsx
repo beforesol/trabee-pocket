@@ -18,7 +18,7 @@ function reducer(state, action) {
 }
 
 const Search = () => {
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef('');
   const [state, dispatch] = useReducer(reducer, {
     inputText: ''
   });
@@ -33,7 +33,8 @@ const Search = () => {
   }, []); // 컴포넌트가 처음 렌더링 될 때만 함수 생성
 
   const _onReset = () => {
-    console.log('onReset');
+    searchInputRef.current.value = '';
+    setSearchText('');
   };
 
   return (
@@ -57,12 +58,16 @@ const Search = () => {
             setSearchText(searchInputRef.current.value);
           }}
         />
-        <button
-          type="button"
-          className={cx('btn_reset')}
-          onClick={_onReset}>
-          <span className={cx('blind')}>delete</span>
-        </button>
+        {
+          searchText && (
+            <button
+              type="button"
+              className={cx('btn_reset')}
+              onClick={_onReset}>
+              <span className={cx('blind')}>delete</span>
+            </button>
+          )
+        }
       </div>
     </form>
   );
