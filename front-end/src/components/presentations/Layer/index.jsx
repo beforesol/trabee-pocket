@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const style = require('./layer.scss');
 const cx = classNames.bind(style);
 
-const Layer = ({ layerType, title, handler, text }) => {
+const Layer = ({ layerType, title, openHandler, handler, text }) => {
   const textArea = useRef(null);
 
   useEffect(() => {
@@ -15,12 +15,14 @@ const Layer = ({ layerType, title, handler, text }) => {
   });
 
   const handleClose = () => {
-    handler(false);
+    openHandler(false);
   };
 
   const handleSumbit = () => {
-    console.log(text, '를 서버에 보내야 합니다.');
-    handler(false);
+    const newText = textArea.current.value;
+
+    handler(newText);
+    openHandler(false);
   };
 
   return (
@@ -50,6 +52,7 @@ Layer.propTypes = {
   layerType: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
+  openHandler: PropTypes.func,
   handler: PropTypes.func
 };
 

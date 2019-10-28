@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,19 +11,24 @@ const style = require('./home.scss');
 const cx = classNames.bind(style);
 
 const Home = ({ userId, onSetUserId }) => {
+  const [id, setId] = useState(0);
+
   useEffect(() => {
+    const previousId = 0;
+
+    setId(previousId + 1);
     onSetUserId('jeonsol');
   }, []);
 
   return (
     <div className={cx('home')}>
-      <Link to="/select" className={cx('btn_add')}>새 여행 만들기</Link>
+      <Link to={`/select/${id}`} className={cx('btn_add')}>새 여행 만들기</Link>
     </div>
   );
 };
 
 Home.propTypes = {
-  userId: PropTypes.number,
+  userId: PropTypes.string,
   onSetUserId: PropTypes.func
 };
 
