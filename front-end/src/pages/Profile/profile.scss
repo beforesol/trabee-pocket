@@ -1,0 +1,130 @@
+@import '../../sprite/scss/sp_profile';
+
+.profile {
+  .image_area {
+    position: relative;
+    overflow: hidden;
+    height: 152px;
+    .btn_home {
+      position: absolute;
+      top: 7px;
+      left: 10px;
+      &:before {
+        display: inline-block;
+        @include get-sprite-profile('icon_home', 20);
+        vertical-align: top;
+        content: '';
+      }
+    }
+    .cover_image {
+      width: 100%;
+      vertical-align: top;
+    }
+    .btn_change {
+      position: absolute;
+      right: 9px;
+      bottom: 7px;
+      font-size: 13px;
+      color: #fff;
+    }
+  }
+  .contents {
+    padding: 18px 20px 155px;
+    .title_area {
+      .btn_title {
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #fefac5;
+        text-align: left;
+      }
+      .btn_memo {
+        margin-top: 7px;
+        line-height: 15px;
+        font-size: 13px;
+        color: #a1a8b0;
+        text-align: left;
+      }
+    }
+  }
+  .section {
+    position: relative;
+    margin-top: 38px;
+    .title {
+      font-size: 16px;
+    }
+    .country {
+      display: table;
+      width: 100%;
+      margin-top: 6px;
+      table-layout: fixed;
+      .thumbnail {
+        display: table-cell;
+        width: 42px;
+        height: 35px;
+        vertical-align: middle;
+      }
+      .image {
+        width: 100%;
+        vertical-align: top;
+      }
+      .name {
+        display: table-cell;
+        padding-left: 10px;
+        font-size: 13px;
+        color: #a1a8b0;
+        vertical-align: middle;
+      }
+    }
+    .date {
+      margin-top: 7px;
+      font-size: 14px;
+      & + .date {
+        margin-top: 0;
+      }
+      .date_title {
+        height: 30px;
+        line-height: 30px;
+      }
+      .btn_date {
+        height: 30px;
+        padding: 0 9px;
+        background-color: #fefac5;
+        color: #a1a8b0;
+        font-size: 14px;
+        vertical-align: top;
+      }
+    }
+    .currency {
+      margin-top: 17px;
+      font-size: 14px;
+      color: #a1a8b0;
+    }
+    .btn_edit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #84b9e7;
+    }
+  }
+  .btn_area {
+    margin-top: 42px;
+    text-align: center;
+    .btn {
+      height: 32px;
+      padding: 0 11px;
+      border-radius: 5px;
+      & + .btn {
+        margin-left: 10px;
+      }
+    }
+    .btn_delete {
+      border: 1px solid #fa7474;
+      color: #fa7474;
+    }
+    .btn_submit {
+      border: 1px solid #84b9e7;
+      color: #84b9e7;
+    }
+  }
+}

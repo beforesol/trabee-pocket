@@ -1,0 +1,54 @@
+.layer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+  }
+  .content_area {
+    padding: 20px 20px 0;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+  }
+  .textarea {
+    margin-top: 30px;
+    outline: none;
+  }
+  .button_area {
+    height: 36px;
+    border-top: 1px solid #eee;
+    .btn {
+      width: 50%;
+      height: 100%;
+      & + .btn {
+        position: relative;
+        &:before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 1px;
+          background-color: #eee;
+          content: '';
+        }
+      }
+      &.btn_close {
+        color: #b5b5b5;
+      }
+      &.btn_submit {
+        color: #84b9e7;
+      }
+    }
+  }
+}

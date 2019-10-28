@@ -1,18 +1,38 @@
+import React, { useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
-import * as React from 'react';
+import { connect } from 'react-redux';
+import { setUserId } from '../../store/user/action';
 
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
+
 const style = require('./home.scss');
 const cx = classNames.bind(style);
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div className={cx('home')}>
-        <Link to="/select" className={cx('btn_add')}>새 여행 만들기</Link>
-      </div>
-    );
-  }
-}
+const Home = ({ userId, onSetUserId }) => {
+  useEffect(() => {
+    onSetUserId('jeonsol');
+  }, []);
 
-export default Home;
+  return (
+    <div className={cx('home')}>
+      <Link to="/select" className={cx('btn_add')}>새 여행 만들기</Link>
+    </div>
+  );
+};
+
+Home.propTypes = {
+  userId: PropTypes.number,
+  onSetUserId: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+  userId: state.user.userId
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSetUserId: userId => dispatch(setUserId(userId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

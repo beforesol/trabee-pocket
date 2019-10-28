@@ -93,7 +93,7 @@ const Select = () => {
             <img src={activeCountryData.imgUrl} alt={activeCountryData.name} className={cx('image')} />
           )}
         </div>
-        <button type="button" className={cx('btn_selected', { 'selected': activeCountry })}>선택완료</button>
+        <Link to="/profile" className={cx('btn_selected', { 'selected': activeCountry })} onClick={e => { if (!activeCountry) e.preventDefault(); }}>선택완료</Link>
       </div>
     </div>
   );

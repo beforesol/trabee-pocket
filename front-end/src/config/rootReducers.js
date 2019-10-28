@@ -1,11 +1,11 @@
 import {
   combineReducers,
 } from 'redux';
-import search from '../store/search/reducer';
+import user from '../store/user/reducer';
 
 // reducer setting.
 export default function createReducer(asyncReducer) {
   return combineReducers({
-    search,
+    user,
   });
 }
