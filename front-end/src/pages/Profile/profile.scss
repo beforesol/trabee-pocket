@@ -39,6 +39,8 @@
         text-align: left;
       }
       .btn_memo {
+        display: block;
+        height: 30px;
         margin-top: 7px;
         line-height: 15px;
         font-size: 13px;
@@ -51,6 +53,7 @@
     position: relative;
     margin-top: 38px;
     .title {
+      display: block;
       font-size: 16px;
     }
     .country {
@@ -75,6 +78,14 @@
         color: #a1a8b0;
         vertical-align: middle;
       }
+    }
+    .select_country {
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      color: #a1a8b0;
+      font-size: 14px;
+      vertical-align: top;
     }
     .date {
       margin-top: 7px;

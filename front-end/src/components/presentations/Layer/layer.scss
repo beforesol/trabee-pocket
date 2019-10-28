@@ -20,10 +20,16 @@
     font-weight: bold;
     font-size: 16px;
     text-align: center;
+    white-space: nowrap;
   }
   .textarea {
     margin-top: 30px;
     outline: none;
+  }
+  .text {
+    width: 205px;
+    margin: 30px 0;
+    color: #a8a7a7;
   }
   .button_area {
     height: 36px;

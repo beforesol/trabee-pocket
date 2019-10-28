@@ -7,13 +7,13 @@ export const ROUTE_PATH = {
     name: 'Upload',
   },
   SELECT: {
-    path: '/select',
-    url: '/select/',
+    path: '/select/:id',
+    url: '/select',
     name: 'Select',
   },
   PROFILE: {
-    path: '/profile',
-    url: '/profile/',
+    path: '/profile/:id',
+    url: '/profile',
     name: 'Profile',
   },
 };

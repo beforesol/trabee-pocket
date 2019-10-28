@@ -6,21 +6,37 @@ import PropTypes from 'prop-types';
 const style = require('./layer.scss');
 const cx = classNames.bind(style);
 
-const Layer = ({ layerType, title, handler, text }) => {
+export const LAYER_TYPE = {
+  TITLE: 'TITLE',
+  MEMO: 'MEMO',
+  DELETE: 'DELETE'
+};
+
+const Layer = ({ layerType, title, openHandler, handler, text }) => {
   const textArea = useRef(null);
+  const isTextContent = layerType === LAYER_TYPE.DELETE;
 
   useEffect(() => {
-    textArea.current.focus();
-    textArea.current.value = text;
+    if (!isTextContent) {
+      textArea.current.focus();
+      textArea.current.value = text;
+    }
   });
 
   const handleClose = () => {
-    handler(false);
+    openHandler(false);
   };
 
   const handleSumbit = () => {
-    console.log(text, '를 서버에 보내야 합니다.');
-    handler(false);
+    if (!isTextContent) {
+      const newText = textArea.current.value;
+
+      handler(newText);
+    } else {
+      handler();
+    }
+
+    openHandler(false);
   };
 
   return (
@@ -28,14 +44,20 @@ const Layer = ({ layerType, title, handler, text }) => {
       <div className={cx('inner')}>
         <div className={cx('content_area')}>
           <p className={cx('title')}>{ title }</p>
-          <textarea
-            className={cx('textarea')}
-            name="text"
-            id="layerText"
-            cols="30"
-            rows="10"
-            ref={textArea}
-          />
+          {
+            isTextContent ? (
+              <div className={cx('text')}>{text}</div>
+            ) : (
+              <textarea
+                className={cx('textarea')}
+                name="text"
+                id="layerText"
+                cols="30"
+                rows="10"
+                ref={textArea}
+              />
+            )
+          }
         </div>
         <div className={cx('button_area')}>
           <button className={cx('btn', 'btn_close')} onClick={ handleClose }>취소</button>
@@ -50,6 +72,7 @@ Layer.propTypes = {
   layerType: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
+  openHandler: PropTypes.func,
   handler: PropTypes.func
 };
 
