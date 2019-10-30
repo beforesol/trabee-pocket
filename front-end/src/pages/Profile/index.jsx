@@ -66,6 +66,8 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
     setTitle('');
     setMemo('');
     setCountry(null);
+    setStartDate('');
+    setEndDate('');
     onResetCurrentTripInfo();
   };
 
