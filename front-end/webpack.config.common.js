@@ -32,7 +32,7 @@ module.exports = {
   mode: 'development',
   entry: ['@babel/polyfill', './src/index.js', './public/css/base.css'],
   resolve: {
-    extensions: ['.jsx', '.js', '.json']
+    extensions: ['.jsx', '.js', '.json', '.scss']
   },
   module: {
     rules: [
@@ -62,6 +62,16 @@ module.exports = {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader', options: scssLoaderOptions },
+          { loader: 'postcss-loader', options: postCssLoaderOptions },
+          { loader: 'sass-loader' },
+        ],
+      },
+      {
+        test: /\.(scss)$/,
+        include: path.resolve(__dirname, 'node_modules'),
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: commonCssLoaderOptions },
           { loader: 'postcss-loader', options: postCssLoaderOptions },
           { loader: 'sass-loader' },
         ],

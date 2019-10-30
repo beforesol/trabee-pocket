@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { DatePicker } from '@y0c/react-datepicker';
+import 'dayjs/locale/ko';
+import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader/root';
@@ -22,6 +25,11 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
   const [memo, setMemo] = useState('');
   const [id, setId] = useState('');
   const [country, setCountry] = useState(null);
+  const [showStartDateText, handleStartDateTextDisplay] = useState(true);
+  const [showEndDateText, handleEndDateTextDisplay] = useState(true);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
 
   const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
   const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
@@ -39,6 +47,8 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
       setTitle(currentTripInfo.title);
       setMemo(currentTripInfo.memo);
       setCountry(currentTripInfo.country);
+      setStartDate(currentTripInfo.startDate);
+      setEndDate(currentTripInfo.endDate);
     }
   }, []);
 
@@ -65,6 +75,26 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
     if (disabled) e.preventDefault();
 
     isDeleteLayer(true);
+  };
+
+  const onChangeStartDate = dateInfo => {
+    if (dateInfo) {
+      const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
+
+      setStartDate(date);
+      onSetCurrentTripInfo({ startDate: date });
+      handleStartDateTextDisplay(false);
+    }
+  };
+
+  const onChangeEndDate = dateInfo => {
+    if (dateInfo) {
+      const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
+
+      setEndDate(date);
+      onSetCurrentTripInfo({ EndDate: date });
+      handleEndDateTextDisplay(false);
+    }
   };
 
   return (
@@ -106,11 +136,25 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
           <strong className={cx('title')}>여행 날짜</strong>
           <div className={cx('date')}>
             <span className={cx('date_title')}>시작일</span>
-            <button type="button" className={cx('btn_date')}>시작일 입력하기</button>
+            <div className={cx('btn_date')}>
+              {
+                showStartDateText && (
+                  <p className={cx('text')}>시작일 입력하기</p>
+                )
+              }
+              <DatePicker initialDate={startDate} onChange={onChangeStartDate} />
+            </div>
           </div>
           <div className={cx('date')}>
             <span className={cx('date_title')}>종료일</span>
-            <button type="button" className={cx('btn_date')}>종료일 입력하기</button>
+            <div className={cx('btn_date')}>
+              {
+                showEndDateText && (
+                  <p className={cx('text')}>종료 입력하기</p>
+                )
+              }
+              <DatePicker initialDate={endDate} onChange={onChangeEndDate} />
+            </div>
           </div>
         </div>
         <div className={cx('section')}>

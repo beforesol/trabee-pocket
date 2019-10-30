@@ -1,4 +1,5 @@
 @import '../../sprite/scss/sp_profile';
+@import './datePicker';
 
 .profile {
   .image_area {
@@ -98,12 +99,17 @@
         line-height: 30px;
       }
       .btn_date {
+        display: inline-block;
+        position: relative;
         height: 30px;
+        line-height: 30px;
         padding: 0 9px;
-        background-color: #fefac5;
-        color: #a1a8b0;
         font-size: 14px;
         vertical-align: top;
+        .text {
+          background-color: #fefac5;
+          color: #a1a8b0;
+        }
       }
     }
     .currency {

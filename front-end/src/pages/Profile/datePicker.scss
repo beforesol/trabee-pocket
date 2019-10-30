@@ -1,0 +1,14 @@
+:global(.picker) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+:global(.picker-input__text) {
+  padding: 0;
+  border: 0;
+  font-size: 14px;
+  color: #a1a8b0;
+}
