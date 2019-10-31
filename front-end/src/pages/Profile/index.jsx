@@ -25,6 +25,7 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
   const [memo, setMemo] = useState('');
   const [id, setId] = useState('');
   const [country, setCountry] = useState(null);
+  const [currency, setCurrency] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -49,6 +50,13 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
       setCountry(currentTripInfo.country);
       setStartDate(currentTripInfo.startDate);
       setEndDate(currentTripInfo.endDate);
+      setCurrency(currentTripInfo.currency);
+
+      try {
+        setCurrency(currentTripInfo.country.currency);
+      } catch {
+        setCurrency(null);
+      }
     }
   }, []);
 
@@ -68,6 +76,7 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
     setCountry(null);
     setStartDate('');
     setEndDate('');
+    setCurrency(null);
     onResetCurrentTripInfo();
     startDateRef.current.handleInputClear();
     endDateRef.current.handleInputClear();
@@ -98,6 +107,8 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
       onSetCurrentTripInfo({ EndDate: date });
     }
   };
+
+  const currencyText = currency ? currency.en : '';
 
   return (
     <div className={cx('profile')}>
@@ -162,7 +173,7 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
         <div className={cx('section')}>
           <strong className={cx('title')}>화폐 & 예산</strong>
           <Link to={`/currency/${id}`} className={cx('btn_edit')}>편집</Link>
-          <p className={cx('currency')}>GBP</p>
+          <p className={cx('currency')}>{ currencyText }</p>
         </div>
         <div className={cx('btn_area')}>
           <button type="button" className={cx('btn', 'btn_delete')} onClick={() => handleDeleteBtn(true)}>이 여행 삭제하기</button>

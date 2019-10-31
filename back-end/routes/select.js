@@ -4,10 +4,11 @@ const MergeCountry = require('../models/mergeCountry');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  MergeCountry.find({}, function(err, countries) {
+  MergeCountry.find({}, function(err, mergecountries) {
     if (err) return res.status(500).json({error: err});
-    if(!countries) return res.json({error: 'countries not found'});
-    res.json(countries);
+    if(!mergecountries) return res.json({error: 'countries not found'});
+    res.json(mergecountries);
+    console.log(mergecountries);
   })
 });
 

@@ -6,7 +6,6 @@ export default class Trip {
     this.country = null;
     this.startDate = '';
     this.endDate = '';
-    this.currency = '';
 
     return this;
   }
@@ -18,7 +17,6 @@ export default class Trip {
     this.country = info.country || {};
     this.startDate = info.startDate || '';
     this.endDate = info.endDate || '';
-    this.currency = info.currency || '';
 
     return this;
   }
