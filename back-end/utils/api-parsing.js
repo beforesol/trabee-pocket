@@ -40,6 +40,7 @@ request({
 
   countryMap.forEach(map => {
     const countryDB = new Country();
+ 
     countryDB.continent = map.continent;
     countryDB.countries = map.countries;
 
