@@ -115,11 +115,26 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
   };
 
   const handleDeleteBtn = (e, callback) => {
+    // todo: 수정해야 됨
     const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
 
     if (disabled) {
+      setIsOpenLayer(true);
+
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '삭제할 데이터가 없습니다.',
+        text: '',
+        handler: () => setIsOpenLayer(false)
+      });
+
       console.log('disabled delelte');
-      e.preventDefault();
+      return;
+    }
+
+    if (currentTripInfo.status === STATUS.NEW) {
+      handleDelete();
       return;
     }
 
@@ -140,11 +155,21 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
   };
 
   const handleSaveBtn = (e, callback) => {
+    // todo: 수정해야 됨
     const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
 
     if (disabled) {
+      setIsOpenLayer(true);
+
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장할 데이터가 없습니다.',
+        text: '',
+        handler: () => setIsOpenLayer(false)
+      });
+
       console.log('disabled save');
-      e.preventDefault();
       return;
     }
 
