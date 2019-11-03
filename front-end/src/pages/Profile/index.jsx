@@ -13,14 +13,15 @@ import { setCurrentTripInfo, resetCurrentTripInfo } from '../../store/trip/actio
 import { LAYER_TYPE } from '../../components/presentations/Layer';
 import { NEW_ROUTER_ID } from '../Home';
 import { STATUS } from '../../store/trip/reducer';
+import axios from 'axios';
 
 const style = require('./profile.scss');
 const cx = classNames.bind(style);
 
-const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onResetCurrentTripInfo }) => {
-  const [isOpenTitleLayer, isTitleLayer] = useState(false);
-  const [isOpenMemoLayer, isMemoLayer] = useState(false);
-  const [isOpenDeleteLayer, isDeleteLayer] = useState(false);
+const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo, onResetCurrentTripInfo }) => {
+  const [isLoaded, setLoaded] = useState(false);
+  const [isOpenLayer, setIsOpenLayer] = useState(false);
+  const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
   const [title, setTitle] = useState('');
   const [memo, setMemo] = useState('');
   const [id, setId] = useState('');
@@ -35,29 +36,60 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
   const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
   const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
 
+  const setAllTripData = data => {
+    setTitle(data.title);
+    setMemo(data.memo);
+    setCountry(data.country);
+    setStartDate(data.startDate);
+    setEndDate(data.endDate);
+
+    try {
+      setCurrency(data.country.currency);
+    } catch {
+      setCurrency(null);
+    }
+  };
+
   useEffect(() => {
     const routeId = match.params.id;
+    const { state } = history.location;
+    const fromSelect = typeof state === 'object' && Object.prototype.hasOwnProperty.call(state, 'select');
+    const status = routeId !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
+
+    if (fromSelect) {
+      if (currentTripInfo) {
+        onSetCurrentTripInfo({ status });
+        setAllTripData(currentTripInfo);
+        setLoaded(true);
+      }
+
+      return;
+    }
 
     if (routeId !== NEW_ROUTER_ID) {
-      onSetCurrentTripInfo({ id: routeId });
+      axios.post('/api/profile', { userId, id: routeId }).then(response => {
+        const { data } = response;
+
+        if (response.data) {
+          onSetCurrentTripInfo({
+            id: routeId,
+            status,
+            ...data
+          });
+
+          setLoaded(true);
+          setAllTripData(data);
+        }
+      });
+    } else {
+      onSetCurrentTripInfo({
+        status,
+      });
+
+      setLoaded(true);
     }
 
     setId(routeId);
-
-    if (currentTripInfo) {
-      setTitle(currentTripInfo.title);
-      setMemo(currentTripInfo.memo);
-      setCountry(currentTripInfo.country);
-      setStartDate(currentTripInfo.startDate);
-      setEndDate(currentTripInfo.endDate);
-      setCurrency(currentTripInfo.currency);
-
-      try {
-        setCurrency(currentTripInfo.country.currency);
-      } catch {
-        setCurrency(null);
-      }
-    }
   }, []);
 
   const handleTitle = text => {
@@ -82,12 +114,57 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
     endDateRef.current.handleInputClear();
   };
 
-  const handleDeleteBtn = e => {
+  const handleDeleteBtn = (e, callback) => {
     const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
 
-    if (disabled) e.preventDefault();
+    if (disabled) {
+      console.log('disabled delelte');
+      e.preventDefault();
+      return;
+    }
 
-    isDeleteLayer(true);
+    axios.post('/api/profile/delete', { userId, id }).then(response => {
+      callback(true, response);
+    }).catch(err => {
+      callback(false);
+    });
+  };
+
+  const handleSuccessDelete = () => {
+    handleDelete();
+    history.replace('/');
+  };
+
+  const handleFailDelete = () => {
+    console.log('fail');
+  };
+
+  const handleSaveBtn = (e, callback) => {
+    const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
+
+    if (disabled) {
+      console.log('disabled save');
+      e.preventDefault();
+      return;
+    }
+
+    axios.post('/api/profile/save', { userId, currentTripInfo }).then(response => {
+      callback(true, response);
+    }).catch(err => {
+      callback(false);
+    });
+  };
+
+  const handleSuccessSave = tripID => {
+    history.replace({
+      pathname: `/profile/${tripID}`
+    });
+
+    onSetCurrentTripInfo({ id: tripID });
+  };
+
+  const handleFailSave = () => {
+    console.log('fail');
   };
 
   const onChangeStartDate = dateInfo => {
@@ -104,13 +181,87 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
       const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
 
       setEndDate(date);
-      onSetCurrentTripInfo({ EndDate: date });
+      onSetCurrentTripInfo({ endDate: date });
     }
+  };
+
+  const onClickTitle = () => {
+    setIsOpenLayer(true);
+
+    setLayerState({
+      ...layerState,
+      layerType: LAYER_TYPE.INPUT,
+      title: '여행 제목을 입력해주세요',
+      text: title,
+      handler: handleTitle
+    });
+  };
+
+  const onClickMemo = () => {
+    setIsOpenLayer(true);
+
+    setLayerState({
+      ...layerState,
+      layerType: LAYER_TYPE.INPUT,
+      title: '여행에 대해 간단히 메모해보세요',
+      text: memo,
+      handler: handleMemo
+    });
+  };
+
+  const onClickDeleteBtn = e => {
+    handleDeleteBtn(e, (state, response) => {
+      setIsOpenLayer(true);
+
+      if (state) {
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '삭제를 성공하였습니다.',
+          text: '감사합니다.',
+          handler: handleSuccessDelete
+        });
+      } else {
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '삭제를 실패하였습니다.',
+          text: '다시 시도해 주세요.',
+          handler: handleFailDelete
+        });
+      }
+    });
+  };
+
+  const onClickSaveBtn = e => {
+    handleSaveBtn(e, (state, response) => {
+      setIsOpenLayer(true);
+
+      if (state) {
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '저장을 성공하였습니다.',
+          text: '즐거운 여행 되세요.',
+          handler: () => handleSuccessSave(response.data.id)
+        });
+      } else {
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '저장을 실패하였습니다.',
+          text: '다시 시도해 주세요.',
+          handler: handleFailSave
+        });
+      }
+    });
   };
 
   const currencyText = currency ? currency.en : '';
 
-  return (
+  return !isLoaded ? (
+    <p>로딩중...</p>
+  ) : (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
         <Link to="/" className={cx('btn_home')} />
@@ -123,8 +274,8 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
       </div>
       <div className={cx('contents')}>
         <div className={cx('title_area')}>
-          <button type="button" className={cx('btn_title')} onClick={() => isTitleLayer(true)}>{titleInnerText}</button>
-          <button type="button" className={cx('btn_memo')} onClick={() => isMemoLayer(true)}>{memoInnerText}</button>
+          <button type="button" className={cx('btn_title')} onClick={onClickTitle}>{titleInnerText}</button>
+          <button type="button" className={cx('btn_memo')} onClick={onClickMemo}>{memoInnerText}</button>
         </div>
         <div className={cx('section')}>
           <strong className={cx('title')}>여행 국가</strong>
@@ -176,41 +327,13 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
           <p className={cx('currency')}>{ currencyText }</p>
         </div>
         <div className={cx('btn_area')}>
-          <button type="button" className={cx('btn', 'btn_delete')} onClick={() => handleDeleteBtn(true)}>이 여행 삭제하기</button>
-          <button type="button" className={cx('btn', 'btn_submit')}>이 여행 저장하기</button>
+          <button type="button" className={cx('btn', 'btn_delete')} onClick={e => onClickDeleteBtn(e)}>이 여행 삭제하기</button>
+          <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
         </div>
       </div>
       {
-        isOpenTitleLayer && (
-          <Layer
-            layerType={LAYER_TYPE.TITLE}
-            title="여행 제목을 입력해주세요"
-            text={title}
-            openHandler={isTitleLayer}
-            handler={handleTitle}
-          />
-        )
-      }
-      {
-        isOpenMemoLayer && (
-          <Layer
-            layerType={LAYER_TYPE.MEMO}
-            title="여행에 대해 간단히 메모해보세요"
-            text={memo}
-            openHandler={isMemoLayer}
-            handler={handleMemo}
-          />
-        )
-      }
-      {
-        isOpenDeleteLayer && (
-          <Layer
-            layerType={LAYER_TYPE.DELETE}
-            title="이 여행 삭제하기"
-            text={`정말, 이 여행(${title})을 삭제하시겠습니까?`}
-            openHandler={isDeleteLayer}
-            handler={handleDelete}
-          />
+        isOpenLayer && (
+          <Layer { ...layerState } />
         )
       }
     </div>
@@ -220,6 +343,7 @@ const Profile = ({ userId, match, onSetCurrentTripInfo, currentTripInfo, onReset
 Profile.propTypes = {
   userId: PropTypes.string,
   match: PropTypes.object,
+  history: PropTypes.object,
   currentTripInfo: PropTypes.object,
   onSetCurrentTripInfo: PropTypes.func,
   onResetCurrentTripInfo: PropTypes.func

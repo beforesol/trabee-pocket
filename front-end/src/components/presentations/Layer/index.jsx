@@ -7,14 +7,13 @@ const style = require('./layer.scss');
 const cx = classNames.bind(style);
 
 export const LAYER_TYPE = {
-  TITLE: 'TITLE',
-  MEMO: 'MEMO',
-  DELETE: 'DELETE'
+  INPUT: 'INPUT',
+  TEXT: 'TEXT'
 };
 
 const Layer = ({ layerType, title, openHandler, handler, text }) => {
   const textArea = useRef(null);
-  const isTextContent = layerType === LAYER_TYPE.DELETE;
+  const isTextContent = layerType === LAYER_TYPE.TEXT;
 
   useEffect(() => {
     if (!isTextContent) {
@@ -61,7 +60,7 @@ const Layer = ({ layerType, title, openHandler, handler, text }) => {
         </div>
         <div className={cx('button_area')}>
           <button className={cx('btn', 'btn_close')} onClick={ handleClose }>취소</button>
-          <button className={cx('btn', 'btn_submit')} onClick={handleSumbit}>완료</button>
+          <button className={cx('btn', 'btn_submit')} onClick={ handleSumbit }>완료</button>
         </div>
       </div>
     </div>

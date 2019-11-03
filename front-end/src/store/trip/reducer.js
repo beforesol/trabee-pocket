@@ -19,10 +19,9 @@ export default function tripReducer(state = initialState, action) {
   switch (action.type) {
   case SET_CURRENT_TRIP_INFO: {
     const { data } = action;
-    const status = data.id ? STATUS.EDIT : STATUS.NEW;
     let { currentTripInfo } = state;
 
-    currentTripInfo = { ...currentTripInfo, ...data, status };
+    currentTripInfo = { ...currentTripInfo, ...data };
 
     return {
       ...state,

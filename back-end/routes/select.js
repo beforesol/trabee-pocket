@@ -8,7 +8,6 @@ router.get('/', function(req, res, next) {
     if (err) return res.status(500).json({error: err});
     if(!mergecountries) return res.json({error: 'countries not found'});
     res.json(mergecountries);
-    console.log(mergecountries);
   })
 });
 

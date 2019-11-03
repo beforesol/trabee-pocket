@@ -34,7 +34,8 @@
     "import/prefer-default-export": 0,
     "import/newline-after-import": 0,
     "import/no-dynamic-require": 0,
-    "newline-per-chained-call": 0
+    "newline-per-chained-call": 0,
+    "no-useless-return": 0
   },
   "plugins": ["react", "jsx"],
   "parser": "babel-eslint"
