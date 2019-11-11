@@ -13,15 +13,17 @@ const store = configureStore(initialState, history);
 const routes = createRoutes(store);
 
 const App = () => (
-  <Provider store={store}>
-    <HashRouter>
-      <Switch>
-        {
-          routes.map(item => (<Route key={item.name} {...item} />))
-        }
-      </Switch>
-    </HashRouter>
-  </Provider>
+  <>
+    <Provider store={store}>
+      <HashRouter>
+        <Switch>
+          {
+            routes.map(item => (<Route key={item.name} {...item} />))
+          }
+        </Switch>
+      </HashRouter>
+    </Provider>
+  </>
 );
 
 

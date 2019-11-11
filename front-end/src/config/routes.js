@@ -11,11 +11,16 @@ export const ROUTE_PATH = {
     url: '/select',
     name: 'Select',
   },
-  PROFILE: {
-    path: '/profile/:id',
-    url: '/profile',
-    name: 'Profile',
-  },
+  DETAIL: {
+    path: '/detail/:id',
+    url: '/detail',
+    name: 'Detail'
+  }
+  // PROFILE: {
+  //   path: '/profile/:id',
+  //   url: '/profile',
+  //   name: 'Profile',
+  // },
 };
 
 export default function createRoutes(store) {
@@ -30,10 +35,15 @@ export default function createRoutes(store) {
       exact: true,
       component: withAsync({ getComponent: () => import('../pages/Select') }),
     },
+    // {
+    //   ...ROUTE_PATH.PROFILE,
+    //   exact: true,
+    //   component: withAsync({ getComponent: () => import('../pages/Profile') }),
+    // },
     {
-      ...ROUTE_PATH.PROFILE,
+      ...ROUTE_PATH.DETAIL,
       exact: true,
-      component: withAsync({ getComponent: () => import('../pages/Profile') }),
+      component: withAsync({ getComponent: () => import('../pages/Detail') }),
     }
   ];
 }

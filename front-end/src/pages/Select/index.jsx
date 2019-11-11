@@ -107,7 +107,7 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
             <img src={activeCountryData.imgUrl} alt={activeCountryData.name} className={cx('image')} />
           )}
         </div>
-        <Link to={{ pathname: `/profile/${id}`, state: { select: true } }} className={cx('btn_selected', { 'selected': activeCountry })} onClick={e => handleSubmit(e) }>선택완료</Link>
+        <Link to={{ pathname: `/detail/${id}`, state: { select: true } }} className={cx('btn_selected', { 'selected': activeCountry })} onClick={e => handleSubmit(e) }>선택완료</Link>
       </div>
     </div>
   );
