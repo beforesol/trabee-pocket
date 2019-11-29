@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Tab, Profile, Select, Currency, Expense, Report } from '../../components';
+import { Tab, Profile, Currency, Expense, Report } from '../../components';
 import { TAB_INFO } from '../../components/Tab';
 import classNames from 'classnames/bind';
 
@@ -12,6 +12,7 @@ const style = require('./detail.scss');
 const cx = classNames.bind(style);
 
 const Detail = ({ match, history }) => {
+  const [id, setId] = useState('');
   const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
 
   const updateTab = tabName => {
@@ -19,12 +20,15 @@ const Detail = ({ match, history }) => {
     console.log(tabName);
   };
 
+  useEffect(() => {
+    setId(match.params.id);
+  }, [match.params.id]);
   return (
     <div className={cx('detail')}>
       <Tab updateTab={updateTab} />
       {
         activeTab === TAB_INFO.PROFILE.name && (
-          <Profile match={match} history={history} onUpdateTab={updateTab} />
+          <Profile id={id} history={history} onUpdateTab={updateTab} />
         )
       }
       {

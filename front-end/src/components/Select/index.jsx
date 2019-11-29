@@ -11,7 +11,7 @@ import { setCurrentTripInfo } from '../../store/trip/action';
 const style = require('./select.scss');
 const cx = classNames.bind(style);
 
-const Select = ({ match, onSetCurrentTripInfo, onSetShowSelect }) => {
+const Select = ({ onSetCurrentTripInfo, onSetShowSelect }) => {
   const [continents, setContinent] = useState(null);
   const [countries, setCountries] = useState(null);
   const [activeCountry, setActiveCountry] = useState(null);
@@ -112,7 +112,6 @@ const Select = ({ match, onSetCurrentTripInfo, onSetShowSelect }) => {
 };
 
 Select.propTypes = {
-  match: PropTypes.object,
   onSetCurrentTripInfo: PropTypes.func,
   onSetShowSelect: PropTypes.func
 };
