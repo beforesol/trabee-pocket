@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Tab, Profile } from '../../components';
+import { Tab, Profile, Select, Currency, Expense, Report } from '../../components';
 import { TAB_INFO } from '../../components/Tab';
 import classNames from 'classnames/bind';
 
@@ -25,6 +25,21 @@ const Detail = ({ match, history }) => {
       {
         activeTab === TAB_INFO.PROFILE.name && (
           <Profile match={match} history={history} onUpdateTab={updateTab} />
+        )
+      }
+      {
+        activeTab === TAB_INFO.CURRENCY.name && (
+          <Currency />
+        )
+      }
+      {
+        activeTab === TAB_INFO.EXPENSE.name && (
+          <Expense />
+        )
+      }
+      {
+        activeTab === TAB_INFO.REPORT.name && (
+          <Report />
         )
       }
     </div>

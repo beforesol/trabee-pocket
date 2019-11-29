@@ -5,7 +5,9 @@ import Layer from './Layer';
 import Tab from './Tab';
 import Profile from './Profile';
 import Select from './Select';
-
+import Currency from './Currency';
+import Expense from './Expense';
+import Report from './Report';
 
 export {
   Search,
@@ -14,5 +16,8 @@ export {
   Layer,
   Tab,
   Profile,
-  Select
+  Select,
+  Currency,
+  Expense,
+  Report
 };
