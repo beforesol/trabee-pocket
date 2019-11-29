@@ -30,11 +30,11 @@ export default function createRoutes(store) {
       exact: true,
       component: withAsync({ getComponent: () => import('../pages/Home') }),
     },
-    {
-      ...ROUTE_PATH.SELECT,
-      exact: true,
-      component: withAsync({ getComponent: () => import('../pages/Select') }),
-    },
+    // {
+    //   ...ROUTE_PATH.SELECT,
+    //   exact: true,
+    //   component: withAsync({ getComponent: () => import('../pages/Select') }),
+    // },
     // {
     //   ...ROUTE_PATH.PROFILE,
     //   exact: true,

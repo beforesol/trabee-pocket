@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 
-import { Search, Continent, Country } from '../../components/presentations';
+import { Search, Continent, Country } from '..';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setCurrentTripInfo } from '../../store/trip/action';
@@ -12,13 +11,12 @@ import { setCurrentTripInfo } from '../../store/trip/action';
 const style = require('./select.scss');
 const cx = classNames.bind(style);
 
-const Select = ({ match, onSetCurrentTripInfo }) => {
+const Select = ({ match, onSetCurrentTripInfo, onSetShowSelect }) => {
   const [continents, setContinent] = useState(null);
   const [countries, setCountries] = useState(null);
   const [activeCountry, setActiveCountry] = useState(null);
   const [activeCountryData, setActiveCountryData] = useState(null);
   const [recommendCountries, setRecommendCounries] = useState(null);
-  const [id, setId] = useState('');
 
   useEffect(() => {
     axios.get('/api/select').then(response => {
@@ -38,8 +36,6 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
 
       setCountries(countriesArray);
     });
-
-    setId(match.params.id);
   }, []);
 
   useEffect(() => {
@@ -70,6 +66,8 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
     onSetCurrentTripInfo({
       country: activeCountryData
     });
+
+    onSetShowSelect(false);
   };
 
   return (
@@ -85,7 +83,7 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
           handleResetInput={handleResetInput}
         />
         <>
-          { recommendCountries ? (
+          {recommendCountries ? (
             <Country
               countries={recommendCountries}
               activeCountry={activeCountry}
@@ -103,11 +101,11 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
       <div className={cx('selected_area')}>
         <div className={cx('selected_country')}>
           <p className={cx('country')}>선택한 나라</p>
-          { activeCountryData && (
+          {activeCountryData && (
             <img src={activeCountryData.imgUrl} alt={activeCountryData.name} className={cx('image')} />
           )}
         </div>
-        <Link to={{ pathname: `/detail/${id}`, state: { select: true } }} className={cx('btn_selected', { 'selected': activeCountry })} onClick={e => handleSubmit(e) }>선택완료</Link>
+        <button className={cx('btn_selected', { 'selected': activeCountry })} onClick={e => handleSubmit(e)}>선택완료</button>
       </div>
     </div>
   );
@@ -115,12 +113,9 @@ const Select = ({ match, onSetCurrentTripInfo }) => {
 
 Select.propTypes = {
   match: PropTypes.object,
-  onSetCurrentTripInfo: PropTypes.func
+  onSetCurrentTripInfo: PropTypes.func,
+  onSetShowSelect: PropTypes.func
 };
-
-// const mapStateToProps = state => ({
-//   userId: state.user.userId
-// });
 
 const mapDispatchToProps = dispatch => ({
   onSetCurrentTripInfo: data => dispatch(setCurrentTripInfo(data))

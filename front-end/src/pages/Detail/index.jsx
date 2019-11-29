@@ -4,14 +4,14 @@ import { hot } from 'react-hot-loader/root';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Tab } from '../../components/presentations';
-import { TAB_INFO } from '../../components/presentations/Tab';
+import { Tab, Profile } from '../../components';
+import { TAB_INFO } from '../../components/Tab';
 import classNames from 'classnames/bind';
 
 const style = require('./detail.scss');
 const cx = classNames.bind(style);
 
-const Detail = () => {
+const Detail = ({ match, history }) => {
   const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
 
   const updateTab = tabName => {
@@ -21,14 +21,19 @@ const Detail = () => {
 
   return (
     <div className={cx('detail')}>
-      {activeTab}
-      <Tab updateTab={ updateTab }/>
+      <Tab updateTab={updateTab} />
+      {
+        activeTab === TAB_INFO.PROFILE.name && (
+          <Profile match={match} history={history} onUpdateTab={updateTab} />
+        )
+      }
     </div>
   );
 };
 
 Detail.propTypes = {
   match: PropTypes.object,
+  history: PropTypes.object,
   currentTripInfo: PropTypes.object,
 };
 

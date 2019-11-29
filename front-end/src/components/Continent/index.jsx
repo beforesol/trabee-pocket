@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Country from '../Country';
 
-import { toggleAttribute } from '../../../utils/dom';
+import { toggleAttribute } from '../../utils/dom';
 
 const style = require('./continent.scss');
 const cx = classNames.bind(style);
@@ -27,9 +27,9 @@ const Continent = ({ continents, activeCountry, setActiveCountry }) => {
               onClick={e => _onClick(e)}
             >{continent.continent}</button>
             <Country
-              countries={ continent.countries }
-              activeCountry={ activeCountry }
-              setActiveCountry={ setActiveCountry }
+              countries={continent.countries}
+              activeCountry={activeCountry}
+              setActiveCountry={setActiveCountry}
             />
           </div>
         ))

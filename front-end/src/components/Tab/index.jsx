@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -36,13 +36,15 @@ const Tab = ({ updateTab }) => {
     console.log('handle Add Expense');
   };
 
-  const items = [];
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
+    const itemArray = [];
+
     Object.values(TAB_INFO).forEach((item, index) => {
       if (index === 2) {
-        items.push(
-          <div className={cx('btn_tab')}>
+        itemArray.push(
+          <div className={cx('btn_tab')} key={'+'}>
             <button
               type="button"
               onClick={handleAddExpense}
@@ -51,8 +53,8 @@ const Tab = ({ updateTab }) => {
         );
       }
 
-      items.push(
-        <div className={cx('btn_tab')}>
+      itemArray.push(
+        <div className={cx('btn_tab')} key={item.name}>
           <button
             type="button"
             className={cx(`${item.className}`)}
@@ -65,11 +67,13 @@ const Tab = ({ updateTab }) => {
         </div>
       );
     });
+
+    setItems(itemArray);
   }, []);
 
   return (
     <div className={cx('tab')}>
-      { items }
+      {items}
     </div>
   );
 };

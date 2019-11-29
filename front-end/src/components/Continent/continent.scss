@@ -1,7 +1,13 @@
-@import '../../../sprite/scss/sp_select';
+@import '../../sprite/scss/sp_select';
 
 .continent_area {
-  margin-top: 20px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+  top: 124px;
+  right: 20px;
+  bottom: 123px;
+  left: 20px;
   .continent {
     & + .continent {
       margin-top: 20px;

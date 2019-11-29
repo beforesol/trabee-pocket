@@ -1,7 +1,13 @@
 @import '../../sprite/scss/sp_select';
 
 .select {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   padding-top: 22px;
+  background-color: #fff;
   .header {
     position: relative;
     height: 47px;
@@ -55,7 +61,7 @@
       }
     }
     .btn_selected {
-      display: block;
+      width: 100%;
       height: 45px;
       line-height: 45px;
       background-color: #deeefb;

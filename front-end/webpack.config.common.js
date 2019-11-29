@@ -36,13 +36,13 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        include: path.resolve(__dirname, './src'),
-        test: /\.(js|jsx)$/,
-        loader: 'eslint-loader',
-        exclude: /node_module/,
-      },
+      // {
+      //   enforce: 'pre',
+      //   include: path.resolve(__dirname, './src'),
+      //   test: /\.(js|jsx)$/,
+      //   loader: 'eslint-loader',
+      //   exclude: /node_module/,
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,

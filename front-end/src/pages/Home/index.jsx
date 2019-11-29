@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUserId } from '../../store/user/action';
+import { Link } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -21,7 +20,7 @@ const Home = ({ userId, onSetUserId, onResetCurrentTripInfo }) => {
 
   return (
     <div className={cx('home')}>
-      <Link to={`/select/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
+      <Link to={`/detail/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
     </div>
   );
 };

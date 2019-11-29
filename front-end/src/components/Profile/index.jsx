@@ -7,28 +7,29 @@ import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 
-import { Layer } from '../../components/presentations';
+import { Layer, Select } from '../../components';
 import PropTypes from 'prop-types';
 import { setCurrentTripInfo, resetCurrentTripInfo } from '../../store/trip/action';
-import { LAYER_TYPE } from '../../components/presentations/Layer';
-import { NEW_ROUTER_ID } from '../Home';
+import { LAYER_TYPE } from '../../components/Layer';
+import { NEW_ROUTER_ID } from '../../pages/Home';
 import { STATUS } from '../../store/trip/reducer';
 import axios from 'axios';
 
 const style = require('./profile.scss');
 const cx = classNames.bind(style);
 
-const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo, onResetCurrentTripInfo }) => {
+const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo, onResetCurrentTripInfo, onUpdateTab }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
+  const [id, setId] = useState('');
   const [title, setTitle] = useState('');
   const [memo, setMemo] = useState('');
-  const [id, setId] = useState('');
   const [country, setCountry] = useState(null);
   const [currency, setCurrency] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [showSelect, setShowSelect] = useState(false);
 
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
@@ -51,20 +52,14 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
   };
 
   useEffect(() => {
-    const routeId = match.params.id;
-    const { state } = history.location;
-    const fromSelect = typeof state === 'object' && Object.prototype.hasOwnProperty.call(state, 'select');
-    const status = routeId !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
-
-    if (fromSelect) {
-      if (currentTripInfo) {
-        onSetCurrentTripInfo({ status });
-        setAllTripData(currentTripInfo);
-        setLoaded(true);
-      }
-
-      return;
+    if (currentTripInfo) {
+      setAllTripData(currentTripInfo);
     }
+  }, [currentTripInfo]);
+
+  useEffect(() => {
+    const routeId = match.params.id;
+    const status = routeId !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
 
     if (routeId !== NEW_ROUTER_ID) {
       axios.post('/api/profile', { userId, id: routeId }).then(response => {
@@ -82,6 +77,7 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
         }
       });
     } else {
+      setShowSelect(true);
       onSetCurrentTripInfo({
         status,
       });
@@ -182,7 +178,7 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
 
   const handleSuccessSave = tripID => {
     history.replace({
-      pathname: `/profile/${tripID}`
+      pathname: `/detail/${tripID}`
     });
 
     onSetCurrentTripInfo({ id: tripID });
@@ -190,6 +186,10 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
 
   const handleFailSave = () => {
     console.log('fail');
+  };
+
+  const handleClickSelectCountry = () => {
+    setShowSelect(!showSelect);
   };
 
   const onChangeStartDate = dateInfo => {
@@ -287,82 +287,92 @@ const Profile = ({ userId, match, history, onSetCurrentTripInfo, currentTripInfo
   return !isLoaded ? (
     <p>로딩중...</p>
   ) : (
-    <div className={cx('profile')}>
-      <div className={cx('image_area')}>
-        <Link to="/" className={cx('btn_home')} />
-        <img
-          className={cx('cover_image')}
-          src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg"
-          alt="cover"
-        />
-        <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
-      </div>
-      <div className={cx('contents')}>
-        <div className={cx('title_area')}>
-          <button type="button" className={cx('btn_title')} onClick={onClickTitle}>{titleInnerText}</button>
-          <button type="button" className={cx('btn_memo')} onClick={onClickMemo}>{memoInnerText}</button>
+      <div className={cx('profile')}>
+        <div className={cx('image_area')}>
+          <Link to="/" className={cx('btn_home')} />
+          <img
+            className={cx('cover_image')}
+            src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg"
+            alt="cover"
+          />
+          <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
         </div>
-        <div className={cx('section')}>
-          <strong className={cx('title')}>여행 국가</strong>
-          {
-            country ? (
-              <Link to={`/select/${id}`} className={cx('country')}>
-                <div className={cx('thumbnail')}>
-                  <img
-                    src={country.imgUrl}
-                    className={cx('image')}
-                    alt={country.name}
-                  />
-                </div>
-                <p className={cx('name')}>{country.name}</p>
-              </Link>
-            ) : (
-              <Link to={`/select/${id}`} className={cx('select_country')}>국가를 선택해주세요.</Link>
-            )
-          }
-        </div>
-        <div className={cx('section')}>
-          <strong className={cx('title')}>여행 날짜</strong>
-          <div className={cx('date')}>
-            <span className={cx('date_title')}>시작일</span>
-            <div className={cx('btn_date')}>
+        <div className={cx('contents')}>
+          <div className={cx('title_area')}>
+            <button type="button" className={cx('btn_title')} onClick={onClickTitle}>{titleInnerText}</button>
+            <button type="button" className={cx('btn_memo')} onClick={onClickMemo}>{memoInnerText}</button>
+          </div>
+          <div className={cx('section')}>
+            <strong className={cx('title')}>여행 국가</strong>
+            <button onClick={handleClickSelectCountry} className={cx('btn_select_country')}>
               {
-                !startDate && (
-                  <p className={cx('text')}>시작일 입력하기</p>
-                )
+                country ? (
+                  <div className={cx('country')}>
+                    <div className={cx('thumbnail')}>
+                      <img
+                        src={country.imgUrl}
+                        className={cx('image')}
+                        alt={country.name}
+                      />
+                    </div>
+                    <span className={cx('name')}>{country.name}</span>
+                  </div>
+                ) : (
+                    <div className={cx('select_country')}>국가를 선택해주세요.</div>
+                  )
               }
-              <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+            </button>
+          </div>
+          <div className={cx('section')}>
+            <strong className={cx('title')}>여행 날짜</strong>
+            <div className={cx('date')}>
+              <span className={cx('date_title')}>시작일</span>
+              <div className={cx('btn_date')}>
+                {
+                  !startDate && (
+                    <p className={cx('text')}>시작일 입력하기</p>
+                  )
+                }
+                <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+              </div>
+            </div>
+            <div className={cx('date')}>
+              <span className={cx('date_title')}>종료일</span>
+              <div className={cx('btn_date')}>
+                {
+                  !endDate && (
+                    <p className={cx('text')}>종료 입력하기</p>
+                  )
+                }
+                <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
+              </div>
             </div>
           </div>
-          <div className={cx('date')}>
-            <span className={cx('date_title')}>종료일</span>
-            <div className={cx('btn_date')}>
-              {
-                !endDate && (
-                  <p className={cx('text')}>종료 입력하기</p>
-                )
-              }
-              <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
-            </div>
+          <div className={cx('section')}>
+            <strong className={cx('title')}>화폐 & 예산</strong>
+            <button onClick={() => onUpdateTab('currency')} className={cx('btn_edit')}>편집</button>
+            <p className={cx('currency')}>{currencyText}</p>
+          </div>
+          <div className={cx('btn_area')}>
+            <button type="button" className={cx('btn', 'btn_delete')} onClick={e => onClickDeleteBtn(e)}>이 여행 삭제하기</button>
+            <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
           </div>
         </div>
-        <div className={cx('section')}>
-          <strong className={cx('title')}>화폐 & 예산</strong>
-          <Link to={`/currency/${id}`} className={cx('btn_edit')}>편집</Link>
-          <p className={cx('currency')}>{ currencyText }</p>
-        </div>
-        <div className={cx('btn_area')}>
-          <button type="button" className={cx('btn', 'btn_delete')} onClick={e => onClickDeleteBtn(e)}>이 여행 삭제하기</button>
-          <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
-        </div>
+        {
+          isOpenLayer && (
+            <Layer {...layerState} />
+          )
+        }
+        {
+          showSelect && (
+            <Select
+              match={match}
+              onSetShowSelect={setShowSelect}
+            />
+          )
+        }
       </div>
-      {
-        isOpenLayer && (
-          <Layer { ...layerState } />
-        )
-      }
-    </div>
-  );
+    );
 };
 
 Profile.propTypes = {
@@ -371,7 +381,8 @@ Profile.propTypes = {
   history: PropTypes.object,
   currentTripInfo: PropTypes.object,
   onSetCurrentTripInfo: PropTypes.func,
-  onResetCurrentTripInfo: PropTypes.func
+  onResetCurrentTripInfo: PropTypes.func,
+  onUpdateTab: PropTypes.func
 };
 
 const mapStateToProps = state => ({
