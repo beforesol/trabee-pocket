@@ -1,0 +1,36 @@
+import axios from 'axios';
+
+const API_DOMAIN = '';
+
+const get = async (url, params = {}) => {
+  const uri = API_DOMAIN + url;
+
+  try {
+    const result = await axios.get(uri, params);
+    const { data } = result;
+
+    return data;
+  } catch (e) {
+    return console.error('API [GET] Error', e);
+  }
+};
+
+const post = async (url, params = {}) => {
+  const uri = API_DOMAIN + url;
+
+  try {
+    const result = await axios.post(uri, params);
+    const { data } = result;
+
+    return data;
+  } catch (e) {
+    return console.error('API [GET] Error', e);
+  }
+};
+
+
+export const getTripApi = param => async () => {
+  const URL_PROFILE = '/api/profile';
+
+  return post(URL_PROFILE, param);
+};

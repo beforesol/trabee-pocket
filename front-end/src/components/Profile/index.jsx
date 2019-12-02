@@ -3,13 +3,14 @@ import { DatePicker } from '@y0c/react-datepicker';
 import 'dayjs/locale/ko';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { TRIP, tripActions } from '../../modules/trips';
+
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 
 import { Layer, Select } from '../../components';
 import PropTypes from 'prop-types';
-import { setCurrentTripInfo, resetCurrentTripInfo } from '../../store/trip/action';
 import { LAYER_TYPE } from '../../components/Layer';
 import { NEW_ROUTER_ID } from '../../pages/Home';
 import { STATUS } from '../../store/trip/reducer';
@@ -17,8 +18,20 @@ import axios from 'axios';
 
 const style = require('./profile.scss');
 const cx = classNames.bind(style);
+const {
+  axiosGetTripApi,
+  setCurrentTripInfo,
+  resetCurrentTripInfo
+} = tripActions;
 
-const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, onResetCurrentTripInfo, onUpdateTab }) => {
+const Profile = ({ id, userId, history, onUpdateTab }) => {
+  const dispatch = useDispatch();
+  const {
+    isLoaded: isTripLoaded,
+    isFailed,
+    currentTripInfo,
+  } = useSelector(state => state[TRIP]);
+
   const [isLoaded, setLoaded] = useState(false);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
@@ -61,39 +74,43 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
 
     if (id) {
       if (id !== NEW_ROUTER_ID) {
-        axios.post('/api/profile', { userId, id }).then(response => {
-          const { data } = response;
-
-          if (response.data) {
-            onSetCurrentTripInfo({
-              id,
-              status,
-              ...data
-            });
-
-            setLoaded(true);
-            setAllTripData(data);
-          }
-        });
+        !isTripLoaded && dispatch(axiosGetTripApi({ userId, id }));
       } else {
         setShowSelect(true);
-        onSetCurrentTripInfo({
+        dispatch(setCurrentTripInfo({
           status,
-        });
+        }));
 
         setLoaded(true);
       }
     }
   }, [id]);
 
+  useEffect(() => {
+    if (isTripLoaded) {
+      const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
+
+      dispatch(setCurrentTripInfo({
+        id,
+        status
+      }));
+      setLoaded(true);
+      setAllTripData(currentTripInfo);
+    }
+  }, [isTripLoaded]);
+
   const handleTitle = text => {
     setTitle(text);
-    onSetCurrentTripInfo({ title: text });
+    dispatch(setCurrentTripInfo({
+      title: text
+    }));
   };
 
   const handleMemo = text => {
     setMemo(text);
-    onSetCurrentTripInfo({ memo: text });
+    dispatch(setCurrentTripInfo({
+      memo: text
+    }));
   };
 
   const handleDelete = () => {
@@ -103,14 +120,14 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
     setStartDate('');
     setEndDate('');
     setCurrency(null);
-    onResetCurrentTripInfo();
+    dispatch(resetCurrentTripInfo());
     startDateRef.current.handleInputClear();
     endDateRef.current.handleInputClear();
   };
 
   const handleDeleteBtn = (e, callback) => {
     // todo: 수정해야 됨
-    const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
+    const disabled = currentTripInfo.status === STATUS.DELETE;
 
     if (disabled) {
       setIsOpenLayer(true);
@@ -149,24 +166,6 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
   };
 
   const handleSaveBtn = (e, callback) => {
-    // todo: 수정해야 됨
-    const disabled = !currentTripInfo.status || currentTripInfo.status === STATUS.DELETE;
-
-    if (disabled) {
-      setIsOpenLayer(true);
-
-      setLayerState({
-        ...layerState,
-        layerType: LAYER_TYPE.TEXT,
-        title: '저장할 데이터가 없습니다.',
-        text: '',
-        handler: () => setIsOpenLayer(false)
-      });
-
-      console.log('disabled save');
-      return;
-    }
-
     axios.post('/api/profile/save', { userId, currentTripInfo }).then(response => {
       callback(true, response);
     }).catch(err => {
@@ -179,7 +178,9 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
       pathname: `/detail/${tripID}`
     });
 
-    onSetCurrentTripInfo({ id: tripID });
+    dispatch(setCurrentTripInfo({
+      id: tripID,
+    }));
   };
 
   const handleFailSave = () => {
@@ -195,7 +196,9 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
       const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
 
       setStartDate(date);
-      onSetCurrentTripInfo({ startDate: date });
+      dispatch(setCurrentTripInfo({
+        startDate: date
+      }));
     }
   };
 
@@ -204,7 +207,9 @@ const Profile = ({ id, userId, history, onSetCurrentTripInfo, currentTripInfo, o
       const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
 
       setEndDate(date);
-      onSetCurrentTripInfo({ endDate: date });
+      dispatch(setCurrentTripInfo({
+        endDate: date
+      }));
     }
   };
 
@@ -376,20 +381,7 @@ Profile.propTypes = {
   id: PropTypes.string,
   userId: PropTypes.string,
   history: PropTypes.object,
-  currentTripInfo: PropTypes.object,
-  onSetCurrentTripInfo: PropTypes.func,
-  onResetCurrentTripInfo: PropTypes.func,
   onUpdateTab: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  userId: state.user.userId,
-  currentTripInfo: state.trip.currentTripInfo
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSetCurrentTripInfo: data => dispatch(setCurrentTripInfo(data)),
-  onResetCurrentTripInfo: () => dispatch(resetCurrentTripInfo())
-});
-
-export default hot(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default hot(Profile);

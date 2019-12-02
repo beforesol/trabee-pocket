@@ -1,8 +1,8 @@
 import {
   combineReducers,
 } from 'redux';
-import user from '../store/user/reducer';
-import trip from '../store/trip/reducer';
+import { user } from '../modules/users';
+import { trip } from '../modules/trips';
 
 // reducer setting.
 export default function createReducer(asyncReducer) {

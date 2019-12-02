@@ -5,13 +5,17 @@ import axios from 'axios';
 
 import { Search, Continent, Country } from '..';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { setCurrentTripInfo } from '../../store/trip/action';
+
+import { useDispatch } from 'react-redux';
+import { tripActions } from '../../modules/trips';
 
 const style = require('./select.scss');
 const cx = classNames.bind(style);
+const { setCurrentTripInfo } = tripActions;
 
-const Select = ({ onSetCurrentTripInfo, onSetShowSelect }) => {
+const Select = ({ onSetShowSelect }) => {
+  const dispatch = useDispatch();
+
   const [continents, setContinent] = useState(null);
   const [countries, setCountries] = useState(null);
   const [activeCountry, setActiveCountry] = useState(null);
@@ -63,9 +67,9 @@ const Select = ({ onSetCurrentTripInfo, onSetShowSelect }) => {
   const handleSubmit = e => {
     if (!activeCountry) e.preventDefault();
 
-    onSetCurrentTripInfo({
+    dispatch(setCurrentTripInfo({
       country: activeCountryData
-    });
+    }));
 
     onSetShowSelect(false);
   };
@@ -112,13 +116,7 @@ const Select = ({ onSetCurrentTripInfo, onSetShowSelect }) => {
 };
 
 Select.propTypes = {
-  onSetCurrentTripInfo: PropTypes.func,
   onSetShowSelect: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => ({
-  onSetCurrentTripInfo: data => dispatch(setCurrentTripInfo(data))
-});
-
-
-export default hot(connect(null, mapDispatchToProps)(Select));
+export default hot(Select);

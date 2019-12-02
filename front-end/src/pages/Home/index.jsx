@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { setUserId } from '../../store/user/action';
+import { hot } from 'react-hot-loader/root';
+
 import { Link } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
-import { resetCurrentTripInfo } from '../../store/trip/action';
+
+import { useDispatch } from 'react-redux';
+import { tripActions } from '../../modules/trips';
 
 export const NEW_ROUTER_ID = 'new';
 
 const style = require('./home.scss');
 const cx = classNames.bind(style);
+const { resetCurrentTripInfo } = tripActions;
 
-const Home = ({ userId, onSetUserId, onResetCurrentTripInfo }) => {
+const Home = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onSetUserId('jeonsol');
-    onResetCurrentTripInfo();
+    dispatch(resetCurrentTripInfo());
   }, []);
 
   return (
@@ -25,19 +28,4 @@ const Home = ({ userId, onSetUserId, onResetCurrentTripInfo }) => {
   );
 };
 
-Home.propTypes = {
-  userId: PropTypes.string,
-  onSetUserId: PropTypes.func,
-  onResetCurrentTripInfo: PropTypes.func
-};
-
-const mapStateToProps = state => ({
-  userId: state.user.userId
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSetUserId: userId => dispatch(setUserId(userId)),
-  onResetCurrentTripInfo: () => dispatch(resetCurrentTripInfo())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default hot(Home);
