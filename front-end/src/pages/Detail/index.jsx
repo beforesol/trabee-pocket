@@ -25,7 +25,7 @@ const Detail = ({ match, history }) => {
   }, [match.params.id]);
   return (
     <div className={cx('detail')}>
-      <Tab updateTab={updateTab} />
+      <Tab updateTab={updateTab} activeTab={activeTab} />
       {
         activeTab === TAB_INFO.PROFILE.name && (
           <Profile id={id} history={history} onUpdateTab={updateTab} />
