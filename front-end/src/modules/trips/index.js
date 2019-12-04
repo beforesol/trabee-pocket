@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 /**
  * onSuccess Api
  */
-import { getTripApi } from '../../api';
+import { getCurrentTripApi } from '../../api';
 import Trip from '../../model/trip';
 
 // initial State
@@ -24,9 +24,9 @@ export const TRIP = 'trip';
 /**
  * Actions
  */
-const AXIOS_GET_TRIP_API = `${TRIP}/AXIOS_GET_TRIP_API`;
-const AXIOS_GET_TRIP_API_SUCCESS = `${TRIP}/AXIOS_GET_TRIP_API_SUCCESS`;
-const AXIOS_GET_TRIP_API_FAIL = `${TRIP}/AXIOS_GET_TRIP_API_FAIL`;
+const AXIOS_GET_CURRENT_TRIP_API = `${TRIP}/AXIOS_GET_CURRENT_TRIP_API`;
+const AXIOS_GET_CURRENT_TRIP_API_SUCCESS = `${TRIP}/AXIOS_GET_CURRENT_TRIP_API_SUCCESS`;
+const AXIOS_GET_CURRENT_TRIP_API_FAIL = `${TRIP}/AXIOS_GET_CURRENT_TRIP_API_FAIL`;
 
 const RESET_CURRENT_TRIP_INTO = 'RESET_CURRENT_TRIP_INTO';
 const SET_CURRENT_TRIP_INFO = 'SET_CURRENT_TRIP_INFO';
@@ -35,7 +35,7 @@ const SET_CURRENT_TRIP_INFO = 'SET_CURRENT_TRIP_INFO';
  * Reducer
  */
 const tripReducer = {
-  [AXIOS_GET_TRIP_API_SUCCESS]: (state, action) => {
+  [AXIOS_GET_CURRENT_TRIP_API_SUCCESS]: (state, action) => {
     // Success일때 데이터 모델링
     const { payload } = action;
     const currentTripInfo = new Trip();
@@ -49,7 +49,7 @@ const tripReducer = {
       currentTripInfo,
     };
   },
-  [AXIOS_GET_TRIP_API_FAIL]: state => ({
+  [AXIOS_GET_CURRENT_TRIP_API_FAIL]: state => ({
     ...state,
     isLoaded: true,
     isFailed: true,
@@ -68,20 +68,21 @@ const tripReducer = {
   },
   [RESET_CURRENT_TRIP_INTO]: state => ({
     ...state,
+    isLoaded: false,
     currentTripInfo: {
       ...new Trip(),
       status: STATUS.DELETE
     }
-  })
+  }),
 };
 
 export const tripActions = {
-  axiosGetTripApiSuccess: createAction(AXIOS_GET_TRIP_API_SUCCESS),
-  axiosGetTripApiFail: createAction(AXIOS_GET_TRIP_API_FAIL),
-  axiosGetTripApi: createAction(AXIOS_GET_TRIP_API, data => ({
-    api: getTripApi(data),
-    onSuccess: tripActions.axiosGetTripApiSuccess,
-    onFail: tripActions.axiosGetTripApiFail,
+  axiosGetCurrentTripApiSuccess: createAction(AXIOS_GET_CURRENT_TRIP_API_SUCCESS),
+  axiosGetCurrentTripApiFail: createAction(AXIOS_GET_CURRENT_TRIP_API_FAIL),
+  axiosGetCurrentTripApi: createAction(AXIOS_GET_CURRENT_TRIP_API, data => ({
+    api: getCurrentTripApi(data),
+    onSuccess: tripActions.axiosGetCurrentTripApiSuccess,
+    onFail: tripActions.axiosGetCurrentTripApiFail,
   })),
   setCurrentTripInfo: createAction(SET_CURRENT_TRIP_INFO),
   resetCurrentTripInfo: createAction(RESET_CURRENT_TRIP_INTO)

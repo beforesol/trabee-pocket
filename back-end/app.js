@@ -12,6 +12,7 @@ const usersRouter = require('./routes/users');
 const tests = require('./routes/test'); //add
 const selectRouter = require('./routes/select');
 const profileRouter = require('./routes/profile');
+const homeRouter = require('./routes/home');
 
 const app = express();
 
@@ -29,21 +30,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/tests', tests); //add
 app.use('/api/select', selectRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/home', homeRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

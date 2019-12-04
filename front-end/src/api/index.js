@@ -29,8 +29,14 @@ const post = async (url, params = {}) => {
 };
 
 
-export const getTripApi = param => async () => {
+export const getCurrentTripApi = param => async () => {
   const URL_PROFILE = '/api/profile';
 
   return post(URL_PROFILE, param);
+};
+
+export const getHomeApi = param => async () => {
+  const URL_HOME = '/api/home';
+
+  return post(URL_HOME, param);
 };

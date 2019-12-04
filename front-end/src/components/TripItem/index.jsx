@@ -7,16 +7,18 @@ import { Link } from 'react-router-dom';
 const style = require('./tripItem.scss');
 const cx = classNames.bind(style);
 
-const TripItem = ({ layoutType }) => {
+const TripItem = ({ tripInfo, layoutType }) => {
   const layoutClassName = layoutType.toLowerCase();
 
   return (
-    <Link to="#" className={cx('trip_item', layoutClassName)}>
-      <div className={cx('inner')} style={{ backgroundImage: 'url(http://cfile216.uf.daum.net/image/1129580549315BAA01850A)' }} >
+    <Link to={`/detail/${tripInfo.id}`} className={cx('trip_item', layoutClassName)}>
+      <div className={cx('inner')} style={{ backgroundImage: `url(${tripInfo.imageUrl})` }} >
         <div className={cx('info')}>
-          <strong className={cx('title')}>건지</strong>
-          <p className={cx('date')}>2019.12.19 ~ 2019.1.29</p>
-          <img src="" alt="" className={cx('country_image')} />
+          <strong className={cx('title')}>{tripInfo.title}</strong>
+          <p className={cx('date')}>{tripInfo.startDate} ~ {tripInfo.endDate}</p>
+          <div>
+            <img src={tripInfo.country.imgUrl} className={cx('country_image')} />
+          </div>
           <p className={cx('expense')}>₩476,708</p>
         </div>
       </div>
@@ -25,6 +27,7 @@ const TripItem = ({ layoutType }) => {
 };
 
 TripItem.propTypes = {
+  tripInfo: PropTypes.object,
   layoutType: PropTypes.string
 };
 

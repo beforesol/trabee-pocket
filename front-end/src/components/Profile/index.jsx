@@ -19,7 +19,7 @@ import axios from 'axios';
 const style = require('./profile.scss');
 const cx = classNames.bind(style);
 const {
-  axiosGetTripApi,
+  axiosGetCurrentTripApi,
   setCurrentTripInfo,
   resetCurrentTripInfo
 } = tripActions;
@@ -65,6 +65,10 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
     }
   };
 
+  useEffect(() => () => {
+    dispatch(resetCurrentTripInfo());
+  }, []);
+
   useEffect(() => {
     if (currentTripInfo) {
       setAllTripData(currentTripInfo);
@@ -76,9 +80,11 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
     if (id) {
       if (id !== NEW_ROUTER_ID) {
+        console.log('너나가냥');
         setShowSelect(false);
-        !isTripLoaded && dispatch(axiosGetTripApi({ userId, id }));
+        !isTripLoaded && dispatch(axiosGetCurrentTripApi({ userId, id }));
       } else {
+        console.log('너나가2');
         setShowSelect(true);
         dispatch(setCurrentTripInfo({
           status,

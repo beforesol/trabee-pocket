@@ -14,7 +14,7 @@ export default class Trip {
   }
 
   setData(info) {
-    this.id = info.id || '';
+    this.id = info._id || '';
     this.title = info.title || '';
     this.memo = info.memo || '';
     this.country = info.country || {};
