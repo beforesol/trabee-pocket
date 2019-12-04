@@ -288,7 +288,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   const currencyText = currency ? currency.en : '';
 
   return !isLoaded ? (
-    <p>로딩중...</p>
+    isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
   ) : (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
