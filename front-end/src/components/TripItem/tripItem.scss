@@ -1,0 +1,80 @@
+.trip_item {
+  display: block;
+  position: relative;
+  &.type_1 {
+    padding-top: 100%;
+    .info {
+      .title {
+        font-size: 20px;
+      }
+      .date {
+        margin-top: 5px;
+        font-size: 12px;
+      }
+      .country_image {
+        width: 40px;
+        margin-top: 45px;
+      }
+      .expense {
+        height: 25px;
+        margin-top: 45px;
+        padding: 0 10px;
+        line-height: 25px;
+        font-size: 15px;
+      }
+    }
+  }
+  &.type_2, &.type_4 {
+    height: 145px;
+    .info {
+      .title {
+        font-size: 12px;
+      }
+      .date {
+        margin-top: 5px;
+        font-size: 6px;
+      }
+      .country_image {
+        width: 25px;
+        margin-top: 10px;
+      }
+      .expense {
+        height: 18px;
+        margin-top: 10px;
+        padding: 0 5px;
+        line-height: 18px;
+        font-size: 8px;
+      }
+    }
+  }
+  &.type_4 {
+    padding-top: 100%;
+    height: auto;
+  }
+  .inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    white-space: nowrap;
+    .country_image {
+      vertical-align: top;
+    }
+    .expense {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 25px;
+      vertical-align: top;
+    }
+  }
+}

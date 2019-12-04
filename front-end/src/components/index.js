@@ -8,6 +8,8 @@ import Select from './Select';
 import Currency from './Currency';
 import Expense from './Expense';
 import Report from './Report';
+import Header from './Header';
+import TripItem from './TripItem';
 
 export {
   Search,
@@ -19,5 +21,7 @@ export {
   Select,
   Currency,
   Expense,
-  Report
+  Report,
+  Header,
+  TripItem
 };
