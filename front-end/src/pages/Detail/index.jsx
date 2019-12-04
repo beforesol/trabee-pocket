@@ -35,6 +35,7 @@ const Detail = ({ match, history }) => {
   useEffect(() => {
     setId(match.params.id);
   }, [match.params.id]);
+
   return (
     <div className={cx('detail')}>
       <Tab updateTab={updateTab} activeTab={activeTab} />

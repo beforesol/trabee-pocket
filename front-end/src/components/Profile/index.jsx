@@ -37,6 +37,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
   const [title, setTitle] = useState('');
   const [memo, setMemo] = useState('');
+  const [imageUrl, setImageUrl] = useState(null);
   const [country, setCountry] = useState(null);
   const [currency, setCurrency] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -53,6 +54,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
     setTitle(data.title);
     setMemo(data.memo);
     setCountry(data.country);
+    setImageUrl(data.imageUrl);
     setStartDate(data.startDate);
     setEndDate(data.endDate);
 
@@ -74,6 +76,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
     if (id) {
       if (id !== NEW_ROUTER_ID) {
+        setShowSelect(false);
         !isTripLoaded && dispatch(axiosGetTripApi({ userId, id }));
       } else {
         setShowSelect(true);
@@ -295,7 +298,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
         <Link to="/" className={cx('btn_home')} />
         <img
           className={cx('cover_image')}
-          src="https://cdn.crowdpic.net/detail-thumb/thumb_d_2F583E5543F7E19139C6FCFFBF9607A6.jpg"
+          src={imageUrl}
           alt="cover"
         />
         <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
