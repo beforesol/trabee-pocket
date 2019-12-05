@@ -42,7 +42,7 @@ const Layer = ({ layerType, title, openHandler, handler, text }) => {
     <div className={cx('layer')}>
       <div className={cx('inner')}>
         <div className={cx('content_area')}>
-          <p className={cx('title')}>{ title }</p>
+          <p className={cx('title')}>{title}</p>
           {
             isTextContent ? (
               <div className={cx('text')}>{text}</div>
@@ -59,8 +59,8 @@ const Layer = ({ layerType, title, openHandler, handler, text }) => {
           }
         </div>
         <div className={cx('button_area')}>
-          <button className={cx('btn', 'btn_close')} onClick={ handleClose }>취소</button>
-          <button className={cx('btn', 'btn_submit')} onClick={ handleSumbit }>완료</button>
+          <button className={cx('btn', 'btn_close')} onClick={handleClose}>취소</button>
+          <button className={cx('btn', 'btn_submit')} onClick={handleSumbit}>완료</button>
         </div>
       </div>
     </div>
