@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
 import { createHashHistory } from 'history';
-import configureStore from '../config/store';
-import createRoutes from '../config/routes';
+import configureStore from '@config/store';
+import createRoutes from '@config/routes';
 
 const initialState = {};
 

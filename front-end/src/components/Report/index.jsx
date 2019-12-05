@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';

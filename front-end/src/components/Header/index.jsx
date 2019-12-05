@@ -2,7 +2,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { VIEW_TYPE } from '../../constants/type/viewType';
+import { VIEW_TYPE } from '@constants/type/viewType';
 
 const style = require('./header.scss');
 const cx = classNames.bind(style);

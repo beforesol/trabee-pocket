@@ -11,7 +11,7 @@ const Country = ({ countries, activeCountry, setActiveCountry }) => (
     {
       countries && countries.map(item => (
         <li className={cx('list')} role="presentation" key={item.id}>
-          <img className={cx('country_image')} src={item.imgUrl} alt={item.name}/>
+          <img className={cx('country_image')} src={item.imgUrl} alt={item.name} />
           <label htmlFor={item.id} className={cx('country_title')}>{item.name}</label>
           <input
             type="radio"

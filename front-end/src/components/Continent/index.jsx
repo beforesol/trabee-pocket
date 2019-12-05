@@ -3,9 +3,8 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
-import Country from '../Country';
-
-import { toggleAttribute } from '../../utils/dom';
+import { Country } from '@components';
+import { toggleAttribute } from '@utils/dom';
 
 const style = require('./continent.scss');
 const cx = classNames.bind(style);

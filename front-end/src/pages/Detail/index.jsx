@@ -3,12 +3,12 @@ import { hot } from 'react-hot-loader/root';
 
 import PropTypes from 'prop-types';
 
-import { Tab, Profile, Currency, Expense, Report } from '../../components';
-import { TAB_INFO } from '../../components/Tab';
+import { Tab, Profile, Currency, Expense, Report } from '@components';
+import { TAB_INFO } from '@components/Tab';
 import classNames from 'classnames/bind';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { USER, userActions } from '../../modules/users';
+import { USER, userActions } from '@modules/users';
 
 const style = require('./detail.scss');
 const cx = classNames.bind(style);

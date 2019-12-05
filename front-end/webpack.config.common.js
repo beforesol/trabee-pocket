@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const port = process.env.PORT || 3000;
+const root = path.resolve(__dirname);
 
 const commonCssLoaderOptions = {
   importLoaders: 2,
@@ -23,16 +24,25 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [
-    autoprefixer(),
-  ],
+  plugins: () => [autoprefixer(),],
 };
 
 module.exports = {
   mode: 'development',
   entry: ['@babel/polyfill', './src/index.js', './public/css/base.css'],
   resolve: {
-    extensions: ['.jsx', '.js', '.json', '.scss']
+    extensions: ['.jsx', '.js', '.json', '.scss'],
+    alias: {
+      '@modules': `${root}/src/modules`,
+      '@model': `${root}/src/model`,
+      '@hooks': `${root}/src/hooks`,
+      '@constants': `${root}/src/constants`,
+      '@config': `${root}/src/config`,
+      '@api': `${root}/src/api`,
+      '@components': `${root}/src/components`,
+      '@utils': `${root}/src/utils`,
+      '@sprite': `${root}/src/scss`
+    },
   },
   module: {
     rules: [

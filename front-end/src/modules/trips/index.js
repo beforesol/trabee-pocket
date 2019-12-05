@@ -2,8 +2,8 @@ import { createAction, handleActions } from 'redux-actions';
 /**
  * onSuccess Api
  */
-import { getCurrentTripApi } from '../../api';
-import Trip from '../../model/trip';
+import { getCurrentTripApi } from '@api';
+import Trip from '@model/trip';
 
 // initial State
 const tripState = {

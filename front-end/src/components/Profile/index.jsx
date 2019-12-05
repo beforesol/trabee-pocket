@@ -297,91 +297,91 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   return !isLoaded ? (
     isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
   ) : (
-      <div className={cx('profile')}>
-        <div className={cx('image_area')}>
-          <Link to="/" className={cx('btn_home')} />
-          <img
-            className={cx('cover_image')}
-            src={imageUrl}
-            alt="cover"
-          />
-          <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
-        </div>
-        <div className={cx('contents')}>
-          <div className={cx('title_area')}>
-            <button type="button" className={cx('btn_title')} onClick={onClickTitle}>{titleInnerText}</button>
-            <button type="button" className={cx('btn_memo')} onClick={onClickMemo}>{memoInnerText}</button>
-          </div>
-          <div className={cx('section')}>
-            <strong className={cx('title')}>여행 국가</strong>
-            <button onClick={handleClickSelectCountry} className={cx('btn_select_country')}>
-              {
-                country ? (
-                  <div className={cx('country')}>
-                    <div className={cx('thumbnail')}>
-                      <img
-                        src={country.imgUrl}
-                        className={cx('image')}
-                        alt={country.name}
-                      />
-                    </div>
-                    <span className={cx('name')}>{country.name}</span>
-                  </div>
-                ) : (
-                    <div className={cx('select_country')}>국가를 선택해주세요.</div>
-                  )
-              }
-            </button>
-          </div>
-          <div className={cx('section')}>
-            <strong className={cx('title')}>여행 날짜</strong>
-            <div className={cx('date')}>
-              <span className={cx('date_title')}>시작일</span>
-              <div className={cx('btn_date')}>
-                {
-                  !startDate && (
-                    <p className={cx('text')}>시작일 입력하기</p>
-                  )
-                }
-                <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
-              </div>
-            </div>
-            <div className={cx('date')}>
-              <span className={cx('date_title')}>종료일</span>
-              <div className={cx('btn_date')}>
-                {
-                  !endDate && (
-                    <p className={cx('text')}>종료 입력하기</p>
-                  )
-                }
-                <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
-              </div>
-            </div>
-          </div>
-          <div className={cx('section')}>
-            <strong className={cx('title')}>화폐 & 예산</strong>
-            <button onClick={() => onUpdateTab('currency')} className={cx('btn_edit')}>편집</button>
-            <p className={cx('currency')}>{currencyText}</p>
-          </div>
-          <div className={cx('btn_area')}>
-            <button type="button" className={cx('btn', 'btn_delete')} onClick={e => onClickDeleteBtn(e)}>이 여행 삭제하기</button>
-            <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
-          </div>
-        </div>
-        {
-          isOpenLayer && (
-            <Layer {...layerState} />
-          )
-        }
-        {
-          showSelect && (
-            <Select
-              onSetShowSelect={setShowSelect}
-            />
-          )
-        }
+    <div className={cx('profile')}>
+      <div className={cx('image_area')}>
+        <Link to="/" className={cx('btn_home')} />
+        <img
+          className={cx('cover_image')}
+          src={imageUrl}
+          alt="cover"
+        />
+        <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
       </div>
-    );
+      <div className={cx('contents')}>
+        <div className={cx('title_area')}>
+          <button type="button" className={cx('btn_title')} onClick={onClickTitle}>{titleInnerText}</button>
+          <button type="button" className={cx('btn_memo')} onClick={onClickMemo}>{memoInnerText}</button>
+        </div>
+        <div className={cx('section')}>
+          <strong className={cx('title')}>여행 국가</strong>
+          <button onClick={handleClickSelectCountry} className={cx('btn_select_country')}>
+            {
+              country ? (
+                <div className={cx('country')}>
+                  <div className={cx('thumbnail')}>
+                    <img
+                      src={country.imgUrl}
+                      className={cx('image')}
+                      alt={country.name}
+                    />
+                  </div>
+                  <span className={cx('name')}>{country.name}</span>
+                </div>
+              ) : (
+                <div className={cx('select_country')}>국가를 선택해주세요.</div>
+              )
+            }
+          </button>
+        </div>
+        <div className={cx('section')}>
+          <strong className={cx('title')}>여행 날짜</strong>
+          <div className={cx('date')}>
+            <span className={cx('date_title')}>시작일</span>
+            <div className={cx('btn_date')}>
+              {
+                !startDate && (
+                  <p className={cx('text')}>시작일 입력하기</p>
+                )
+              }
+              <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+            </div>
+          </div>
+          <div className={cx('date')}>
+            <span className={cx('date_title')}>종료일</span>
+            <div className={cx('btn_date')}>
+              {
+                !endDate && (
+                  <p className={cx('text')}>종료 입력하기</p>
+                )
+              }
+              <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
+            </div>
+          </div>
+        </div>
+        <div className={cx('section')}>
+          <strong className={cx('title')}>화폐 & 예산</strong>
+          <button onClick={() => onUpdateTab('currency')} className={cx('btn_edit')}>편집</button>
+          <p className={cx('currency')}>{currencyText}</p>
+        </div>
+        <div className={cx('btn_area')}>
+          <button type="button" className={cx('btn', 'btn_delete')} onClick={e => onClickDeleteBtn(e)}>이 여행 삭제하기</button>
+          <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
+        </div>
+      </div>
+      {
+        isOpenLayer && (
+          <Layer {...layerState} />
+        )
+      }
+      {
+        showSelect && (
+          <Select
+            onSetShowSelect={setShowSelect}
+          />
+        )
+      }
+    </div>
+  );
 };
 
 Profile.propTypes = {

@@ -3,11 +3,11 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 
-import { Search, Continent, Country } from '..';
+import { Search, Continent, Country } from '@components';
 import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
-import { tripActions } from '../../modules/trips';
+import { tripActions } from '@modules/trips';
 
 const style = require('./select.scss');
 const cx = classNames.bind(style);
