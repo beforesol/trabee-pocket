@@ -17,8 +17,8 @@ const { setUserId } = userActions;
 
 const Detail = ({ match, history }) => {
   const { userId } = useSelector(state => state[USER]);
-
   const dispatch = useDispatch();
+
   const [id, setId] = useState('');
   const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);

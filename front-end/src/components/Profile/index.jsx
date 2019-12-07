@@ -25,6 +25,9 @@ const {
 } = tripActions;
 
 const Profile = ({ id, userId, history, onUpdateTab }) => {
+  const startDateRef = useRef(null);
+  const endDateRef = useRef(null);
+
   const dispatch = useDispatch();
   const {
     isLoaded: isTripLoaded,
@@ -44,12 +47,6 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   const [endDate, setEndDate] = useState('');
   const [showSelect, setShowSelect] = useState(false);
 
-  const startDateRef = useRef(null);
-  const endDateRef = useRef(null);
-
-  const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
-  const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
-
   const setAllTripData = data => {
     setTitle(data.title);
     setMemo(data.memo);
@@ -64,47 +61,6 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
       setCurrency(null);
     }
   };
-
-  useEffect(() => () => {
-    dispatch(resetCurrentTripInfo());
-  }, []);
-
-  useEffect(() => {
-    if (currentTripInfo) {
-      setAllTripData(currentTripInfo);
-    }
-  }, [currentTripInfo]);
-
-  useEffect(() => {
-    const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
-
-    if (id) {
-      if (id !== NEW_ROUTER_ID) {
-        setShowSelect(false);
-        !isTripLoaded && dispatch(axiosGetCurrentTripApi({ userId, id }));
-      } else {
-        setShowSelect(true);
-        dispatch(setCurrentTripInfo({
-          status,
-        }));
-
-        setLoaded(true);
-      }
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (isTripLoaded) {
-      const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
-
-      dispatch(setCurrentTripInfo({
-        id,
-        status
-      }));
-      setLoaded(true);
-      setAllTripData(currentTripInfo);
-    }
-  }, [isTripLoaded]);
 
   const handleTitle = text => {
     setTitle(text);
@@ -292,7 +248,50 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
     });
   };
 
+  useEffect(() => () => {
+    dispatch(resetCurrentTripInfo());
+  }, []);
+
+  useEffect(() => {
+    if (currentTripInfo) {
+      setAllTripData(currentTripInfo);
+    }
+  }, [currentTripInfo]);
+
+  useEffect(() => {
+    const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
+
+    if (id) {
+      if (id !== NEW_ROUTER_ID) {
+        setShowSelect(false);
+        !isTripLoaded && dispatch(axiosGetCurrentTripApi({ userId, id }));
+      } else {
+        setShowSelect(true);
+        dispatch(setCurrentTripInfo({
+          status,
+        }));
+
+        setLoaded(true);
+      }
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (isTripLoaded) {
+      const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
+
+      dispatch(setCurrentTripInfo({
+        id,
+        status
+      }));
+      setLoaded(true);
+      setAllTripData(currentTripInfo);
+    }
+  }, [isTripLoaded]);
+
   const currencyText = currency ? currency.en : '';
+  const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
+  const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
 
   return !isLoaded ? (
     isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)

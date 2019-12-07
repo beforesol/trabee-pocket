@@ -9,12 +9,12 @@ const cx = classNames.bind(style);
 const Search = ({ handleChangeInput, handleResetInput }) => {
   const [searchText, setSearchText] = useState('');
 
-  const _onChange = e => {
+  const onChange = e => {
     setSearchText(e.currentTarget.value);
     handleChangeInput(e.currentTarget.value);
   };
 
-  const _onSubmit = useCallback(() => {
+  const onSubmit = useCallback(() => {
     console.log('onSubmit');
   }, []); // 컴포넌트가 처음 렌더링 될 때만 함수 생성
 
@@ -28,7 +28,7 @@ const Search = ({ handleChangeInput, handleResetInput }) => {
       role="search"
       id="searchForm"
       className={cx('search_form')}
-      onSubmit={_onSubmit}>
+      onSubmit={onSubmit}>
       <div className={cx('input_wrap')}>
         <span className={cx('blind')}>search</span>
         <input
@@ -39,7 +39,7 @@ const Search = ({ handleChangeInput, handleResetInput }) => {
           value={searchText}
           autoFocus={true}
           autoComplete="off"
-          onChange={ e => _onChange(e) }
+          onChange={e => onChange(e)}
         />
         {
           searchText && (

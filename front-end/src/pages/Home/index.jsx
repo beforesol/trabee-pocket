@@ -40,7 +40,6 @@ const Home = () => {
     }));
   }, []);
 
-
   const handleChangeLayout = type => {
     setLayout(type);
     console.log(type);

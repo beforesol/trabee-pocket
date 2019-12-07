@@ -22,6 +22,26 @@ const Select = ({ onSetShowSelect }) => {
   const [activeCountryData, setActiveCountryData] = useState(null);
   const [recommendCountries, setRecommendCounries] = useState(null);
 
+  const handleChangeInput = text => {
+    const recommendCountryArray = countries.filter(country => country.name.indexOf(text) !== -1);
+
+    setRecommendCounries(recommendCountryArray);
+  };
+
+  const handleResetInput = () => {
+    setRecommendCounries(null);
+  };
+
+  const handleSubmit = e => {
+    if (!activeCountry) e.preventDefault();
+
+    dispatch(setCurrentTripInfo({
+      country: activeCountryData
+    }));
+
+    onSetShowSelect(false);
+  };
+
   useEffect(() => {
     axios.get('/api/select').then(response => {
       const countriesArray = [];
@@ -53,26 +73,6 @@ const Select = ({ onSetShowSelect }) => {
       });
     }
   }, [activeCountry]);
-
-  const handleChangeInput = text => {
-    const recommendCountryArray = countries.filter(country => country.name.indexOf(text) !== -1);
-
-    setRecommendCounries(recommendCountryArray);
-  };
-
-  const handleResetInput = () => {
-    setRecommendCounries(null);
-  };
-
-  const handleSubmit = e => {
-    if (!activeCountry) e.preventDefault();
-
-    dispatch(setCurrentTripInfo({
-      country: activeCountryData
-    }));
-
-    onSetShowSelect(false);
-  };
 
   return (
     <div className={cx('select')}>

@@ -10,7 +10,7 @@ const style = require('./continent.scss');
 const cx = classNames.bind(style);
 
 const Continent = ({ continents, activeCountry, setActiveCountry }) => {
-  const _onClick = e => {
+  const onClickContinent = e => {
     toggleAttribute(e.currentTarget, 'aria-selected');
   };
 
@@ -23,7 +23,7 @@ const Continent = ({ continents, activeCountry, setActiveCountry }) => {
               type="button"
               className={cx('continent_name')}
               aria-selected={true}
-              onClick={e => _onClick(e)}
+              onClick={e => onClickContinent(e)}
             >{continent.continent}</button>
             <Country
               countries={continent.countries}

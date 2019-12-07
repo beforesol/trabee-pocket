@@ -13,14 +13,6 @@ export const LAYER_TYPE = {
 
 const Layer = ({ layerType, title, openHandler, handler, text }) => {
   const textArea = useRef(null);
-  const isTextContent = layerType === LAYER_TYPE.TEXT;
-
-  useEffect(() => {
-    if (!isTextContent) {
-      textArea.current.focus();
-      textArea.current.value = text;
-    }
-  });
 
   const handleClose = () => {
     openHandler(false);
@@ -37,6 +29,15 @@ const Layer = ({ layerType, title, openHandler, handler, text }) => {
 
     openHandler(false);
   };
+
+  useEffect(() => {
+    if (!isTextContent) {
+      textArea.current.focus();
+      textArea.current.value = text;
+    }
+  });
+
+  const isTextContent = layerType === LAYER_TYPE.TEXT;
 
   return (
     <div className={cx('layer')}>
