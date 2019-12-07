@@ -6,21 +6,11 @@ export const ROUTE_PATH = {
     url: '/',
     name: 'Upload',
   },
-  SELECT: {
-    path: '/select/:id',
-    url: '/select',
-    name: 'Select',
-  },
   DETAIL: {
     path: '/detail/:id',
     url: '/detail',
     name: 'Detail'
   }
-  // PROFILE: {
-  //   path: '/profile/:id',
-  //   url: '/profile',
-  //   name: 'Profile',
-  // },
 };
 
 export default function createRoutes(store) {

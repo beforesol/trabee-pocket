@@ -4,16 +4,19 @@ import 'dayjs/locale/ko';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { TRIP, tripActions } from '../../modules/trips';
 
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-
-import { Layer, Select } from '../../components';
 import PropTypes from 'prop-types';
-import { LAYER_TYPE } from '../../components/Layer';
-import { NEW_ROUTER_ID } from '../../pages/Home';
-import { STATUS } from '../../store/trip/reducer';
+
+import { TRIP, tripActions, STATUS } from '@modules/trips';
+
+import { Layer, Select } from '@components';
+import { LAYER_TYPE } from '@components/Layer';
+import { NEW_ROUTER_ID } from '@pages/Home';
+
+import { ROUTE_PATH } from '@config/routes';
+
 import axios from 'axios';
 
 const style = require('./profile.scss');
@@ -121,7 +124,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
   const handleSuccessDelete = () => {
     handleDelete();
-    history.replace('/');
+    history.replace(ROUTE_PATH.HOME.url);
   };
 
   const handleFailDelete = () => {
@@ -138,7 +141,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
   const handleSuccessSave = tripID => {
     history.replace({
-      pathname: `/detail/${tripID}`
+      pathname: `/${ROUTE_PATH.DETAIL.url}/${tripID}`
     });
 
     dispatch(setCurrentTripInfo({
@@ -298,7 +301,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   ) : (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
-        <Link to="/" className={cx('btn_home')} />
+        <Link to={ROUTE_PATH.HOME.url} className={cx('btn_home')} />
         <img
           className={cx('cover_image')}
           src={imageUrl}

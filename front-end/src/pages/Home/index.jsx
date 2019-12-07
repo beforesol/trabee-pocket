@@ -13,6 +13,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { HOME, homeActions } from '@modules/home';
 import { USER, userActions } from '@modules/users';
 
+import { ROUTE_PATH } from '@config/routes';
+
 export const NEW_ROUTER_ID = 'new';
 
 const style = require('./home.scss');
@@ -97,7 +99,7 @@ const Home = () => {
                   )
                 }
               </div>
-              <Link to={`/detail/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
+              <Link to={`/${ROUTE_PATH.DETAIL.url}/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
             </div >
           )
         ) : (

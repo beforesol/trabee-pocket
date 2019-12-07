@@ -24,7 +24,7 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [autoprefixer(),],
+  plugins: () => [autoprefixer(), ],
 };
 
 module.exports = {
@@ -40,6 +40,7 @@ module.exports = {
       '@config': `${root}/src/config`,
       '@api': `${root}/src/api`,
       '@components': `${root}/src/components`,
+      '@pages': `${root}/src/pages`,
       '@utils': `${root}/src/utils`,
       '@sprite': `${root}/src/scss`
     },
