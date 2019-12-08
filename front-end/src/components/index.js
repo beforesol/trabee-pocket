@@ -3,6 +3,7 @@ import Country from './Country';
 import Currency from './Currency';
 import Expense from './Expense';
 import Header from './Header';
+import DetailHeader from './Header/DetailHeader';
 import Layer from './Layer';
 import Profile from './Profile';
 import Report from './Report';
@@ -17,6 +18,7 @@ export {
   Currency,
   Expense,
   Header,
+  DetailHeader,
   Layer,
   Profile,
   Report,

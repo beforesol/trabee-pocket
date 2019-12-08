@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DatePicker } from '@y0c/react-datepicker';
 import 'dayjs/locale/ko';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { hot } from 'react-hot-loader/root';
@@ -11,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import { TRIP, tripActions, STATUS } from '@modules/trips';
 
-import { Layer, Select } from '@components';
+import { Layer, Select, DetailHeader } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
 import { NEW_ROUTER_ID } from '@pages/Home';
 
@@ -301,7 +300,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   ) : (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
-        <Link to={ROUTE_PATH.HOME.url} className={cx('btn_home')} />
+        <DetailHeader />
         <img
           className={cx('cover_image')}
           src={imageUrl}

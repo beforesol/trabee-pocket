@@ -42,7 +42,7 @@ module.exports = {
       '@components': `${root}/src/components`,
       '@pages': `${root}/src/pages`,
       '@utils': `${root}/src/utils`,
-      '@sprite': `${root}/src/scss`
+      'sprite': `${root}/src/sprite/scss`
     },
   },
   module: {

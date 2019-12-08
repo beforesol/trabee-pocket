@@ -1,8 +1,8 @@
 
 $sprite-meta-header: (
   "name": "header",
-  "width": 1574,
-  "height": 1064
+  "width": 1596,
+  "height": 1563
 );
 $sprite-map-header: (
   
@@ -27,25 +27,32 @@ $sprite-map-header: (
     "bg-left": -10,
   ),
     
+  "icon_home": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -542,
+    "bg-left": -542,
+  ),
+    
   "icon_setting": (
     "width": 478.7,
     "height": 478.7,
-    "bg-top": -519.4,
-    "bg-left": -1074,
+    "bg-top": -1074,
+    "bg-left": -10,
   ),
     
   "icon_shop": (
     "width": 489.4,
     "height": 489.4,
-    "bg-top": -10,
+    "bg-top": -542,
     "bg-left": -1074,
   ),
     
   "icon_user": (
     "width": 512,
     "height": 512,
-    "bg-top": -542,
-    "bg-left": -542,
+    "bg-top": -10,
+    "bg-left": -1074,
   ),
     
 );
