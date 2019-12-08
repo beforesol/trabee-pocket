@@ -10,9 +10,10 @@ import PropTypes from 'prop-types';
 
 import { TRIP, tripActions, STATUS } from '@modules/trips';
 
-import { Layer, Select, DetailHeader } from '@components';
+import { Layer, Select } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
 import { NEW_ROUTER_ID } from '@pages/Home';
+import { Link } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@config/routes';
 
@@ -300,7 +301,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   ) : (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
-        <DetailHeader />
+        <Link to={ROUTE_PATH.HOME.url} className={cx('btn_home')} />
         <img
           className={cx('cover_image')}
           src={imageUrl}

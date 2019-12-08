@@ -20,7 +20,7 @@ const Detail = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [id, setId] = useState('');
-  const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
+  const [activeTab, setActiveTab] = useState(TAB_INFO.EXPENSE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
 
   const updateTab = tabName => {

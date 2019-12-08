@@ -1,3 +1,61 @@
 .expense {
-  
+  padding-top: 30px;
+  .date_tab {
+    height: 50px;
+    .date_area {
+      display: inline-block;
+      position: relative;
+      vertical-align: top;
+      & + .date_area:before {
+        position: absolute;
+        top: 12px;
+        bottom: 12px;
+        width: 1px;
+        background-color: #e8eaeb;
+        content: '';
+      }
+    }
+    .btn_tab {
+      padding: 8px;
+      text-align: center;
+      &[aria-selected=true] {
+        color: #fff;
+        .tab_title {
+          border-radius: 50%;
+          background-color: #8ac2ea;
+        }
+      }
+    }
+    .tab_title {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    .text {
+      margin-top: 3px;
+      color: #b6b7bc;
+      font-size: 7px;
+    }
+  }
+  .total_area {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    height: 57px;
+    background-color: #eef1f9;
+    line-height: 57px;
+    text-align: center;
+    .text {
+      color: #a9acb3;
+      font-size: 10px;
+    }
+    .total_expense {
+      margin-left: 10px;
+      font-size: 15px;
+    }
+  }
 }
