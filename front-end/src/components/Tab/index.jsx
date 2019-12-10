@@ -3,8 +3,6 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-
 const style = require('./tab.scss');
 const cx = classNames.bind(style);
 
@@ -31,7 +29,12 @@ export const TAB_INFO = {
   }
 };
 
-const Tab = ({ activeTab, updateTab }) => {
+const Tab = ({
+  activeTab,
+  updateTab,
+  onClickSpending,
+  onClickIncome
+}) => {
   const [items, setItems] = useState([]);
   const [showLayer, setShowLayer] = useState(false);
 
@@ -47,11 +50,13 @@ const Tab = ({ activeTab, updateTab }) => {
   const handleClickIncome = () => {
     console.log('handleClickIncome');
     setShowLayer(false);
+    onClickIncome(true);
   };
 
   const handleClickSpending = () => {
     console.log('handleClickSpending');
     setShowLayer(false);
+    onClickSpending(true);
   };
 
   useEffect(() => {
@@ -112,10 +117,9 @@ const Tab = ({ activeTab, updateTab }) => {
 
 Tab.propTypes = {
   activeTab: PropTypes.string,
-  updateTab: PropTypes.func
+  updateTab: PropTypes.func,
+  onClickSpending: PropTypes.func,
+  onClickIncome: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-});
-
-export default hot(connect(mapStateToProps, null)(Tab));
+export default hot(Tab);

@@ -3,7 +3,15 @@ import { hot } from 'react-hot-loader/root';
 
 import PropTypes from 'prop-types';
 
-import { Tab, Profile, Currency, Expense, Layer } from '@components';
+import {
+  Tab,
+  Profile,
+  Currency,
+  Expense,
+  Layer,
+  SpendingLayer,
+  IncomeLayer
+} from '@components';
 import { LAYER_TYPE } from '@components/Layer';
 import { TAB_INFO } from '@components/Tab';
 import classNames from 'classnames/bind';
@@ -22,6 +30,8 @@ const Detail = ({ match, history }) => {
   const [id, setId] = useState('');
   const [activeTab, setActiveTab] = useState(TAB_INFO.EXPENSE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
+  const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(true);
+  const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
 
   const updateTab = tabName => {
     setActiveTab(tabName);
@@ -29,6 +39,14 @@ const Detail = ({ match, history }) => {
 
   const handleClickReportTab = () => {
     setActiveTab(TAB_INFO.PROFILE.name);
+  };
+
+  const handleClickSpending = () => {
+    setIsOpenSpendingLayer(true);
+  };
+
+  const handleClickIncome = () => {
+    setIsOpenIncomeLayer(true);
   };
 
   useEffect(() => {
@@ -47,37 +65,40 @@ const Detail = ({ match, history }) => {
 
   return (
     <div className={cx('detail')}>
-      <Tab updateTab={updateTab} activeTab={activeTab} />
-      {
-        activeTab === TAB_INFO.PROFILE.name && (
-          <Profile id={id} history={history} onUpdateTab={updateTab} userId={userId} />
-        )
-      }
-      {
-        activeTab === TAB_INFO.CURRENCY.name && (
-          <Currency />
-        )
-      }
-      {
-        activeTab === TAB_INFO.EXPENSE.name && (
-          <Expense />
-        )
-      }
-      {
-        activeTab === TAB_INFO.REPORT.name && (
-          <>
-            {isOpenLayer && (
-              <Layer
-                title={'PRO UPGRADE'}
-                text={'PRO로 업그레이드 해보세요. 여행 경비 리포트를 볼 수 있고, 지출 내역을 PDF, CSV 파일로 내보내기 할 수 있습니다.'}
-                layerType={LAYER_TYPE.TEXT}
-                openHandler={setIsOpenLayer}
-                handler={handleClickReportTab}
-              />
-            )}
-          </>
-        )
-      }
+      <Tab
+        updateTab={updateTab}
+        activeTab={activeTab}
+        onClickSpending={handleClickSpending}
+        onClickIncome={handleClickIncome}
+      />
+      {activeTab === TAB_INFO.PROFILE.name && (
+        <Profile id={id} history={history} onUpdateTab={updateTab} userId={userId} />
+      )}
+      {activeTab === TAB_INFO.CURRENCY.name && (
+        <Currency />
+      )}
+      {activeTab === TAB_INFO.EXPENSE.name && (
+        <Expense />
+      )}
+      {activeTab === TAB_INFO.REPORT.name && (
+        <>
+          {isOpenLayer && (
+            <Layer
+              title={'PRO UPGRADE'}
+              text={'PRO로 업그레이드 해보세요. 여행 경비 리포트를 볼 수 있고, 지출 내역을 PDF, CSV 파일로 내보내기 할 수 있습니다.'}
+              layerType={LAYER_TYPE.TEXT}
+              openHandler={setIsOpenLayer}
+              handler={handleClickReportTab}
+            />
+          )}
+        </>
+      )}
+      {isOpenSpendingLayer && (
+        <SpendingLayer />
+      )}
+      {isOpenIncomeLayer && (
+        <IncomeLayer />
+      )}
     </div>
   );
 };

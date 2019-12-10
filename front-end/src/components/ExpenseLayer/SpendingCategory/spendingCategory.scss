@@ -1,0 +1,56 @@
+@import '~sprite/sp_expense';
+
+.spending_category {
+  padding: 35px 0;
+  .category {
+    width: 25%;
+    padding: 25px 0;
+    vertical-align: top;
+    text-align: center;
+    &:before {
+      content: '';
+    }
+    &[aria-selected=true] {
+      .text {
+        color: #666;
+      }
+    }
+    &.food {
+      &:before {
+        @include get-sprite-expense('icon_fork_knife', 25);
+      }
+      &[aria-selected=true]:before {
+        @include get-sprite-expense('icon_fork_knife_selected', 25);
+      }
+    }
+    &.shopping {
+      &:before {
+        @include get-sprite-expense('icon_shopping_bag', 25);
+      }
+      &[aria-selected=true]:before {
+        @include get-sprite-expense('icon_shopping_bag_selected', 25);
+      }
+    }
+    &.tour {
+      &:before {
+        @include get-sprite-expense('icon_train', 25);
+      }
+      &[aria-selected=true]:before {
+        @include get-sprite-expense('icon_train_selected', 25);
+      }
+    }
+    &.accommodation {
+      &:before {
+        @include get-sprite-expense('icon_bedroom', 25);
+      }
+      &[aria-selected=true]:before {
+        @include get-sprite-expense('icon_bedroom_selected', 25);
+      }
+    }
+  }
+  .text {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #ccc;
+  }
+}

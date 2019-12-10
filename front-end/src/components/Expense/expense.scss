@@ -1,7 +1,6 @@
 .expense {
   padding-top: 30px;
   .date_tab {
-    height: 50px;
     .date_area {
       display: inline-block;
       position: relative;
@@ -38,6 +37,120 @@
       margin-top: 3px;
       color: #b6b7bc;
       font-size: 7px;
+    }
+  }
+  .info_area {
+    padding: 10px;
+    background-color: #f7f9fd;
+    border-top: 1px solid #ebf0f4;
+    color: #687079;
+    .expense_info {
+      position: relative;
+    }
+    .btn_area {
+      .btn {
+        height: 26px;
+        padding: 0 10px;
+        border: 1px solid #edf4fb;
+        border-radius: 13px;
+        background-color: #fff;
+        font-size: 10px;
+        color: #687079;
+        vertical-align: top;
+        & + .btn {
+          margin-left: 7px;
+        }
+        &[aria-selected=true] {
+          background-color: #8ac2ea;
+          color: #fff;
+        }
+      }
+    }
+    .btn_view_type {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 10px;
+      color: #8ac2ea;
+      &:before {
+        position: absolute;
+        top: 0;
+        left: -15px;
+        bottom: 0;
+        width: 1px;
+        background-color: #ccc;
+        content: '';
+      }
+    }
+    .date_info {
+      position: relative;
+      margin-top: 5px;
+      font-size: 11px;
+      .d_day {
+        font-weight: bold;
+      }
+      .date {
+        position: relative;
+        padding-left: 15px;
+        &:before {
+          position: absolute;
+          top: 0;
+          left: 7px;
+          bottom: 0;
+          width: 1px;
+          background-color: #ccc;
+          content: '';
+        }
+      }
+      .total_expense {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+  .expense_list {
+    padding: 0 30px;
+    .wrapper {
+      display: table;
+      width: 100%;
+      height: 70px;
+      table-layout: fixed;
+      .inner {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+    .icon {
+      width: 50px;
+    }
+    .detail_info {
+      text-align: left;
+      .info_inner {
+        .detail_expense {
+          color: #eb7e7d;
+          font-size: 15px;
+        }
+        .ready {
+          display: inline-block;
+          vertical-align: top;
+          padding: 2px 5px;
+          margin: 1px 0 0 5px;
+          border-radius: 4px;
+          background-color: #f9f7f7;
+          color: #ababab;
+          font-size: 10px;
+        }
+      }
+      .info_text {
+        margin-top: 2px;
+        font-size: 12px;
+      }
+    }
+    .time{
+      width: 50px;
+      font-size: 11px;
+      color: #c7cbdb;
     }
   }
   .total_area {

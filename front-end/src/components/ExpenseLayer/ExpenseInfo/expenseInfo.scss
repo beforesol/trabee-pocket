@@ -1,0 +1,87 @@
+@import '~sprite/sp_expense';
+
+.expense_info {
+  padding: 45px 15px 15px;
+  .top_area {
+    position: relative;
+    height: 20px;
+    text-align: center;
+    .expense_type {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 13px;
+      color: #dd8586;
+    }
+    .currency_type {
+      padding: 3px 10px;
+      border-radius: 15px;
+      background-color: #f9b5b8;
+      color: #d96a6e;
+      font-size: 13px;
+      .currency {
+        font-weight: bold;
+      }
+    }
+  }
+  .middle_area {
+    position: relative;
+    margin-top: 25px;
+    font-size: 20px;
+    .flag {
+      width: 32px;
+      height: 20px;
+      vertical-align: top;
+    }
+    .currency {
+      display: inline-block;
+      margin: -2px 0 0 5px;
+      color: #ce4549;
+      vertical-align: top;
+    }
+    .amount {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #fff;
+      font-weight: bold;
+      font-size: 22px;
+    }
+  }
+  .bottom_area {
+    position: relative;
+    margin-top: 10px;
+    .icon {
+      display: inline-block;
+      vertical-align: top;
+      &:before {
+        content: '';
+      }
+      & + .icon {
+        margin-left: 10px;
+      }
+      &.ready_money {
+        &:before {
+          @include get-sprite-expense('icon_money', 20);
+        }
+        &[aria-selected=true]:before {
+          @include get-sprite-expense('icon_money_selected', 20);
+        }
+      }
+      &.card {
+        &:before {
+          @include get-sprite-expense('icon_card', 20);
+        }
+        &[aria-selected=true]:before {
+          @include get-sprite-expense('icon_card_selected', 20);
+        }
+      }
+    }
+    .converted_amount {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #d65d61;
+    }
+  }
+}

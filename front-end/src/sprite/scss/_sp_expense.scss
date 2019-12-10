@@ -1,0 +1,145 @@
+
+$sprite-meta-expense: (
+  "name": "expense",
+  "width": 2128,
+  "height": 2128
+);
+$sprite-map-expense: (
+  
+  "icon_bedroom": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -542.0000000000001,
+  ),
+    
+  "icon_bedroom_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1074.0000000000002,
+    "bg-left": -542.0000000000001,
+  ),
+    
+  "icon_building": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -542.0000000000001,
+    "bg-left": -10,
+  ),
+    
+  "icon_building_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -542.0000000000001,
+    "bg-left": -542.0000000000001,
+  ),
+    
+  "icon_card": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -1074.0000000000002,
+  ),
+    
+  "icon_card_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -542.0000000000001,
+    "bg-left": -1074.0000000000002,
+  ),
+    
+  "icon_delete": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1074.0000000000002,
+    "bg-left": -10,
+  ),
+    
+  "icon_fork_knife": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -10,
+  ),
+    
+  "icon_fork_knife_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1074.0000000000002,
+    "bg-left": -1074.0000000000002,
+  ),
+    
+  "icon_money": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -1606,
+  ),
+    
+  "icon_money_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -542.0000000000001,
+    "bg-left": -1606,
+  ),
+    
+  "icon_shopping_bag": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1074.0000000000002,
+    "bg-left": -1606,
+  ),
+    
+  "icon_shopping_bag_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1606,
+    "bg-left": -10,
+  ),
+    
+  "icon_train": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1606,
+    "bg-left": -542.0000000000001,
+  ),
+    
+  "icon_train_selected": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1606,
+    "bg-left": -1074.0000000000002,
+  ),
+    
+);
+
+@mixin get-sprite-expense($name, $width: null) {
+
+  $sp-w: map-get($sprite-meta-expense, "width");
+  $sp-h: map-get($sprite-meta-expense, "height");
+  $img: map-get($sprite-map-expense, $name);
+  $img-w: map-get($img, "width");
+  $img-h: map-get($img, "height");
+  $img-r: $img-w / $img-h;
+  $img-bgt: map-get($img, "bg-top");
+  $img-bgl: map-get($img, "bg-left");
+
+  @if $width == null {
+    $width: $img-w;
+  }
+
+  $height: $width / $img-r;
+
+  $bgw: floor($width * ($sp-w / $img-w));
+  $bgh: floor($height * ($sp-h / $img-h));
+  $bgl: ($bgw / $sp-w) * $img-bgl;
+  $bgt: ($bgh / $sp-h) * $img-bgt; 
+
+  display: inline-block;
+  width: #{$width}px;
+  height: #{$height}px;
+  background: url(public/img/sprite/_sp_expense.svg) no-repeat;
+  background-position: #{$bgl}#{"px"} #{$bgt}#{"px"};
+  background-size: #{$bgw}px #{$bgh}px;
+  vertical-align: top;
+}

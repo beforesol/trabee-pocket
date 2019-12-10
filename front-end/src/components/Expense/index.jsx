@@ -47,9 +47,9 @@ const Expense = () => (
     <div className={cx('info_area')}>
       <div className={cx('expense_info')}>
         <div className={cx('btn_area')}>
-          <button className={cx('btn')}>모두보기</button>
-          <button className={cx('btn')}>RUB</button>
-          <button className={cx('btn')}>KRW</button>
+          <button className={cx('btn')} aria-selected="true">모두보기</button>
+          <button className={cx('btn')} aria-selected="false">RUB</button>
+          <button className={cx('btn')} aria-selected="false">KRW</button>
         </div>
         <div className={cx('btn_view_type')}>현금, 카드 보기</div>
       </div>
@@ -62,16 +62,17 @@ const Expense = () => (
     <ul className={cx('expense_list')}>
       <li className={cx('list')}>
         <button className={cx('btn_expense')}>
-          <div className={cx('icon')}><span className={cx('blind')}>교통비</span></div>
-          <div className={cx('detail_info')}>
-            <div className={cx('info_inner')}>
-              <span className={cx('detail_expense')}>₩60,700</span>
-              <span className={cx('ready')}>준비</span>
-              <span className={cx('card')}><span className={cx('blind')}>준비</span></span>
+          <div className={cx('wrapper')}>
+            <div className={cx('inner', 'icon')}><span className={cx('blind')}>교통비</span></div>
+            <div className={cx('inner', 'detail_info')}>
+              <div className={cx('info_inner')}>
+                <span className={cx('detail_expense')}>₩60,700</span>
+                <span className={cx('ready')}>준비</span>
+              </div>
+              <p className={cx('info_text')}>위탁수화물</p>
             </div>
-            <p className={cx('info_text')}>위탁수화물</p>
+            <div className={cx('inner', 'time')}>11:25</div>
           </div>
-          <div className={cx('time')}>11:25</div>
         </button>
       </li>
     </ul>
