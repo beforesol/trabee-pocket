@@ -2,17 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DatePicker } from '@y0c/react-datepicker';
 import 'dayjs/locale/ko';
 import '@y0c/react-datepicker/assets/styles/calendar.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 
-import { TRIP, tripActions, STATUS } from '@modules/trips';
+import {
+  tripActions,
+  STATUS
+} from '@modules/trips';
 
-import { Layer, Select } from '@components';
+import { Layer } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
-import { NEW_ROUTER_ID } from '@pages/Home';
 import { Link } from 'react-router-dom';
 
 import { ROUTE_PATH } from '@config/routes';
@@ -22,23 +24,23 @@ import axios from 'axios';
 const style = require('./profile.scss');
 const cx = classNames.bind(style);
 const {
-  axiosGetCurrentTripApi,
   setCurrentTripInfo,
   resetCurrentTripInfo
 } = tripActions;
 
-const Profile = ({ id, userId, history, onUpdateTab }) => {
+const Profile = ({
+  currentTripInfo,
+  id,
+  userId,
+  history,
+  onUpdateTab,
+  onSetShowSelect
+}) => {
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
 
   const dispatch = useDispatch();
-  const {
-    isLoaded: isTripLoaded,
-    isFailed,
-    currentTripInfo,
-  } = useSelector(state => state[TRIP]);
 
-  const [isLoaded, setLoaded] = useState(false);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
   const [title, setTitle] = useState('');
@@ -48,7 +50,6 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
   const [currency, setCurrency] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [showSelect, setShowSelect] = useState(false);
 
   const setAllTripData = data => {
     setTitle(data.title);
@@ -141,7 +142,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
   const handleSuccessSave = tripID => {
     history.replace({
-      pathname: `/${ROUTE_PATH.DETAIL.url}/${tripID}`
+      pathname: `${ROUTE_PATH.DETAIL.url}/${tripID}`
     });
 
     dispatch(setCurrentTripInfo({
@@ -151,10 +152,6 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
 
   const handleFailSave = () => {
     console.log('fail');
-  };
-
-  const handleClickSelectCountry = () => {
-    setShowSelect(!showSelect);
   };
 
   const onChangeStartDate = dateInfo => {
@@ -261,44 +258,11 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
     }
   }, [currentTripInfo]);
 
-  useEffect(() => {
-    const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
-
-    if (id) {
-      if (id !== NEW_ROUTER_ID) {
-        setShowSelect(false);
-        !isTripLoaded && dispatch(axiosGetCurrentTripApi({ userId, id }));
-      } else {
-        setShowSelect(true);
-        dispatch(setCurrentTripInfo({
-          status,
-        }));
-
-        setLoaded(true);
-      }
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (isTripLoaded) {
-      const status = id !== NEW_ROUTER_ID ? STATUS.EDIT : STATUS.NEW;
-
-      dispatch(setCurrentTripInfo({
-        id,
-        status
-      }));
-      setLoaded(true);
-      setAllTripData(currentTripInfo);
-    }
-  }, [isTripLoaded]);
-
   const currencyText = currency ? currency.en : '';
   const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
   const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
 
-  return !isLoaded ? (
-    isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
-  ) : (
+  return (
     <div className={cx('profile')}>
       <div className={cx('image_area')}>
         <Link to={ROUTE_PATH.HOME.url} className={cx('btn_home')} />
@@ -316,7 +280,7 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
         </div>
         <div className={cx('section')}>
           <strong className={cx('title')}>여행 국가</strong>
-          <button onClick={handleClickSelectCountry} className={cx('btn_select_country')}>
+          <button onClick={() => onSetShowSelect(true)} className={cx('btn_select_country')}>
             {
               country ? (
                 <div className={cx('country')}>
@@ -375,22 +339,17 @@ const Profile = ({ id, userId, history, onUpdateTab }) => {
           <Layer {...layerState} />
         )
       }
-      {
-        showSelect && (
-          <Select
-            onSetShowSelect={setShowSelect}
-          />
-        )
-      }
     </div>
   );
 };
 
 Profile.propTypes = {
+  currentTripInfo: PropTypes.object,
   id: PropTypes.string,
   userId: PropTypes.string,
   history: PropTypes.object,
-  onUpdateTab: PropTypes.func
+  onUpdateTab: PropTypes.func,
+  onSetShowSelect: PropTypes.func
 };
 
 export default hot(Profile);

@@ -10,7 +10,8 @@ import {
   Expense,
   Layer,
   SpendingLayer,
-  IncomeLayer
+  IncomeLayer,
+  Select
 } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
 import { TAB_INFO } from '@components/Tab';
@@ -18,20 +19,32 @@ import classNames from 'classnames/bind';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { USER, userActions } from '@modules/users';
+import { TRIP, tripActions } from '@modules/trips';
+import { NEW_ROUTER_ID } from '@pages/Home';
 
 const style = require('./detail.scss');
 const cx = classNames.bind(style);
 const { setUserId } = userActions;
+const {
+  axiosGetCurrentTripApi
+} = tripActions;
 
 const Detail = ({ match, history }) => {
   const { userId } = useSelector(state => state[USER]);
+  const {
+    isLoaded: isTripLoaded,
+    isFailed,
+    currentTripInfo,
+  } = useSelector(state => state[TRIP]);
   const dispatch = useDispatch();
 
-  const [id, setId] = useState('');
-  const [activeTab, setActiveTab] = useState(TAB_INFO.EXPENSE.name);
+  const [id, setId] = useState(match.params.id);
+  const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(false);
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
+  const [showSelect, setShowSelect] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const updateTab = tabName => {
     setActiveTab(tabName);
@@ -56,6 +69,20 @@ const Detail = ({ match, history }) => {
   }, []);
 
   useEffect(() => {
+    if (id !== NEW_ROUTER_ID) {
+      setShowSelect(false);
+      if (!isTripLoaded) {
+        dispatch(axiosGetCurrentTripApi({ userId, id }));
+      } else {
+        setIsLoaded(true);
+      }
+    } else {
+      setShowSelect(true);
+      setIsLoaded(true);
+    }
+  }, [isTripLoaded]);
+
+  useEffect(() => {
     setId(match.params.id);
   }, [match.params.id]);
 
@@ -63,7 +90,9 @@ const Detail = ({ match, history }) => {
     if (activeTab === TAB_INFO.PROFILE.name) setIsOpenLayer(true);
   }, [activeTab]);
 
-  return (
+  return (!isLoaded ? (
+    isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
+  ) : (
     <div className={cx('detail')}>
       <Tab
         updateTab={updateTab}
@@ -72,7 +101,14 @@ const Detail = ({ match, history }) => {
         onClickIncome={handleClickIncome}
       />
       {activeTab === TAB_INFO.PROFILE.name && (
-        <Profile id={id} history={history} onUpdateTab={updateTab} userId={userId} />
+        <Profile
+          currentTripInfo={currentTripInfo}
+          id={id}
+          history={history}
+          onUpdateTab={updateTab}
+          userId={userId}
+          onSetShowSelect={setShowSelect}
+        />
       )}
       {activeTab === TAB_INFO.CURRENCY.name && (
         <Currency />
@@ -81,18 +117,25 @@ const Detail = ({ match, history }) => {
         <Expense />
       )}
       {activeTab === TAB_INFO.REPORT.name && (
-        <>
-          {isOpenLayer && (
-            <Layer
-              title={'PRO UPGRADE'}
-              text={'PRO로 업그레이드 해보세요. 여행 경비 리포트를 볼 수 있고, 지출 내역을 PDF, CSV 파일로 내보내기 할 수 있습니다.'}
-              layerType={LAYER_TYPE.TEXT}
-              openHandler={setIsOpenLayer}
-              handler={handleClickReportTab}
-            />
-          )}
-        </>
+          <>
+            {isOpenLayer && (
+              <Layer
+                title={'PRO UPGRADE'}
+                text={'PRO로 업그레이드 해보세요. 여행 경비 리포트를 볼 수 있고, 지출 내역을 PDF, CSV 파일로 내보내기 할 수 있습니다.'}
+                layerType={LAYER_TYPE.TEXT}
+                openHandler={setIsOpenLayer}
+                handler={handleClickReportTab}
+              />
+            )}
+          </>
       )}
+      {
+        showSelect && (
+          <Select
+            onSetShowSelect={setShowSelect}
+          />
+        )
+      }
       {isOpenSpendingLayer && (
         <SpendingLayer
           onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
@@ -102,7 +145,7 @@ const Detail = ({ match, history }) => {
         <IncomeLayer />
       )}
     </div>
-  );
+  ));
 };
 
 Detail.propTypes = {
