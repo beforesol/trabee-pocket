@@ -138,6 +138,7 @@ const Detail = ({ match, history }) => {
       }
       {isOpenSpendingLayer && (
         <SpendingLayer
+          currentTripInfo={currentTripInfo}
           onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
         />
       )}

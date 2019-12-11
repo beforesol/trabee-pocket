@@ -9,12 +9,15 @@ import ExpenseInput from '../ExpenseInput';
 const style = require('./spendingLayer.scss');
 const cx = classNames.bind(style);
 
-const SpendingLayer = ({ onSetIsOpenSpendingLayer }) => {
+const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
   const [displayValue, setDisplayValue] = useState('');
 
   return (
     <div className={cx('spending_layer')}>
-      <ExpenseInfo displayValue={displayValue} />
+      <ExpenseInfo
+        country={currentTripInfo.country}
+        displayValue={displayValue}
+      />
       <SpendingCategory />
       <ExpenseInput
         onSetDisplayValue={setDisplayValue}
@@ -25,6 +28,7 @@ const SpendingLayer = ({ onSetIsOpenSpendingLayer }) => {
 };
 
 SpendingLayer.propTypes = {
+  currentTripInfo: PropTypes.object,
   onSetIsOpenSpendingLayer: PropTypes.func
 };
 
