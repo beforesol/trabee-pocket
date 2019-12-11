@@ -54,6 +54,25 @@ global@^4.4.0:
     min-document "^2.19.0"
     process "^0.11.10"
 
+invariant@^2.2.1:
+  version "2.2.4"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
+  dependencies:
+    loose-envify "^1.0.0"
+
+"js-tokens@^3.0.0 || ^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
+  integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
+
+loose-envify@^1.0.0, loose-envify@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
+  integrity sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8=
+  dependencies:
+    js-tokens "^3.0.0 || ^4.0.0"
+
 min-document@^2.19.0:
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
@@ -80,10 +99,37 @@ mkdirp@0.5.1:
   dependencies:
     minimist "0.0.8"
 
+object-assign@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
+  integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
+
 process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
+
+prop-types@^15.5.6:
+  version "15.7.2"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
+
+react-is@^16.8.1:
+  version "16.12.0"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
+  integrity sha1-LMD+D7p0LZf9UnxCoTvsTusGJBw=
+
+react-point@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.navercorp.com:443/api/npm/npm-naver/react-point/-/react-point-3.0.1.tgz#4f067261170420d13e0d6f6bec88e391ea6114ed"
+  integrity sha1-TwZyYRcEINE+DW9r7IjjkephFO0=
+  dependencies:
+    invariant "^2.2.1"
+    prop-types "^15.5.6"
 
 sorted-object@2.0.1:
   version "2.0.1"

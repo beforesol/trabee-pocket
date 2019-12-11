@@ -1,0 +1,28 @@
+@import '~sprite/sp_expense';
+
+.calculator {
+  table {
+    width: 100%;
+    margin-left: -1px;
+    table-layout: fixed;
+    text-align: center;
+    tr {
+      border-top: 1px solid #fbf1f1;
+    }
+    td {
+      border-left: 1px solid #fbf1f1;
+    }
+    button {
+      width: 100%;
+      height: 50px;
+      color: #64686e;
+      &.operator {
+        color: #e2797d;
+      }
+      &.delete:before {
+        @include get-sprite-expense('icon_delete', 18);
+        content: '';
+      }
+    }
+  }
+}

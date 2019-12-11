@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const style = require('./expenseInfo.scss');
 const cx = classNames.bind(style);
 
-const ExpenseInfo = ({ }) => (
+const ExpenseInfo = ({ displayValue }) => (
   <div className={cx('expense_info')} style={{ backgroundColor: 'rgb(253, 200, 200)' }}>
     <div className={cx('top_area')}>
       <span className={cx('expense_type')}>지출</span>
@@ -15,7 +15,7 @@ const ExpenseInfo = ({ }) => (
     <div className={cx('middle_area')}>
       <img src="http://www.0404.go.kr/imgsrc.mofa?atch_file_id=COUNTRY_120&file_sn=1" alt="" className={cx('flag')} />
       <em className={cx('currency')}>KRW</em>
-      <div className={cx('amount')}>0</div>
+      <div className={cx('amount')}>{displayValue}</div>
     </div>
     <div className={cx('bottom_area')}>
       <button className={cx('icon', 'ready_money')} aria-selected="true"><span className={cx('blind')}>현금</span></button>
@@ -24,5 +24,10 @@ const ExpenseInfo = ({ }) => (
     </div>
   </div>
 );
+
+ExpenseInfo.propTypes = {
+  displayValue: PropTypes.string
+};
+
 
 export default hot(ExpenseInfo);

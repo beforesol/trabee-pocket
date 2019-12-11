@@ -1,3 +1,4 @@
+import Calculator from './Calculator';
 import Continent from './Continent';
 import Country from './Country';
 import Currency from './Currency';
@@ -15,6 +16,7 @@ import Tab from './Tab';
 import TripItem from './TripItem';
 
 export {
+  Calculator,
   Continent,
   Country,
   Currency,
