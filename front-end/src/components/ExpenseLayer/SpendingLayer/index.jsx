@@ -9,16 +9,24 @@ import ExpenseInput from '../ExpenseInput';
 const style = require('./spendingLayer.scss');
 const cx = classNames.bind(style);
 
-const SpendingLayer = ({ }) => {
+const SpendingLayer = ({ onSetIsOpenSpendingLayer }) => {
   const [displayValue, setDisplayValue] = useState('');
 
   return (
     <div className={cx('spending_layer')}>
       <ExpenseInfo displayValue={displayValue} />
       <SpendingCategory />
-      <ExpenseInput onSetDisplayValue={setDisplayValue} />
+      <ExpenseInput
+        onSetDisplayValue={setDisplayValue}
+        onSetIsOpenSpendingLayer={onSetIsOpenSpendingLayer}
+      />
     </div>
   );
 };
+
+SpendingLayer.propTypes = {
+  onSetIsOpenSpendingLayer: PropTypes.func
+};
+
 
 export default hot(SpendingLayer);

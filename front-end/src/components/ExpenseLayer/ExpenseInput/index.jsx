@@ -7,9 +7,13 @@ import { Calculator } from '@components';
 const style = require('./expenseInput.scss');
 const cx = classNames.bind(style);
 
-const ExpenseInput = ({ onSetDisplayValue }) => {
+const ExpenseInput = ({ onSetDisplayValue, onSetIsOpenSpendingLayer }) => {
   const setDisplayValue = displayValue => {
     onSetDisplayValue(displayValue);
+  };
+
+  const handleClickSave = () => {
+    onSetIsOpenSpendingLayer(false);
   };
 
   return (
@@ -21,8 +25,8 @@ const ExpenseInput = ({ onSetDisplayValue }) => {
       />
       <div className={cx('keyboard_area')}>
         <div className={cx('btn_area')}>
-          <button className={cx('btn', 'cancle')}>취소</button>
-          <button className={cx('btn', 'save')}>저장</button>
+          <button className={cx('btn', 'cancle')} onClick={() => onSetIsOpenSpendingLayer(false)}>취소</button>
+          <button className={cx('btn', 'save')} onClick={handleClickSave}>저장</button>
         </div>
         <Calculator onSetDisplayValue={setDisplayValue} />
       </div>
@@ -31,7 +35,8 @@ const ExpenseInput = ({ onSetDisplayValue }) => {
 };
 
 ExpenseInput.propTypes = {
-  onSetDisplayValue: PropTypes.func
+  onSetDisplayValue: PropTypes.func,
+  onSetIsOpenSpendingLayer: PropTypes.func
 };
 
 export default hot(ExpenseInput);

@@ -30,7 +30,7 @@ const Detail = ({ match, history }) => {
   const [id, setId] = useState('');
   const [activeTab, setActiveTab] = useState(TAB_INFO.EXPENSE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
-  const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(true);
+  const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(false);
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
 
   const updateTab = tabName => {
@@ -94,7 +94,9 @@ const Detail = ({ match, history }) => {
         </>
       )}
       {isOpenSpendingLayer && (
-        <SpendingLayer />
+        <SpendingLayer
+          onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
+        />
       )}
       {isOpenIncomeLayer && (
         <IncomeLayer />
