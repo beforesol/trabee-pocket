@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import { AMOUNT_TYPE } from '@constants/type';
 
 const style = require('./expenseInfo.scss');
 const cx = classNames.bind(style);
 
-const ExpenseInfo = ({ country, displayValue }) => {
+const ExpenseInfo = ({
+  country,
+  displayValue,
+  amountType,
+  onSetAmountType
+}) => {
   let currency = '';
 
   try {
@@ -27,8 +33,18 @@ const ExpenseInfo = ({ country, displayValue }) => {
         <div className={cx('amount')}>{displayValue}</div>
       </div>
       <div className={cx('bottom_area')}>
-        <button className={cx('icon', 'ready_money')} aria-selected="true"><span className={cx('blind')}>현금</span></button>
-        <button className={cx('icon', 'card')} aria-selected="false"><span className={cx('blind')}>카드</span></button>
+        <button
+          className={cx('icon', 'ready_money')}
+          aria-selected={amountType === AMOUNT_TYPE.READY_MONEY}
+          onClick={() => onSetAmountType(AMOUNT_TYPE.READY_MONEY)}>
+          <span className={cx('blind')}>현금</span>
+        </button>
+        <button
+          className={cx('icon', 'card')}
+          aria-selected={amountType === AMOUNT_TYPE.CARD}
+          onClick={() => onSetAmountType(AMOUNT_TYPE.CARD)}>
+          <span className={cx('blind')}>카드</span>
+        </button>
         <p className={cx('converted_amount')}>{currency.en} <span className={cx('money')}>*</span></p>
       </div>
     </div>
@@ -37,7 +53,9 @@ const ExpenseInfo = ({ country, displayValue }) => {
 
 ExpenseInfo.propTypes = {
   country: PropTypes.object,
-  displayValue: PropTypes.string
+  displayValue: PropTypes.string,
+  amountType: PropTypes.string,
+  onSetAmountType: PropTypes.func
 };
 
 

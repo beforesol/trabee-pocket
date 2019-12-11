@@ -26,3 +26,8 @@ export const EXPENSE_TYPE = [
     title: 'ETC',
   }
 ];
+
+export const AMOUNT_TYPE = {
+  READY_MONEY: 'READY_MONEY',
+  CARD: 'CARD'
+};
