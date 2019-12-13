@@ -10,8 +10,8 @@ const cx = classNames.bind(style);
 const ExpenseInfo = ({
   country,
   displayValue,
-  amountType,
-  onSetAmountType
+  activeAmoutType,
+  onSetActiveAmountType
 }) => {
   let currency = '';
 
@@ -35,14 +35,14 @@ const ExpenseInfo = ({
       <div className={cx('bottom_area')}>
         <button
           className={cx('icon', 'ready_money')}
-          aria-selected={amountType === AMOUNT_TYPE.READY_MONEY}
-          onClick={() => onSetAmountType(AMOUNT_TYPE.READY_MONEY)}>
+          aria-selected={activeAmoutType === AMOUNT_TYPE.READY_MONEY}
+          onClick={() => onSetActiveAmountType(AMOUNT_TYPE.READY_MONEY)}>
           <span className={cx('blind')}>현금</span>
         </button>
         <button
           className={cx('icon', 'card')}
-          aria-selected={amountType === AMOUNT_TYPE.CARD}
-          onClick={() => onSetAmountType(AMOUNT_TYPE.CARD)}>
+          aria-selected={activeAmoutType === AMOUNT_TYPE.CARD}
+          onClick={() => onSetActiveAmountType(AMOUNT_TYPE.CARD)}>
           <span className={cx('blind')}>카드</span>
         </button>
         <p className={cx('converted_amount')}>{currency.en} <span className={cx('money')}>*</span></p>
@@ -54,8 +54,8 @@ const ExpenseInfo = ({
 ExpenseInfo.propTypes = {
   country: PropTypes.object,
   displayValue: PropTypes.string,
-  amountType: PropTypes.string,
-  onSetAmountType: PropTypes.func
+  activeAmoutType: PropTypes.string,
+  onSetActiveAmountType: PropTypes.func
 };
 
 
