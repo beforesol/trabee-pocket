@@ -21,6 +21,8 @@ const ExpenseInfo = ({
     console.log('화페 없음.');
   }
 
+  const rate = currency ? displayValue * currency.rate : '*';
+
   return (
     <div className={cx('expense_info')} style={{ backgroundColor: 'rgb(253, 200, 200)' }}>
       <div className={cx('top_area')}>
@@ -45,7 +47,7 @@ const ExpenseInfo = ({
           onClick={() => onSetActiveAmountType(AMOUNT_TYPE.CARD)}>
           <span className={cx('blind')}>카드</span>
         </button>
-        <p className={cx('converted_amount')}>{currency.en} <span className={cx('money')}>*</span></p>
+        <p className={cx('converted_amount')}>{currency.en} <span className={cx('money')}>{rate}</span></p>
       </div>
     </div>
   );
