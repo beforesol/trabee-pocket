@@ -7,7 +7,11 @@ import { Calculator } from '@components';
 const style = require('./expenseInput.scss');
 const cx = classNames.bind(style);
 
-const ExpenseInput = ({ onSetDisplayValue, onSetIsOpenSpendingLayer }) => {
+const ExpenseInput = ({
+  onSetDisplayValue,
+  onSetIsOpenSpendingLayer,
+  onSetTitle
+}) => {
   const setDisplayValue = displayValue => {
     onSetDisplayValue(displayValue);
   };
@@ -22,6 +26,7 @@ const ExpenseInput = ({ onSetDisplayValue, onSetIsOpenSpendingLayer }) => {
         type="text"
         className={cx('text_input')}
         placeholder='여기에 항목명을 입력해주세요 (선택)'
+        onChange={e => onSetTitle(e.currentTarget.value)}
       />
       <div className={cx('keyboard_area')}>
         <div className={cx('btn_area')}>
@@ -36,7 +41,8 @@ const ExpenseInput = ({ onSetDisplayValue, onSetIsOpenSpendingLayer }) => {
 
 ExpenseInput.propTypes = {
   onSetDisplayValue: PropTypes.func,
-  onSetIsOpenSpendingLayer: PropTypes.func
+  onSetIsOpenSpendingLayer: PropTypes.func,
+  onSetTitle: PropTypes.func
 };
 
 export default hot(ExpenseInput);

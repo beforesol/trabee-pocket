@@ -15,6 +15,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
   const [activeCategory, setActiveCategory] = useState(EXPENSE_TYPE.FOOD.type);
+  const [title, setTitle] = useState('');
 
   return (
     <div className={cx('spending_layer')}>
@@ -31,6 +32,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
       <ExpenseInput
         onSetDisplayValue={setDisplayValue}
         onSetIsOpenSpendingLayer={onSetIsOpenSpendingLayer}
+        onSetTitle={setTitle}
       />
     </div>
   );
