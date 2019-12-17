@@ -44,7 +44,6 @@ const Home = () => {
 
   const handleChangeLayout = type => {
     setLayout(type);
-    console.log(type);
   };
 
   useEffect(() => {
@@ -63,49 +62,42 @@ const Home = () => {
 
   return (
     <>
-      {
-        isTripsLoaded ? (
-          isFailed ? (
-            <p>실패..</p>
-          ) : (
-            <div className={cx('home')} >
-              <Header onChangeLayout={handleChangeLayout} />
-              <div className={cx('history_info')}>지금까지 <em className={cx('num')}>{tripCount}</em>개 나라를 여행 했습니다.</div>
-              <div className={cx('section')}>
-                <p className={cx('title')}>다가오는 여행<em className={cx('num')}>{tripCount}</em></p>
-                {
-                  tripCount && (
-                    <ul className={cx('trip_list', layoutClassName)}>
-                      {tripList.map(item => (
-                        <li className={cx('list')} key={item.id}>
-                          <TripItem layoutType={layout} tripInfo={item} />
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                }
-              </div>
-              <div className={cx('section')}>
-                <p className={cx('title')}>지난 여행<em className={cx('num')}>{tripCount}</em></p>
-                {
-                  tripCount && (
-                    <ul className={cx('trip_list', layoutClassName)}>
-                      {tripList.map(item => (
-                        <li className={cx('list')} key={item.id}>
-                          <TripItem layoutType={layout} tripInfo={item} />
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                }
-              </div>
-              <Link to={`${ROUTE_PATH.DETAIL.url}/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
-            </div >
-          )
+      {isTripsLoaded ? (
+        isFailed ? (
+          <p>실패..</p>
         ) : (
-          <p>로딩중...</p>
-        )
-      }
+          <div className={cx('home')} >
+            <Header onChangeLayout={handleChangeLayout} />
+            <div className={cx('history_info')}>지금까지 <em className={cx('num')}>{tripCount}</em>개 나라를 여행 했습니다.</div>
+            <div className={cx('section')}>
+              <p className={cx('title')}>다가오는 여행<em className={cx('num')}>{tripCount}</em></p>
+              {tripCount && (
+                <ul className={cx('trip_list', layoutClassName)}>
+                  {tripList.map(item => (
+                    <li className={cx('list')} key={item.id}>
+                      <TripItem layoutType={layout} tripInfo={item} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className={cx('section')}>
+              <p className={cx('title')}>지난 여행<em className={cx('num')}>{tripCount}</em></p>
+              {tripCount && (
+                <ul className={cx('trip_list', layoutClassName)}>
+                  {tripList.map(item => (
+                    <li className={cx('list')} key={item.id}>
+                      <TripItem layoutType={layout} tripInfo={item} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <Link to={`${ROUTE_PATH.DETAIL.url}/${NEW_ROUTER_ID}`} className={cx('btn_add')}>새 여행 만들기</Link>
+          </div >)
+      ) : (
+        <p>로딩중...</p>
+      )}
     </>
   );
 };

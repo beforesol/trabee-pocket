@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { DetailHeader } from '@components';
+import { EXPENSE_CATEGORY } from '@constants/type';
 
 const style = require('./expense.scss');
 const cx = classNames.bind(style);
@@ -63,7 +64,7 @@ const Expense = () => (
       <li className={cx('list')}>
         <button className={cx('btn_expense')}>
           <div className={cx('wrapper')}>
-            <div className={cx('inner', 'icon')}><span className={cx('blind')}>교통비</span></div>
+            <div className={cx('inner', 'icon', EXPENSE_CATEGORY.FOOD.type)}><span className={cx('blind')}>{EXPENSE_CATEGORY.FOOD.title}</span></div>
             <div className={cx('inner', 'detail_info')}>
               <div className={cx('info_inner')}>
                 <span className={cx('detail_expense')}>₩60,700</span>

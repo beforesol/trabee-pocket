@@ -326,11 +326,9 @@ const Profile = ({
           <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
         </div>
       </div>
-      {
-        isOpenLayer && (
-          <Layer {...layerState} />
-        )
-      }
+      {isOpenLayer && (
+        <Layer {...layerState} />
+      )}
     </div>
   );
 };

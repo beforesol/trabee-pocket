@@ -5,7 +5,14 @@ import PropTypes from 'prop-types';
 import ExpenseInfo from '../ExpenseInfo';
 import SpendingCategory from '../SpendingCategory';
 import ExpenseInput from '../ExpenseInput';
-import { AMOUNT_TYPE, EXPENSE_CATEGORY, EXPENSE_TYPE } from '@constants/type';
+import {
+  AMOUNT_TYPE,
+  EXPENSE_CATEGORY,
+  EXPENSE_TYPE
+} from '@constants/type';
+import { Layer } from '@components';
+import { LAYER_TYPE } from '@components/Layer';
+
 import axios from 'axios';
 
 
@@ -17,6 +24,9 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
   const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
   const [title, setTitle] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [isOpenLayer, setIsOpenLayer] = useState(false);
+  const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
 
   const save = () => {
     const type = EXPENSE_TYPE.SPENDING;
@@ -30,11 +40,33 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
       category: activeCategory
     };
 
+    setIsSaving(true);
+
     axios.post('/api/budget/save', { budgetInfo }).then(response => {
-      console.log('저장 성공');
+      setIsOpenLayer(true);
+      setIsSaving(false);
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장을 성공하였습니다.',
+        text: '즐거운 여행 되세요.',
+        handler: handleSuccessSave
+      });
     }).catch(err => {
-      console.log('저장 실패');
+      setIsOpenLayer(true);
+      setIsSaving(false);
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장을 실패하였습니다.',
+        text: '다시 시도해 주세요.',
+        handler: () => { }
+      });
     });
+
+    const handleSuccessSave = () => {
+      onSetIsOpenSpendingLayer(false);
+    };
   };
 
   return (
@@ -55,6 +87,12 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
         onSetTitle={setTitle}
         onSave={save}
       />
+      {isSaving && (
+        <p>저장중...</p>
+      )}
+      {isOpenLayer && (
+        <Layer {...layerState} />
+      )}
     </div>
   );
 };

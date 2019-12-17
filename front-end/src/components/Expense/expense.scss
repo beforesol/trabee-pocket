@@ -1,3 +1,5 @@
+@import '~sprite/sp_expense';
+
 .expense {
   padding-top: 30px;
   .date_tab {
@@ -110,7 +112,6 @@
     }
   }
   .expense_list {
-    padding: 0 30px;
     .wrapper {
       display: table;
       width: 100%;
@@ -122,7 +123,30 @@
       }
     }
     .icon {
-      width: 50px;
+      width: 100px;
+      &:before {
+        content: '';
+      }
+      &.food {
+        &:before {
+          @include get-sprite-expense('icon_fork_knife', 25);
+        }
+      }
+      &.shopping {
+        &:before {
+          @include get-sprite-expense('icon_shopping_bag', 25);
+        }
+      }
+      &.tour {
+        &:before {
+          @include get-sprite-expense('icon_train', 25);
+        }
+      }
+      &.accommodation {
+        &:before {
+          @include get-sprite-expense('icon_bedroom', 25);
+        }
+      }
     }
     .detail_info {
       text-align: left;
@@ -148,7 +172,7 @@
       }
     }
     .time{
-      width: 50px;
+      width: 100px;
       font-size: 11px;
       color: #c7cbdb;
     }

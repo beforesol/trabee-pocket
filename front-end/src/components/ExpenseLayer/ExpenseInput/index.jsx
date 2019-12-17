@@ -18,7 +18,6 @@ const ExpenseInput = ({
   };
 
   const handleClickSave = () => {
-    onSetIsOpenSpendingLayer(false);
     onSave();
   };
 
