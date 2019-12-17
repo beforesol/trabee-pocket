@@ -95,6 +95,7 @@ const Detail = ({ match, history }) => {
   ) : (
     <div className={cx('detail')}>
       <Tab
+        match={match}
         updateTab={updateTab}
         activeTab={activeTab}
         onClickSpending={handleClickSpending}

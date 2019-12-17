@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import { NEW_ROUTER_ID } from '@pages/Home';
 
 const style = require('./tab.scss');
 const cx = classNames.bind(style);
@@ -30,6 +31,7 @@ export const TAB_INFO = {
 };
 
 const Tab = ({
+  match,
   activeTab,
   updateTab,
   onClickSpending,
@@ -67,6 +69,7 @@ const Tab = ({
         itemArray.push(
           <div className={cx('btn_tab', 'btn_add')} key={'+'}>
             <button
+              disabled={match.params.id === NEW_ROUTER_ID}
               type="button"
               onClick={handleAddExpense}
               className={cx('btn')}><span className={cx('btn_text')}>+</span></button>
@@ -116,6 +119,7 @@ const Tab = ({
 };
 
 Tab.propTypes = {
+  match: PropTypes.object,
   activeTab: PropTypes.string,
   updateTab: PropTypes.func,
   onClickSpending: PropTypes.func,
