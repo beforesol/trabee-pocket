@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -10,7 +10,8 @@ const cx = classNames.bind(style);
 const ExpenseInput = ({
   onSetDisplayValue,
   onSetIsOpenSpendingLayer,
-  onSetTitle
+  onSetTitle,
+  onSave
 }) => {
   const setDisplayValue = displayValue => {
     onSetDisplayValue(displayValue);
@@ -18,6 +19,7 @@ const ExpenseInput = ({
 
   const handleClickSave = () => {
     onSetIsOpenSpendingLayer(false);
+    onSave();
   };
 
   return (
@@ -42,7 +44,8 @@ const ExpenseInput = ({
 ExpenseInput.propTypes = {
   onSetDisplayValue: PropTypes.func,
   onSetIsOpenSpendingLayer: PropTypes.func,
-  onSetTitle: PropTypes.func
+  onSetTitle: PropTypes.func,
+  onSave: PropTypes.func
 };
 
 export default hot(ExpenseInput);

@@ -13,6 +13,7 @@ const tests = require('./routes/test'); //add
 const selectRouter = require('./routes/select');
 const profileRouter = require('./routes/profile');
 const homeRouter = require('./routes/home');
+const budgetRouter = require('./routes/budget');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/tests', tests); //add
 app.use('/api/select', selectRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/home', homeRouter);
+app.use('/api/budget', budgetRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

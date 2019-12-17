@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { EXPENSE_TYPE } from '@constants/type';
+import { EXPENSE_CATEGORY } from '@constants/type';
 
 const style = require('./spendingCategory.scss');
 const cx = classNames.bind(style);
 
-const categoryList = Object.values(EXPENSE_TYPE);
+const categoryList = Object.values(EXPENSE_CATEGORY);
 const SpendingCategory = ({
   activeCategory,
   onSetActiveCategory

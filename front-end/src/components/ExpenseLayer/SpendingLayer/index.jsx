@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import ExpenseInfo from '../ExpenseInfo';
 import SpendingCategory from '../SpendingCategory';
 import ExpenseInput from '../ExpenseInput';
-import { AMOUNT_TYPE, EXPENSE_TYPE } from '@constants/type';
+import { AMOUNT_TYPE, EXPENSE_CATEGORY, EXPENSE_TYPE } from '@constants/type';
+import axios from 'axios';
 
 
 const style = require('./spendingLayer.scss');
@@ -14,8 +15,27 @@ const cx = classNames.bind(style);
 const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
-  const [activeCategory, setActiveCategory] = useState(EXPENSE_TYPE.FOOD.type);
+  const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
   const [title, setTitle] = useState('');
+
+  const save = () => {
+    const type = EXPENSE_TYPE.SPENDING;
+    const budgetInfo = {
+      tripId: currentTripInfo.id,
+      type,
+      title,
+      amount: displayValue,
+      amountType: activeAmoutType,
+      currency: currentTripInfo.country.currency,
+      category: activeCategory
+    };
+
+    axios.post('/api/budget/save', { budgetInfo }).then(response => {
+      console.log('저장 성공');
+    }).catch(err => {
+      console.log('저장 실패');
+    });
+  };
 
   return (
     <div className={cx('spending_layer')}>
@@ -33,6 +53,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
         onSetDisplayValue={setDisplayValue}
         onSetIsOpenSpendingLayer={onSetIsOpenSpendingLayer}
         onSetTitle={setTitle}
+        onSave={save}
       />
     </div>
   );

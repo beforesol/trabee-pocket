@@ -4,7 +4,7 @@ export const VIEW_TYPE = {
   TYPE_4: 'TYPE_4'
 };
 
-export const EXPENSE_TYPE = {
+export const EXPENSE_CATEGORY = {
   FOOD: {
     type: 'food',
     title: '식비',
@@ -30,4 +30,9 @@ export const EXPENSE_TYPE = {
 export const AMOUNT_TYPE = {
   READY_MONEY: 'READY_MONEY',
   CARD: 'CARD'
+};
+
+export const EXPENSE_TYPE = {
+  SPENDING: 'SPENDING',
+  INCOME: 'INCOME'
 };
