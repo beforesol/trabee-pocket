@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -13,15 +13,8 @@ const ExpenseInfo = ({
   activeAmoutType,
   onSetActiveAmountType
 }) => {
-  let currency = '';
-
-  try {
-    currency = country.currency;
-  } catch {
-    console.log('화페 없음.');
-  }
-
-  const rate = currency ? displayValue * currency.rate : '*';
+  const { currency } = country;
+  const rate = displayValue * currency.rate;
 
   return (
     <div className={cx('expense_info')} style={{ backgroundColor: 'rgb(253, 200, 200)' }}>

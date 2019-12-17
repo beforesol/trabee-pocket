@@ -47,7 +47,6 @@ const Profile = ({
   const [memo, setMemo] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
   const [country, setCountry] = useState(null);
-  const [currency, setCurrency] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -58,12 +57,6 @@ const Profile = ({
     setImageUrl(data.imageUrl);
     setStartDate(data.startDate);
     setEndDate(data.endDate);
-
-    try {
-      setCurrency(data.country.currency);
-    } catch {
-      setCurrency(null);
-    }
   };
 
   const handleTitle = text => {
@@ -86,7 +79,6 @@ const Profile = ({
     setCountry(null);
     setStartDate('');
     setEndDate('');
-    setCurrency(null);
     dispatch(resetCurrentTripInfo());
     startDateRef.current.handleInputClear();
     endDateRef.current.handleInputClear();
@@ -258,7 +250,7 @@ const Profile = ({
     }
   }, [currentTripInfo]);
 
-  const currencyText = currency ? currency.en : '';
+  const currencyText = country ? country.currency.en : '';
   const titleInnerText = title || '여기에 여행 제목을 입력해주세요';
   const memoInnerText = memo || '이곳에는 여행에 대한 간단한 메모를 남길 수 있습니다. 여기를 눌러 메모해보세요.';
 
