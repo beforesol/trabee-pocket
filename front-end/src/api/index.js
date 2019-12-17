@@ -40,3 +40,9 @@ export const getHomeApi = param => async () => {
 
   return post(URL_HOME, param);
 };
+
+export const getCurrentBudgetApi = param => async () => {
+  const URL_BUDGET = '/api/budget';
+
+  return post(URL_BUDGET, param);
+};

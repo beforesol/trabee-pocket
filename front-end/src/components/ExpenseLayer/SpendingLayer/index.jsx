@@ -8,7 +8,7 @@ import ExpenseInput from '../ExpenseInput';
 import {
   AMOUNT_TYPE,
   EXPENSE_CATEGORY,
-  EXPENSE_TYPE
+  EXPENSE_TYPE,
 } from '@constants/type';
 import { Layer } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
@@ -19,7 +19,7 @@ import axios from 'axios';
 const style = require('./spendingLayer.scss');
 const cx = classNames.bind(style);
 
-const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
+const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
   const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
@@ -29,6 +29,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
 
   const save = () => {
+    console.log('active', activeCategory);
     const type = EXPENSE_TYPE.SPENDING;
     const budgetInfo = {
       tripId: currentTripInfo.id,
@@ -37,7 +38,8 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
       amount: displayValue,
       amountType: activeAmoutType,
       currency: currentTripInfo.country.currency,
-      category: activeCategory
+      category: activeCategory,
+      day
     };
 
     setIsSaving(true);
@@ -99,7 +101,8 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer }) => {
 
 SpendingLayer.propTypes = {
   currentTripInfo: PropTypes.object,
-  onSetIsOpenSpendingLayer: PropTypes.func
+  onSetIsOpenSpendingLayer: PropTypes.func,
+  day: PropTypes.string
 };
 
 

@@ -22,11 +22,13 @@ import { USER, userActions } from '@modules/users';
 import { TRIP, tripActions } from '@modules/trips';
 import { NEW_ROUTER_ID } from '@pages/Home';
 
+import { EXPENSE_DATE_FILTER } from '@constants/type';
 const style = require('./detail.scss');
 const cx = classNames.bind(style);
 const { setUserId } = userActions;
 const {
-  axiosGetCurrentTripApi
+  axiosGetCurrentTripApi,
+  resetCurrentTripInfo
 } = tripActions;
 
 const Detail = ({ match, history }) => {
@@ -66,6 +68,10 @@ const Detail = ({ match, history }) => {
     dispatch(setUserId({
       userId: 'jeonsol'
     }));
+
+    return () => {
+      dispatch(resetCurrentTripInfo());
+    };
   }, []);
 
   useEffect(() => {
@@ -93,31 +99,33 @@ const Detail = ({ match, history }) => {
   return (!isLoaded ? (
     isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
   ) : (
-      <div className={cx('detail')}>
-        <Tab
-          match={match}
-          updateTab={updateTab}
-          activeTab={activeTab}
-          onClickSpending={handleClickSpending}
-          onClickIncome={handleClickIncome}
+    <div className={cx('detail')}>
+      <Tab
+        match={match}
+        updateTab={updateTab}
+        activeTab={activeTab}
+        onClickSpending={handleClickSpending}
+        onClickIncome={handleClickIncome}
+      />
+      {activeTab === TAB_INFO.PROFILE.name && (
+        <Profile
+          currentTripInfo={currentTripInfo}
+          id={id}
+          history={history}
+          onUpdateTab={updateTab}
+          userId={userId}
+          onSetShowSelect={setShowSelect}
         />
-        {activeTab === TAB_INFO.PROFILE.name && (
-          <Profile
-            currentTripInfo={currentTripInfo}
-            id={id}
-            history={history}
-            onUpdateTab={updateTab}
-            userId={userId}
-            onSetShowSelect={setShowSelect}
-          />
-        )}
-        {activeTab === TAB_INFO.CURRENCY.name && (
-          <Currency />
-        )}
-        {activeTab === TAB_INFO.EXPENSE.name && (
-          <Expense />
-        )}
-        {activeTab === TAB_INFO.REPORT.name && (
+      )}
+      {activeTab === TAB_INFO.CURRENCY.name && (
+        <Currency />
+      )}
+      {activeTab === TAB_INFO.EXPENSE.name && (
+        <Expense
+          currentTripInfo={currentTripInfo}
+        />
+      )}
+      {activeTab === TAB_INFO.REPORT.name && (
           <>
             {isOpenLayer && (
               <Layer
@@ -129,25 +137,26 @@ const Detail = ({ match, history }) => {
               />
             )}
           </>
-        )}
-        {
-          showSelect && (
-            <Select
-              onSetShowSelect={setShowSelect}
-            />
-          )
-        }
-        {isOpenSpendingLayer && (
-          <SpendingLayer
-            currentTripInfo={currentTripInfo}
-            onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
+      )}
+      {
+        showSelect && (
+          <Select
+            onSetShowSelect={setShowSelect}
           />
-        )}
-        {isOpenIncomeLayer && (
-          <IncomeLayer />
-        )}
-      </div>
-    ));
+        )
+      }
+      {isOpenSpendingLayer && (
+        <SpendingLayer
+          currentTripInfo={currentTripInfo}
+          onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
+          day={EXPENSE_DATE_FILTER.READY}
+        />
+      )}
+      {isOpenIncomeLayer && (
+        <IncomeLayer />
+      )}
+    </div>
+  ));
 };
 
 Detail.propTypes = {

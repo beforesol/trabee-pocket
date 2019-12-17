@@ -10,7 +10,8 @@ var budgetSchema = new Schema({
   amountType: String,
   currency: Object,
   category: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  day: String,
 });
 
 module.exports = mongoose.model('budget', budgetSchema);

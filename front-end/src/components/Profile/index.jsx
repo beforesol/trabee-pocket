@@ -240,10 +240,6 @@ const Profile = ({
     });
   };
 
-  useEffect(() => () => {
-    dispatch(resetCurrentTripInfo());
-  }, []);
-
   useEffect(() => {
     if (currentTripInfo) {
       setAllTripData(currentTripInfo);

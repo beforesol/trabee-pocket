@@ -1,7 +1,13 @@
 @import '~sprite/sp_expense';
 
 .expense {
-  padding-top: 30px;
+  .fixed_area {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+  }
   .date_tab {
     .date_area {
       display: inline-block;
@@ -112,6 +118,13 @@
     }
   }
   .expense_list {
+    position: fixed;
+    top: 156px;
+    left: 0;
+    right: 0;
+    bottom: 113px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     .wrapper {
       display: table;
       width: 100%;

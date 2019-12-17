@@ -36,3 +36,12 @@ export const EXPENSE_TYPE = {
   SPENDING: 'SPENDING',
   INCOME: 'INCOME'
 };
+
+export const EXPENSE_DATE_FILTER = {
+  ALL: 'ALL',
+  READY: 'READY'
+};
+
+export const EXPENSE_CURRENCY_FILTER = {
+  ALL: 'ALL',
+};
