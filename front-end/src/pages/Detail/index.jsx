@@ -41,7 +41,7 @@ const Detail = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [id, setId] = useState(match.params.id);
-  const [activeTab, setActiveTab] = useState(TAB_INFO.EXPENSE.name);
+  const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(false);
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
@@ -99,33 +99,33 @@ const Detail = ({ match, history }) => {
   return (!isLoaded ? (
     isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
   ) : (
-    <div className={cx('detail')}>
-      <Tab
-        match={match}
-        updateTab={updateTab}
-        activeTab={activeTab}
-        onClickSpending={handleClickSpending}
-        onClickIncome={handleClickIncome}
-      />
-      {activeTab === TAB_INFO.PROFILE.name && (
-        <Profile
-          currentTripInfo={currentTripInfo}
-          id={id}
-          history={history}
-          onUpdateTab={updateTab}
-          userId={userId}
-          onSetShowSelect={setShowSelect}
+      <div className={cx('detail')}>
+        <Tab
+          match={match}
+          updateTab={updateTab}
+          activeTab={activeTab}
+          onClickSpending={handleClickSpending}
+          onClickIncome={handleClickIncome}
         />
-      )}
-      {activeTab === TAB_INFO.CURRENCY.name && (
-        <Currency />
-      )}
-      {activeTab === TAB_INFO.EXPENSE.name && (
-        <Expense
-          currentTripInfo={currentTripInfo}
-        />
-      )}
-      {activeTab === TAB_INFO.REPORT.name && (
+        {activeTab === TAB_INFO.PROFILE.name && (
+          <Profile
+            currentTripInfo={currentTripInfo}
+            id={id}
+            history={history}
+            onUpdateTab={updateTab}
+            userId={userId}
+            onSetShowSelect={setShowSelect}
+          />
+        )}
+        {activeTab === TAB_INFO.CURRENCY.name && (
+          <Currency />
+        )}
+        {activeTab === TAB_INFO.EXPENSE.name && (
+          <Expense
+            currentTripInfo={currentTripInfo}
+          />
+        )}
+        {activeTab === TAB_INFO.REPORT.name && (
           <>
             {isOpenLayer && (
               <Layer
@@ -137,26 +137,26 @@ const Detail = ({ match, history }) => {
               />
             )}
           </>
-      )}
-      {
-        showSelect && (
-          <Select
-            onSetShowSelect={setShowSelect}
+        )}
+        {
+          showSelect && (
+            <Select
+              onSetShowSelect={setShowSelect}
+            />
+          )
+        }
+        {isOpenSpendingLayer && (
+          <SpendingLayer
+            currentTripInfo={currentTripInfo}
+            onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
+            day={EXPENSE_DATE_FILTER.READY}
           />
-        )
-      }
-      {isOpenSpendingLayer && (
-        <SpendingLayer
-          currentTripInfo={currentTripInfo}
-          onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
-          day={EXPENSE_DATE_FILTER.READY}
-        />
-      )}
-      {isOpenIncomeLayer && (
-        <IncomeLayer />
-      )}
-    </div>
-  ));
+        )}
+        {isOpenIncomeLayer && (
+          <IncomeLayer />
+        )}
+      </div>
+    ));
 };
 
 Detail.propTypes = {

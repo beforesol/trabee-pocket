@@ -9,6 +9,9 @@
     background-color: #fff;
   }
   .date_tab {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
     .date_area {
       display: inline-block;
       position: relative;

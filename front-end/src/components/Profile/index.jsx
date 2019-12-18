@@ -125,11 +125,23 @@ const Profile = ({
   };
 
   const handleSaveBtn = (e, callback) => {
-    axios.post('/api/profile/save', { userId, currentTripInfo }).then(response => {
-      callback(true, response);
-    }).catch(err => {
-      callback(false);
-    });
+    if (!startDate || !endDate) {
+      setIsOpenLayer(true);
+
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장을 실패하였습니다.',
+        text: '날짜를 정확하게 입력해 주세요.',
+        handler: () => { }
+      });
+    } else {
+      axios.post('/api/profile/save', { userId, currentTripInfo }).then(response => {
+        callback(true, response);
+      }).catch(err => {
+        callback(false);
+      });
+    }
   };
 
   const handleSuccessSave = tripID => {
@@ -292,23 +304,27 @@ const Profile = ({
           <div className={cx('date')}>
             <span className={cx('date_title')}>시작일</span>
             <div className={cx('btn_date')}>
-              {
-                !startDate && (
-                  <p className={cx('text')}>시작일 입력하기</p>
-                )
-              }
-              <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+              {startDate ? (
+                <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+              ) : (
+                  <>
+                    <p className={cx('text')}>시작일 입력하기</p>
+                    <DatePicker initialDate={startDate} onChange={onChangeStartDate} ref={startDateRef} />
+                  </>
+              )}
             </div>
           </div>
           <div className={cx('date')}>
             <span className={cx('date_title')}>종료일</span>
             <div className={cx('btn_date')}>
-              {
-                !endDate && (
-                  <p className={cx('text')}>종료 입력하기</p>
-                )
-              }
-              <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
+              {endDate ? (
+                <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
+              ) : (
+                  <>
+                    <p className={cx('text')}>종료 입력하기</p>
+                    <DatePicker initialDate={endDate} onChange={onChangeEndDate} ref={endDateRef} />
+                  </>
+              )}
             </div>
           </div>
         </div>
