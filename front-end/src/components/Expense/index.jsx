@@ -60,10 +60,6 @@ const Expense = ({ currentTripInfo }) => {
   }, [activeDateFilter, activeCurrencyFilter, budgetList]);
 
   useEffect(() => {
-    // currentBudgetInfo.length && setTotalAmount(currentBudgetInfo.reduce((a, b) => {
-    //   console.log(a, b);
-    //   return a.amount + b.amount;
-    // }));
     currentBudgetInfo.length && setTotalAmount(currentBudgetInfo.reduce((a, b) => {
       const calculatedAmount = Number(b.amount) * b.currency.rate;
 
@@ -73,7 +69,7 @@ const Expense = ({ currentTripInfo }) => {
 
   const dateRange = getDatesBetween(new Date(currentTripInfo.startDate), new Date(currentTripInfo.endDate)).map(item => item.toLocaleDateString());
 
-  const currencyItems = currentBudgetInfo.length ? budgetList.map(item => item.currency.en) : [currentTripInfo.country.currency.en];
+  const currencyItems = (budgetList.length) ? budgetList.map(item => item.currency.en) : [];
   const uniqueCurrencies = currencyItems.filter((item, index) => currencyItems.indexOf(item) === index);
 
   return (!isBudgetLoaded ? (
