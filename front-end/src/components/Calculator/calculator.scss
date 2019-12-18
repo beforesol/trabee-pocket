@@ -16,6 +16,9 @@
       width: 100%;
       height: 50px;
       color: #64686e;
+      @media all and (max-width: 360px) {
+        height: 40px;
+      }
       &.operator {
         color: #e2797d;
       }
