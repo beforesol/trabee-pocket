@@ -80,6 +80,7 @@ const Tab = ({
       itemArray.push(
         <div className={cx('btn_tab', item.className)} key={item.name}>
           <button
+            disabled={match.params.id === NEW_ROUTER_ID}
             className={cx('btn')}
             type="button"
             onClick={() => updateTab(item.name)}
