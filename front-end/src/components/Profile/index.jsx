@@ -162,10 +162,27 @@ const Profile = ({
     if (dateInfo) {
       const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
 
-      setStartDate(date);
-      dispatch(setCurrentTripInfo({
-        startDate: date
-      }));
+      if (endDate && new Date(endDate).getTime() < new Date(date).getTime()) {
+        setIsOpenLayer(true);
+
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '시작일을 다시 입력해주세요.',
+          text: '종료일 이전으로 지정해주세요.',
+          handler: () => { }
+        });
+
+        setStartDate('');
+        dispatch(setCurrentTripInfo({
+          startDate: ''
+        }));
+      } else {
+        setStartDate(date);
+        dispatch(setCurrentTripInfo({
+          startDate: date
+        }));
+      }
     }
   };
 
@@ -173,10 +190,27 @@ const Profile = ({
     if (dateInfo) {
       const date = dateInfo.$d.toString().split(' ').slice(0, 4).join(' ');
 
-      setEndDate(date);
-      dispatch(setCurrentTripInfo({
-        endDate: date
-      }));
+      if (startDate && new Date(startDate).getTime() > new Date(date).getTime()) {
+        setIsOpenLayer(true);
+
+        setLayerState({
+          ...layerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '종료일을 다시 입력해주세요.',
+          text: '시작일 이후로 지정해주세요.',
+          handler: () => { }
+        });
+
+        setEndDate('');
+        dispatch(setCurrentTripInfo({
+          endDate: ''
+        }));
+      } else {
+        setEndDate(date);
+        dispatch(setCurrentTripInfo({
+          endDate: date
+        }));
+      }
     }
   };
 
