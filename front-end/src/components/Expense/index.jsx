@@ -4,6 +4,7 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { DetailHeader } from '@components';
+import ExpenseItem from './ExpenseItem';
 import {
   EXPENSE_TYPE,
   EXPENSE_DATE_FILTER,
@@ -148,23 +149,15 @@ const Expense = ({ currentTripInfo }) => {
           const time = new Date(item.date).toLocaleTimeString();
 
           return (
-            <li className={cx('list')} key={item.id}>
-              <button className={cx('btn_expense')}>
-                <div className={cx('wrapper')}>
-                  <div className={cx('inner', 'icon', item.category)}><span className={cx('blind')}>{item.category}</span></div>
-                  <div className={cx('inner', 'detail_info')}>
-                    <div className={cx('info_inner')}>
-                      <span className={cx('detail_expense')}>₩{item.amount}</span>
-                      {item.day === EXPENSE_DATE_FILTER.READY && (
-                        <span className={cx('ready')}>준비</span>
-                      )}
-                    </div>
-                    <p className={cx('info_text')}>{item.title}</p>
-                  </div>
-                  <div className={cx('inner', 'time')}>{time}</div>
-                </div>
-              </button>
-            </li>
+            <ExpenseItem
+              key={item.id}
+              id={item.id}
+              category={item.category}
+              amount={item.amount}
+              day={item.day}
+              title={item.title}
+              time={time}
+            />
           );
         })}
       </ul>
