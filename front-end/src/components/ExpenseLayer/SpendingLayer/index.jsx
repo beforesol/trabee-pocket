@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -13,13 +14,20 @@ import {
 import { Layer } from '@components';
 import { LAYER_TYPE } from '@components/Layer';
 
+import { budgetActions } from '@modules/budget';
+
 import axios from 'axios';
 
 
 const style = require('./spendingLayer.scss');
 const cx = classNames.bind(style);
+const {
+  resetCurrentBudgetInfo
+} = budgetActions;
 
 const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
+  const dispatch = useDispatch();
+
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
   const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
@@ -68,6 +76,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
 
     const handleSuccessSave = () => {
       onSetIsOpenSpendingLayer(false);
+      dispatch(resetCurrentBudgetInfo());
     };
   };
 
