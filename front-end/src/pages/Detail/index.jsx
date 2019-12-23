@@ -20,6 +20,7 @@ import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import { USER, userActions } from '@modules/users';
 import { TRIP, tripActions } from '@modules/trips';
+import { BUDGET, budgetActions } from '@modules/budget';
 import { NEW_ROUTER_ID } from '@pages/Home';
 
 import { EXPENSE_DATE_FILTER } from '@constants/type';
@@ -28,8 +29,12 @@ const cx = classNames.bind(style);
 const { setUserId } = userActions;
 const {
   axiosGetCurrentTripApi,
-  resetCurrentTripInfo
+  resetCurrentTripInfo,
 } = tripActions;
+const {
+  getCurrentBudgetInfo,
+  resetCurrentBudgetInfo
+} = budgetActions;
 
 const Detail = ({ match, history }) => {
   const { userId } = useSelector(state => state[USER]);
@@ -38,6 +43,9 @@ const Detail = ({ match, history }) => {
     isFailed,
     currentTripInfo,
   } = useSelector(state => state[TRIP]);
+  const {
+    currentBudgetInfo,
+  } = useSelector(state => state[BUDGET]);
   const dispatch = useDispatch();
 
   const [id, setId] = useState(match.params.id);
@@ -58,10 +66,17 @@ const Detail = ({ match, history }) => {
 
   const handleClickSpending = () => {
     setIsOpenSpendingLayer(true);
+    dispatch(resetCurrentBudgetInfo());
   };
 
   const handleClickIncome = () => {
     setIsOpenIncomeLayer(true);
+  };
+
+  const handleClickExpenseItem = id => {
+    dispatch(getCurrentBudgetInfo({ id }));
+    setIsOpenSpendingLayer(true);
+    console.log('handleClickExpenseItemdddd', id);
   };
 
   useEffect(() => {
@@ -123,6 +138,7 @@ const Detail = ({ match, history }) => {
       {activeTab === TAB_INFO.EXPENSE.name && (
         <Expense
           currentTripInfo={currentTripInfo}
+          onClickExpenseItem={handleClickExpenseItem}
         />
       )}
       {activeTab === TAB_INFO.REPORT.name && (
@@ -147,7 +163,7 @@ const Detail = ({ match, history }) => {
         <SpendingLayer
           currentTripInfo={currentTripInfo}
           onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
-          day={EXPENSE_DATE_FILTER.READY}
+          currentBudgetInfo={currentBudgetInfo}
         />
       )}
       {isOpenIncomeLayer && (

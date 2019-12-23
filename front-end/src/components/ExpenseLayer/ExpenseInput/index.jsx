@@ -8,6 +8,7 @@ const style = require('./expenseInput.scss');
 const cx = classNames.bind(style);
 
 const ExpenseInput = ({
+  title,
   onSetDisplayValue,
   onSetIsOpenSpendingLayer,
   onSetTitle,
@@ -27,6 +28,7 @@ const ExpenseInput = ({
         type="text"
         className={cx('text_input')}
         placeholder='여기에 항목명을 입력해주세요 (선택)'
+        value={title}
         onChange={e => onSetTitle(e.currentTarget.value)}
       />
       <div className={cx('keyboard_area')}>
@@ -41,6 +43,7 @@ const ExpenseInput = ({
 };
 
 ExpenseInput.propTypes = {
+  title: PropTypes.string,
   onSetDisplayValue: PropTypes.func,
   onSetIsOpenSpendingLayer: PropTypes.func,
   onSetTitle: PropTypes.func,

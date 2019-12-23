@@ -19,10 +19,10 @@ const cx = classNames.bind(style);
 
 const {
   axiosGetCurrentBudgetApi,
-  resetCurrentBudgetInfo
+  resetCurrentBudgetList
 } = budgetActions;
 
-const Expense = ({ currentTripInfo }) => {
+const Expense = ({ currentTripInfo, onClickExpenseItem }) => {
   const dispatch = useDispatch();
 
   const {
@@ -37,7 +37,7 @@ const Expense = ({ currentTripInfo }) => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => () => {
-    dispatch(resetCurrentBudgetInfo());
+    dispatch(resetCurrentBudgetList());
   }, []);
 
   useEffect(() => {
@@ -157,6 +157,7 @@ const Expense = ({ currentTripInfo }) => {
               day={item.day}
               title={item.title}
               time={time}
+              onClickExpenseItem={onClickExpenseItem}
             />
           );
         })}
@@ -171,7 +172,8 @@ const Expense = ({ currentTripInfo }) => {
 };
 
 Expense.propTypes = {
-  currentTripInfo: PropTypes.object
+  currentTripInfo: PropTypes.object,
+  onClickExpenseItem: PropTypes.func
 };
 
 export default hot(Expense);

@@ -9,7 +9,8 @@ import Budget from '@model/budget';
 const budgetState = {
   isLoaded: false,
   isFailed: false,
-  budgetList: []
+  budgetList: [],
+  currentBudgetInfo: { ...new Budget() }
 };
 
 // Domain
@@ -23,7 +24,11 @@ const AXIOS_GET_CURRENT_BUDGET_API = `${BUDGET}/AXIOS_GET_CURRENT_BUDGET_API`;
 const AXIOS_GET_CURRENT_BUDGET_API_SUCCESS = `${BUDGET}/AXIOS_GET_CURRENT_BUDGET_API_SUCCESS`;
 const AXIOS_GET_CURRENT_BUDGET_API_FAIL = `${BUDGET}/AXIOS_GET_CURRENT_BUDGET_API_FAIL`;
 
+const RESET_CURRENT_BUDGET_LIST = `${BUDGET}/RESET_CURRENT_BUDGET_LIST`;
+
+const GET_CURRENT_BUDGET_INFO = `${BUDGET}/GET_CURRENT_BUDGET_INFO`;
 const RESET_CURRENT_BUDGET_INFO = `${BUDGET}/RESET_CURRENT_BUDGET_INFO`;
+
 
 /**
  * Reducer
@@ -47,10 +52,22 @@ const budgetReducer = {
     isFailed: true,
     tripList: [],
   }),
-  [RESET_CURRENT_BUDGET_INFO]: state => ({
+  [RESET_CURRENT_BUDGET_LIST]: state => ({
     ...state,
     isLoaded: false,
     tripList: [],
+  }),
+  [GET_CURRENT_BUDGET_INFO]: (state, action) => {
+    const { id } = action.payload;
+
+    return {
+      ...state,
+      currentBudgetInfo: state.budgetList.find(item => item.id === id)
+    };
+  },
+  [RESET_CURRENT_BUDGET_INFO]: state => ({
+    ...state,
+    currentBudgetInfo: { ...new Budget() }
   }),
 };
 
@@ -62,6 +79,8 @@ export const budgetActions = {
     onSuccess: budgetActions.axiosGetCurrentBudgetApiSuccess,
     onFail: budgetActions.axiosGetCurrentBudgetApiFail,
   })),
+  resetCurrentBudgetList: createAction(RESET_CURRENT_BUDGET_LIST),
+  getCurrentBudgetInfo: createAction(GET_CURRENT_BUDGET_INFO),
   resetCurrentBudgetInfo: createAction(RESET_CURRENT_BUDGET_INFO)
 };
 

@@ -14,7 +14,7 @@ const ExpenseInfo = ({
   onSetActiveAmountType
 }) => {
   const { currency } = country;
-  const rate = displayValue * currency.rate;
+  const rate = Number(displayValue) * currency.rate;
 
   return (
     <div className={cx('expense_info')} style={{ backgroundColor: 'rgb(253, 200, 200)' }}>

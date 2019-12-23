@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
@@ -22,24 +22,26 @@ import axios from 'axios';
 const style = require('./spendingLayer.scss');
 const cx = classNames.bind(style);
 const {
-  resetCurrentBudgetInfo
+  resetCurrentBudgetList
 } = budgetActions;
 
-const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
+const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, currentBudgetInfo }) => {
   const dispatch = useDispatch();
 
+  const [id, setId] = useState('');
+  const [type, setType] = useState(EXPENSE_TYPE.SPENDING);
+  const [title, setTitle] = useState('');
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
   const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
-  const [title, setTitle] = useState('');
+  const [day, setDay] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [layerState, setLayerState] = useState({ openHandler: setIsOpenLayer });
 
   const save = () => {
-    console.log('active', activeCategory);
-    const type = EXPENSE_TYPE.SPENDING;
     const budgetInfo = {
+      id,
       tripId: currentTripInfo.id,
       type,
       title,
@@ -47,7 +49,8 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
       amountType: activeAmoutType,
       currency: currentTripInfo.country.currency,
       category: activeCategory,
-      day
+      day,
+      date: Date.now()
     };
 
     setIsSaving(true);
@@ -76,9 +79,29 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
 
     const handleSuccessSave = () => {
       onSetIsOpenSpendingLayer(false);
-      dispatch(resetCurrentBudgetInfo());
+      dispatch(resetCurrentBudgetList());
     };
   };
+
+  useEffect(() => {
+    const {
+      id,
+      title,
+      amount,
+      amountType,
+      category,
+      day
+    } = currentBudgetInfo;
+
+    if (id) {
+      setId(id);
+      setTitle(title);
+      setDisplayValue(amount);
+      setActiveAmoutType(amountType);
+      setActiveCategory(category);
+      setDay(day);
+    }
+  }, [currentBudgetInfo]);
 
   return (
     <div className={cx('spending_layer')}>
@@ -93,6 +116,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
         onSetActiveCategory={setActiveCategory}
       />
       <ExpenseInput
+        title={title}
         onSetDisplayValue={setDisplayValue}
         onSetIsOpenSpendingLayer={onSetIsOpenSpendingLayer}
         onSetTitle={setTitle}
@@ -111,7 +135,7 @@ const SpendingLayer = ({ currentTripInfo, onSetIsOpenSpendingLayer, day }) => {
 SpendingLayer.propTypes = {
   currentTripInfo: PropTypes.object,
   onSetIsOpenSpendingLayer: PropTypes.func,
-  day: PropTypes.string
+  currentBudgetInfo: PropTypes.object
 };
 
 
