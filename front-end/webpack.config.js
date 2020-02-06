@@ -9,12 +9,17 @@ const MODE = {
   PROD: 'production',
 };
 
-module.exports = function(env, argv) {
+module.exports = function (env, argv) {
   const { mode } = argv;
 
   switch (mode) {
     case MODE.DEV:
-      return webpackMerge(webpackCommonConfig, webpackDevConfig);
+      return webpackMerge(webpackCommonConfig, webpackDevConfig, {
+        devtool: 'inline-source-map',
+        resolve: {
+          extensions: ['.ts', '.tsx', '.js', '.json', 'scss']
+        },
+      });
 
     case MODE.PROD:
       return webpackMerge(webpackCommonConfig, webpackProdConfig);
