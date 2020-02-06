@@ -6,9 +6,17 @@ module.exports = {
   output: {
     filename: 'bundle.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.(ts)$/,
+        exclude: ['/src/**/*.test.ts'],
+      },
+    ]
+  },
   plugins: [
     new CopyWebpackPlugin([
-      {from:'public/img/sprite',to:'public/img/sprite'}
+      { from: 'public/img/sprite', to: 'public/img/sprite' }
     ]),
   ]
 };
