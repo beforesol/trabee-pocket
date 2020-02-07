@@ -24,14 +24,14 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [autoprefixer(), ],
+  plugins: () => [autoprefixer(),],
 };
 
 module.exports = {
   mode: 'development',
-  entry: ['@babel/polyfill', './src/index.js', './public/css/base.css'],
+  entry: ['@babel/polyfill', './src/index.tsx', './public/css/base.css'],
   resolve: {
-    extensions: ['.jsx', '.js', '.json', '.scss'],
+    extensions: ['.ts', '.tsx', '.js', '.json', 'scss'],
     alias: {
       '@modules': `${root}/src/modules`,
       '@model': `${root}/src/model`,
@@ -55,9 +55,8 @@ module.exports = {
       //   exclude: /node_module/,
       // },
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
+        test: /\.(ts|tsx)$/,
+        use: [{ loader: 'ts-loader' },]
       },
       {
         test: /\.(css)$/,
