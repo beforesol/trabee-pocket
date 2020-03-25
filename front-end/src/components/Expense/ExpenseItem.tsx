@@ -9,6 +9,7 @@ const cx = classNames.bind(style);
 
 interface IOwnProps {
   id: any
+  type: string
   category: any
   amount: any
   day: any
@@ -20,6 +21,7 @@ interface IOwnProps {
 
 const ExpenseItem: React.FC<IOwnProps> = ({
   id,
+  type,
   category,
   amount,
   day,
@@ -32,7 +34,7 @@ const ExpenseItem: React.FC<IOwnProps> = ({
   };
 
   return (
-    <li className={cx('list')} key={id}>
+    <li className={cx('list', type.toLowerCase())} key={id}>
       <button className={cx('btn_expense')} onClick={handleClick}>
         <div className={cx('wrapper')}>
           <div className={cx('inner', 'icon', category)}><span className={cx('blind')}>{category}</span></div>

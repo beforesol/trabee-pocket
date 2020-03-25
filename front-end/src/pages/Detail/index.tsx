@@ -22,6 +22,7 @@ import { BUDGET, budgetActions } from '@modules/budget';
 import { NEW_ROUTER_ID } from '@pages/Home';
 
 import { EXPENSE_DATE_FILTER } from '@constants/type';
+
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 const { setUserId } = userActions;
@@ -58,6 +59,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
   const [showSelect, setShowSelect] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [activeDateFilter, setDateActiveFilter] = useState(EXPENSE_DATE_FILTER.ALL);
 
   const updateTab = (tabName: any) => {
     setActiveTab(tabName);
@@ -79,7 +81,6 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const handleClickExpenseItem = (id: any) => {
     dispatch(getCurrentBudgetInfo({ id }));
     setIsOpenSpendingLayer(true);
-    console.log('handleClickExpenseItemdddd', id);
   };
 
   useEffect(() => {
@@ -140,6 +141,8 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
         )}
         {activeTab === TAB_INFO.EXPENSE.name && (
           <Expense
+            activeDateFilter={activeDateFilter}
+            onSetDateActiveFilter={setDateActiveFilter}
             currentTripInfo={currentTripInfo}
             onClickExpenseItem={handleClickExpenseItem}
           />
@@ -164,6 +167,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
         )}
         {isOpenSpendingLayer && (
           <SpendingLayer
+            activeDateFilter={activeDateFilter}
             currentTripInfo={currentTripInfo}
             onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
             currentBudgetInfo={currentBudgetInfo}

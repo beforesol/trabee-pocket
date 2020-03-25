@@ -42,7 +42,7 @@ const Tab: React.FC<IOwnProps> = ({
   activeTab,
   updateTab,
   onClickSpending,
-  onClickIncome
+  onClickIncome,
 }) => {
   const [items, setItems] = useState<any[]>([]);
   const [showLayer, setShowLayer] = useState(false);
@@ -109,19 +109,17 @@ const Tab: React.FC<IOwnProps> = ({
       <div className={cx('btn_area')}>
         {items}
       </div>
-      {
-        showLayer && (
-          <div className={cx('layer')}>
-            <div className={cx('layer_inner')}>
-              <div className={cx('btn_wrap')}>
-                <button type="button" className={cx('btn_layer', 'income')} onClick={handleClickIncome}><span className={cx('text')}>수입</span></button>
-                <button type="button" className={cx('btn_layer', 'spending')} onClick={handleClickSpending}><span className={cx('text')}>지출</span></button>
-              </div>
-              <button type="button" className={cx('btn_close')} onClick={handleCloseLayer}><span className={cx('blind')}>닫기</span></button>
+      {showLayer && (
+        <div className={cx('layer')}>
+          <div className={cx('layer_inner')}>
+            <div className={cx('btn_wrap')}>
+              <button type="button" className={cx('btn_layer', 'income')} onClick={handleClickIncome}><span className={cx('text')}>수입</span></button>
+              <button type="button" className={cx('btn_layer', 'spending')} onClick={handleClickSpending}><span className={cx('text')}>지출</span></button>
             </div>
+            <button type="button" className={cx('btn_close')} onClick={handleCloseLayer}><span className={cx('blind')}>닫기</span></button>
           </div>
-        )
-      }
+        </div>
+      )}
     </div>
   );
 };

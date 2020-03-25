@@ -13,11 +13,10 @@ import {
 } from '@constants/type';
 import { Layer } from '@components/index';
 import { LAYER_TYPE } from '@components/Layer';
-
 import { budgetActions } from '@modules/budget';
-
 import axios from 'axios';
-
+import { getDatesBetween } from '@utils/index';
+import { EXPENSE_DATE_FILTER } from '@constants/type';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -29,9 +28,15 @@ interface IOwnProps {
   currentTripInfo: any
   onSetIsOpenSpendingLayer: any
   currentBudgetInfo: any
+  activeDateFilter: string
 }
 
-const SpendingLayer: React.FC<IOwnProps> = ({ currentTripInfo, onSetIsOpenSpendingLayer, currentBudgetInfo }) => {
+const SpendingLayer: React.FC<IOwnProps> = ({
+  currentTripInfo,
+  onSetIsOpenSpendingLayer,
+  currentBudgetInfo,
+  activeDateFilter
+}) => {
   const dispatch = useDispatch();
 
   const [id, setId] = useState('');
@@ -45,7 +50,23 @@ const SpendingLayer: React.FC<IOwnProps> = ({ currentTripInfo, onSetIsOpenSpendi
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [layerState, setLayerState] = useState<any>({ openHandler: setIsOpenLayer });
 
+  const getDday = () => {
+    if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
+      return 1;
+    }
+
+    if (activeDateFilter === EXPENSE_DATE_FILTER.READY) {
+      return EXPENSE_DATE_FILTER.READY;
+    }
+
+    const dateRange = getDatesBetween(new Date(currentTripInfo.startDate), new Date(currentTripInfo.endDate)).map(item => item.toLocaleDateString());
+
+    return dateRange.indexOf(activeDateFilter) + 1
+  }
+
   const save = () => {
+    const day = getDday();
+
     const budgetInfo = {
       id,
       tripId: currentTripInfo.id,

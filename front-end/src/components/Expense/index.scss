@@ -128,6 +128,16 @@
     bottom: 113px;
     overflow-y: scroll;
     overflow-x: hidden;
+    .list.spending {
+      .detail_info .info_inner .detail_expense {
+        color: #eb7e7d;
+      }
+    }
+    .list.income {
+      .detail_info .info_inner .detail_expense {
+        color: #8ac2ea;
+      }
+    }
     .wrapper {
       display: table;
       width: 100%;
@@ -168,7 +178,7 @@
       text-align: left;
       .info_inner {
         .detail_expense {
-          color: #eb7e7d;
+          color: #000;
           font-size: 15px;
         }
         .ready {

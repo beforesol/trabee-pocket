@@ -10,7 +10,7 @@ import {
   EXPENSE_CURRENCY_FILTER
 } from '@constants/type/index.ts';
 
-import { BUDGET, budgetActions } from '@modules/budget';
+import { BUDGET, budgetActions, budget } from '@modules/budget';
 import { getDatesBetween } from '@utils/index';
 
 const style = require('./index.scss');
@@ -24,9 +24,16 @@ const {
 interface IOwnProps {
   currentTripInfo: any;
   onClickExpenseItem: any;
+  activeDateFilter: string;
+  onSetDateActiveFilter: (date: string) => void;
 }
 
-const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) => {
+const Expense: React.FC<IOwnProps> = ({
+  currentTripInfo,
+  onClickExpenseItem,
+  activeDateFilter,
+  onSetDateActiveFilter
+}) => {
   const dispatch = useDispatch();
 
   const {
@@ -35,10 +42,57 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
     budgetList,
   } = useSelector((state: any) => state[BUDGET]);
 
-  const [activeDateFilter, setDateActiveFilter] = useState(EXPENSE_DATE_FILTER.ALL);
   const [activeCurrencyFilter, setCurrencyActiveFilter] = useState(EXPENSE_CURRENCY_FILTER.ALL);
-  const [currentBudgetInfo, setCurrentBudgetInfo] = useState(budgetList);
+  const [currentBudgetList, setCurrentBudgetList] = useState<any[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [dateInfo, setDateInfo] = useState<any>({
+    dDay: 1,
+    date: new Date(currentTripInfo.startDate)
+  })
+
+  const dateRange = getDatesBetween(new Date(currentTripInfo.startDate), new Date(currentTripInfo.endDate)).map(item => item.toLocaleDateString());
+  const dDay = dateRange.indexOf(activeDateFilter) + 1;
+
+  const getCurrentBudgetList = () => {
+    let filteredBudgetList = [];
+
+    if (activeCurrencyFilter === EXPENSE_CURRENCY_FILTER.ALL) {
+      filteredBudgetList = [...budgetList];
+    } else {
+      filteredBudgetList = [...budgetList].filter((budget: any) => budget.currency.en === activeCurrencyFilter)
+    };
+
+    if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
+      return filteredBudgetList;
+    }
+
+    if (activeDateFilter === EXPENSE_DATE_FILTER.READY) {
+      return filteredBudgetList.filter((budget: any) => budget.day === EXPENSE_DATE_FILTER.READY);
+    }
+
+    return filteredBudgetList.filter((budget: any) => parseInt(budget.day) === dDay);
+  }
+
+  const getDate = () => {
+    let year: any = '';
+    let month: any = '';
+    let date: any = '';
+
+    if (activeDateFilter === EXPENSE_DATE_FILTER.ALL || activeDateFilter === EXPENSE_DATE_FILTER.READY) {
+
+      year = new Date(currentTripInfo.startDate).getFullYear();
+      month = new Date(currentTripInfo.startDate).getMonth();
+      date = new Date(currentTripInfo.startDate).getDate();
+
+      month = month % 12 + 1;
+    } else {
+      year = activeDateFilter.split('.')[0];
+      month = activeDateFilter.split('.')[1];
+      date = activeDateFilter.split('.')[2];
+    }
+
+    return `${year}년 ${month}월 ${date}일`;
+  }
 
   useEffect(() => () => {
     dispatch(resetCurrentBudgetList());
@@ -49,30 +103,29 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
   }, [isBudgetLoaded]);
 
   useEffect(() => {
-    let budgetInfo = [];
+    const buggetList = getCurrentBudgetList();
 
-    if ((activeDateFilter === EXPENSE_DATE_FILTER.ALL) && (activeCurrencyFilter === EXPENSE_CURRENCY_FILTER.ALL)) {
-      budgetInfo = budgetList;
-    } else if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
-      budgetInfo = budgetList.filter((item: any) => item.currency.en === activeCurrencyFilter);
-    } else if (activeCurrencyFilter === EXPENSE_CURRENCY_FILTER.ALL) {
-      budgetInfo = budgetList.filter((item: any) => item.day === activeDateFilter);
-    } else {
-      budgetInfo = budgetList.filter((item: any) => (item.day === activeDateFilter) && (item.currency.en === activeCurrencyFilter));
-    }
-
-    setCurrentBudgetInfo(budgetInfo);
+    setCurrentBudgetList([...buggetList]);
   }, [activeDateFilter, activeCurrencyFilter, budgetList]);
 
   useEffect(() => {
-    currentBudgetInfo.length && setTotalAmount(currentBudgetInfo.reduce((a: any, b: any) => {
-      const calculatedAmount = Number(b.amount) * b.currency.rate;
+    setDateInfo({
+      dDay: dDay > 0 ? 1 : dDay,
+      date: getDate()
+    })
+  }, [activeDateFilter]);
 
-      return Number(a) + Number(calculatedAmount);
-    }, 0));
-  }, [currentBudgetInfo]);
+  useEffect(() => {
+    if (currentBudgetList.length) {
+      const total = currentBudgetList.reduce((a: any, b: any) => {
+        const calculatedAmount = Number(b.amount) * b.currency.rate;
 
-  const dateRange = getDatesBetween(new Date(currentTripInfo.startDate), new Date(currentTripInfo.endDate)).map(item => item.toLocaleDateString());
+        return Number(a) + Number(calculatedAmount);
+      }, 0);
+
+      setTotalAmount(Math.floor(total));
+    }
+  }, [currentBudgetList]);
 
   const currencyItems = (budgetList.length) ? budgetList.map((item: any) => item.currency.en) : [];
   const uniqueCurrencies = currencyItems.filter((item: any, index: number) => currencyItems.indexOf(item) === index);
@@ -87,7 +140,7 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
             <div className={cx('date_area')}>
               <button
                 type="button"
-                onClick={() => setDateActiveFilter(EXPENSE_DATE_FILTER.ALL)}
+                onClick={() => onSetDateActiveFilter(EXPENSE_DATE_FILTER.ALL)}
                 aria-selected={activeDateFilter === EXPENSE_DATE_FILTER.ALL}
                 className={cx('btn_tab')}>
                 <em className={cx('tab_title')}>A</em>
@@ -95,7 +148,7 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
               </button>
               <button
                 type="button"
-                onClick={() => setDateActiveFilter(EXPENSE_DATE_FILTER.READY)}
+                onClick={() => onSetDateActiveFilter(EXPENSE_DATE_FILTER.READY)}
                 aria-selected={activeDateFilter === EXPENSE_DATE_FILTER.READY}
                 className={cx('btn_tab')}>
                 <em className={cx('tab_title')}>P</em>
@@ -111,7 +164,7 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
                   <button
                     key={day}
                     type="button"
-                    onClick={() => setDateActiveFilter(item)}
+                    onClick={() => onSetDateActiveFilter(item)}
                     aria-selected={activeDateFilter === item}
                     className={cx('btn_tab')}>
                     <em className={cx('tab_title')}>{day}</em>
@@ -142,20 +195,21 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
               <div className={cx('btn_view_type')}>현금, 카드 보기</div>
             </div>
             <div className={cx('date_info')}>
-              <em className={cx('d_day')}>DAY 1</em>
-              <span className={cx('date')}>2019년 8월 28일</span>
+              <em className={cx('d_day')}>DAY {dateInfo.dDay}</em>
+              <span className={cx('date')}>{dateInfo.date}</span>
               <span className={cx('total_expense')}>₩{totalAmount}</span>
             </div>
           </div>
         </div>
         <ul className={cx('expense_list')}>
-          {currentBudgetInfo.map((item: any) => {
+          {currentBudgetList.map((item: any) => {
             const time = new Date(item.date).toLocaleTimeString();
 
             return (
               <ExpenseItem
                 key={item.id}
                 id={item.id}
+                type={item.type}
                 category={item.category}
                 amount={item.amount}
                 day={item.day}
@@ -168,7 +222,7 @@ const Expense: React.FC<IOwnProps> = ({ currentTripInfo, onClickExpenseItem }) =
         </ul>
         <div className={cx('total_area')}>
           <span className={cx('text')}>쓴 돈</span>
-          <em className={cx('total_expense')}>₩ 362,928</em>
+          <em className={cx('total_expense')}>₩{totalAmount}</em>
         </div>
       </div>
     )
