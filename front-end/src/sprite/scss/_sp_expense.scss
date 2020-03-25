@@ -17,7 +17,7 @@ $sprite-map-expense: (
     "width": 512,
     "height": 512,
     "bg-top": -1074.0000000000002,
-    "bg-left": -542.0000000000001,
+    "bg-left": -1074.0000000000002,
   ),
     
   "icon_building": (
@@ -58,15 +58,15 @@ $sprite-map-expense: (
   "icon_fork_knife": (
     "width": 512,
     "height": 512,
-    "bg-top": -10,
-    "bg-left": -10,
+    "bg-top": -1074.0000000000002,
+    "bg-left": -542.0000000000001,
   ),
     
   "icon_fork_knife_selected": (
     "width": 512,
     "height": 512,
-    "bg-top": -1074.0000000000002,
-    "bg-left": -1074.0000000000002,
+    "bg-top": -10,
+    "bg-left": -10,
   ),
     
   "icon_money": (
@@ -109,6 +109,13 @@ $sprite-map-expense: (
     "height": 512,
     "bg-top": -1606,
     "bg-left": -1074.0000000000002,
+  ),
+    
+  "icon_wallet": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -1606,
+    "bg-left": -1606,
   ),
     
 );

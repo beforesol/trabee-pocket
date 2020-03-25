@@ -1,0 +1,51 @@
+@import '~sprite/sp_expense';
+
+.income_info {
+  position: absolute;
+  top: 159px;
+  left: 0;
+  right: 0;
+  bottom: 346px;
+  padding-bottom: 80px;
+  .text_area {
+    height: 100%;
+    text-align: center;
+    .text {
+      font-size: 15px;
+      color: #595a59;
+      vertical-align: middle;
+    }
+    &:before {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+      content: '';
+    }
+  }
+  .rate_area {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    left: 20px;
+    height: 80px;
+    padding: 20px 0;
+    border-top: 1px solid #f6f6f6;
+    box-sizing: border-box;
+    .name {
+      float: left;
+      color: #6d6d6d;
+    }
+    .btn_area {
+      float: right;
+      text-align: right;
+      .rate {
+        font-size: 13px;
+        color: #a2a2a2;
+      }
+      .btn_edit {
+        padding: 5px;
+        color: #239b46;
+      }
+    }
+  }
+}

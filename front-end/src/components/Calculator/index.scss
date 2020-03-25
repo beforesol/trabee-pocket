@@ -1,6 +1,17 @@
 @import '~sprite/sp_expense';
 
 .calculator {
+  &.income {
+    table {
+      tr,
+      td {
+        border-color: #e7f4e9;
+      }
+      button.operator {
+        color: #239b46;
+      }
+    }
+  }
   table {
     width: 100%;
     margin-left: -1px;

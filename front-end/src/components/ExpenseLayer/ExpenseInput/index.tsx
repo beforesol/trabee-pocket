@@ -8,17 +8,19 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
+  type: string
   title: any
   onSetDisplayValue: any
-  onSetIsOpenSpendingLayer: any
+  onSetIsOpenLayer: any
   onSetTitle: any
   onSave: any
 }
 
 const ExpenseInput: React.FC<IOwnProps> = ({
+  type,
   title,
   onSetDisplayValue,
-  onSetIsOpenSpendingLayer,
+  onSetIsOpenLayer,
   onSetTitle,
   onSave
 }) => {
@@ -31,7 +33,7 @@ const ExpenseInput: React.FC<IOwnProps> = ({
   };
 
   return (
-    <div className={cx('expense_input')}>
+    <div className={cx('expense_input', type.toLowerCase())}>
       <input
         type="text"
         className={cx('text_input')}
@@ -41,10 +43,13 @@ const ExpenseInput: React.FC<IOwnProps> = ({
       />
       <div className={cx('keyboard_area')}>
         <div className={cx('btn_area')}>
-          <button className={cx('btn', 'cancle')} onClick={() => onSetIsOpenSpendingLayer(false)}>취소</button>
+          <button className={cx('btn', 'cancle')} onClick={() => onSetIsOpenLayer(false)}>취소</button>
           <button className={cx('btn', 'save')} onClick={handleClickSave}>저장</button>
         </div>
-        <Calculator onSetDisplayValue={setDisplayValue} />
+        <Calculator
+          onSetDisplayValue={setDisplayValue}
+          type={type}
+        />
       </div>
     </div>
   );

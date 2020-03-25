@@ -76,6 +76,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
 
   const handleClickIncome = () => {
     setIsOpenIncomeLayer(true);
+    dispatch(resetCurrentBudgetInfo());
   };
 
   const handleClickExpenseItem = (id: any) => {
@@ -174,7 +175,12 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
           />
         )}
         {isOpenIncomeLayer && (
-          <IncomeLayer />
+          <IncomeLayer
+            activeDateFilter={activeDateFilter}
+            currentTripInfo={currentTripInfo}
+            onSetIsOpenIncomeLayer={setIsOpenIncomeLayer}
+            currentBudgetInfo={currentBudgetInfo}
+          />
         )}
       </div>
     ));

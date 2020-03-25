@@ -99,7 +99,7 @@ const Expense: React.FC<IOwnProps> = ({
   }, []);
 
   useEffect(() => {
-    !isBudgetLoaded && dispatch(axiosGetCurrentBudgetApi({ id: currentTripInfo.id, type: EXPENSE_TYPE.SPENDING }));
+    !isBudgetLoaded && dispatch(axiosGetCurrentBudgetApi({ id: currentTripInfo.id }));
   }, [isBudgetLoaded]);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Expense: React.FC<IOwnProps> = ({
 
   useEffect(() => {
     setDateInfo({
-      dDay: dDay > 0 ? 1 : dDay,
+      dDay: dDay < 1 ? 1 : dDay,
       date: getDate()
     })
   }, [activeDateFilter]);

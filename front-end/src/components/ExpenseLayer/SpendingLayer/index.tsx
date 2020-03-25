@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
 import ExpenseInfo from '../ExpenseInfo';
 import SpendingCategory from '../SpendingCategory';
 import ExpenseInput from '../ExpenseInput';
@@ -40,7 +39,6 @@ const SpendingLayer: React.FC<IOwnProps> = ({
   const dispatch = useDispatch();
 
   const [id, setId] = useState('');
-  const [type, setType] = useState(EXPENSE_TYPE.SPENDING);
   const [title, setTitle] = useState('');
   const [displayValue, setDisplayValue] = useState('');
   const [activeAmoutType, setActiveAmoutType] = useState(AMOUNT_TYPE.READY_MONEY);
@@ -70,7 +68,7 @@ const SpendingLayer: React.FC<IOwnProps> = ({
     const budgetInfo = {
       id,
       tripId: currentTripInfo.id,
-      type,
+      type: EXPENSE_TYPE.SPENDING,
       title,
       amount: displayValue,
       amountType: activeAmoutType,
@@ -133,6 +131,7 @@ const SpendingLayer: React.FC<IOwnProps> = ({
   return (
     <div className={cx('spending_layer')}>
       <ExpenseInfo
+        type={EXPENSE_TYPE.SPENDING}
         country={currentTripInfo.country}
         displayValue={displayValue}
         activeAmoutType={activeAmoutType}
@@ -143,9 +142,10 @@ const SpendingLayer: React.FC<IOwnProps> = ({
         onSetActiveCategory={setActiveCategory}
       />
       <ExpenseInput
+        type={EXPENSE_TYPE.SPENDING}
         title={title}
         onSetDisplayValue={setDisplayValue}
-        onSetIsOpenSpendingLayer={onSetIsOpenSpendingLayer}
+        onSetIsOpenLayer={onSetIsOpenSpendingLayer}
         onSetTitle={setTitle}
         onSave={save}
       />

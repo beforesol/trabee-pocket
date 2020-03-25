@@ -5,12 +5,38 @@
   left: 0;
   right: 0;
   bottom: 0;
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background-color: #f6f6f6;
+    content: '';
+  }
+  &.income {
+    .keyboard_area {
+      background-color: #f7fdfa;
+      border-color: #abe0b6;
+    }
+    .btn_area {
+      .btn{
+        &.cancle {
+          color: #239b46;
+          border-color: #cff0d7;
+        }
+        &.save {
+          background-color: #c4f0cd;
+          color: #239b46;
+        }
+      }
+    }
+  }
   .text_input {
     display: block;
     width: 100%;
     height: 45px;
     padding: 0 20px;
-    border-top: 1px solid #f6f6f6;
     text-align: center;
     box-sizing: border-box;
     &::placeholder {

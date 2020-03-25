@@ -32,9 +32,13 @@ const CalculatorKey: React.FC<ICalculatorKeyProps> = ({ handleClick, className, 
 
 interface ICacluatorProps {
   onSetDisplayValue: (displayValue: string) => void;
+  type: string;
 }
 
-const Calculator: React.FC<ICacluatorProps> = ({ onSetDisplayValue }) => {
+const Calculator: React.FC<ICacluatorProps> = ({
+  onSetDisplayValue,
+  type
+}) => {
   const [value, setValue] = useState(null);
   const [displayValue, setDisplayValue] = useState('0');
   const [operator, setOperator] = useState<any>('');
@@ -113,7 +117,7 @@ const Calculator: React.FC<ICacluatorProps> = ({ onSetDisplayValue }) => {
   const clearText = isClearDisplay ? 'C' : 'AC';
 
   return (
-    <div className={cx('calculator')}>
+    <div className={cx('calculator', type.toLowerCase())}>
       <table>
         <tbody>
           <tr>

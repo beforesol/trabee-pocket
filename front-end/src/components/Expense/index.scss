@@ -151,6 +151,7 @@
     .icon {
       width: 100px;
       &:before {
+        @include get-sprite-expense('icon_wallet', 25);
         content: '';
       }
       &.food {

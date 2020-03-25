@@ -41,9 +41,9 @@ router.post('/save', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-  const { id, type } = req.body;
+  const { id } = req.body;
 
-  Budget.find({ tripId: id, type }, function (err, budgetData) {
+  Budget.find({ tripId: id }, function (err, budgetData) {
     if (err) return res.status(500).json({ error: err });
 
     if (!budgetData) return res.json({ error: 'budgetData not found' });

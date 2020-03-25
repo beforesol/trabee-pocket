@@ -5,6 +5,31 @@
   @media all and (max-width: 320px) {
     padding-top: 15px;
   }
+  &.spending {
+    background-color: rgb(253, 200, 200);
+  }
+  &.income {
+    background-color: #abe0b6;
+    .top_area {
+      .expense_type {
+        color: #73bf7a;
+      }
+      .currency_type {
+        background-color: transparent;
+        color: #239b46;
+      }
+    }
+    .middle_area {
+      .currency {
+        color: #239b46;
+      }
+    }
+    .bottom_area {
+      .converted_amount {
+        color: #239b46;
+      }
+    }
+  }
   .top_area {
     position: relative;
     height: 20px;
@@ -53,6 +78,7 @@
   }
   .bottom_area {
     position: relative;
+    height: 20px;
     margin-top: 10px;
     .icon {
       display: inline-block;
