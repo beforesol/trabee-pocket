@@ -11,6 +11,7 @@ interface IOwnProps {
   id: any
   type: string
   category: any
+  currency: any
   amount: any
   day: any
   title: any
@@ -23,6 +24,7 @@ const ExpenseItem: React.FC<IOwnProps> = ({
   id,
   type,
   category,
+  currency,
   amount,
   day,
   title,
@@ -40,7 +42,7 @@ const ExpenseItem: React.FC<IOwnProps> = ({
           <div className={cx('inner', 'icon', category)}><span className={cx('blind')}>{category}</span></div>
           <div className={cx('inner', 'detail_info')}>
             <div className={cx('info_inner')}>
-              <span className={cx('detail_expense')}>₩{amount}</span>
+              <span className={cx('detail_expense')}>{currency.en} {amount}</span>
               {day === EXPENSE_DATE_FILTER.READY && (
                 <span className={cx('ready')}>준비</span>
               )}

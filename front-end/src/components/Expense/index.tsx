@@ -197,7 +197,7 @@ const Expense: React.FC<IOwnProps> = ({
             <div className={cx('date_info')}>
               <em className={cx('d_day')}>DAY {dateInfo.dDay}</em>
               <span className={cx('date')}>{dateInfo.date}</span>
-              <span className={cx('total_expense')}>₩{totalAmount}</span>
+              <span className={cx('total_expense')}>₩ {totalAmount}</span>
             </div>
           </div>
         </div>
@@ -211,6 +211,7 @@ const Expense: React.FC<IOwnProps> = ({
                 id={item.id}
                 type={item.type}
                 category={item.category}
+                currency={item.currency}
                 amount={item.amount}
                 day={item.day}
                 title={item.title}
@@ -222,7 +223,7 @@ const Expense: React.FC<IOwnProps> = ({
         </ul>
         <div className={cx('total_area')}>
           <span className={cx('text')}>쓴 돈</span>
-          <em className={cx('total_expense')}>₩{totalAmount}</em>
+          <em className={cx('total_expense')}>₩ {totalAmount}</em>
         </div>
       </div>
     )
