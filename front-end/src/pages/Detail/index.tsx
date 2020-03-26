@@ -174,7 +174,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
             currentBudgetInfo={currentBudgetInfo}
           />
         )}
-        {isOpenIncomeLayer && (
+        {!isOpenIncomeLayer && (
           <IncomeLayer
             activeDateFilter={activeDateFilter}
             currentTripInfo={currentTripInfo}

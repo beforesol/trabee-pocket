@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Children } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -8,18 +8,27 @@ const cx = classNames.bind(style);
 
 export const LAYER_TYPE = {
   INPUT: 'INPUT',
-  TEXT: 'TEXT'
+  TEXT: 'TEXT',
+  COMPONENT: 'COMPONENT'
 };
 
 interface IOwnProps {
-  layerType: any
-  title: any
-  openHandler: any
+  layerType: string
+  title?: any
+  openHandler: (isOpen: boolean) => void
   handler: any
-  text: any
+  text?: any
+  children?: any
 }
 
-const Layer: React.FC<IOwnProps> = ({ layerType, title, openHandler, handler, text }) => {
+const Layer: React.FC<IOwnProps> = ({
+  layerType,
+  title,
+  openHandler,
+  handler,
+  text,
+  children
+}) => {
   const textArea = useRef<any>(null);
 
   const handleClose = () => {
@@ -27,7 +36,7 @@ const Layer: React.FC<IOwnProps> = ({ layerType, title, openHandler, handler, te
   };
 
   const handleSumbit = () => {
-    if (!isTextContent) {
+    if (layerType === LAYER_TYPE.INPUT) {
       const newText = textArea.current.value;
 
       handler(newText);
@@ -39,33 +48,37 @@ const Layer: React.FC<IOwnProps> = ({ layerType, title, openHandler, handler, te
   };
 
   useEffect(() => {
-    if (!isTextContent) {
+    if (layerType === LAYER_TYPE.INPUT) {
       textArea.current.focus();
       textArea.current.value = text;
     }
   });
 
-  const isTextContent = layerType === LAYER_TYPE.TEXT;
-
   return (
     <div className={cx('layer')}>
       <div className={cx('inner')}>
         <div className={cx('content_area')}>
-          <p className={cx('title')}>{title}</p>
-          {
-            isTextContent ? (
-              <div className={cx('text')}>{text}</div>
-            ) : (
-                <textarea
-                  className={cx('textarea')}
-                  name="text"
-                  id="layerText"
-                  cols={30}
-                  rows={10}
-                  ref={textArea}
-                />
-              )
-          }
+          {title && (
+            <p className={cx('title')}>{title}</p>
+          )}
+          {layerType === LAYER_TYPE.TEXT && (
+            <div className={cx('text')}>{text}</div>
+          )}
+          {layerType === LAYER_TYPE.INPUT && (
+            <textarea
+              className={cx('textarea')}
+              name="text"
+              id="layerText"
+              cols={30}
+              rows={10}
+              ref={textArea}
+            />
+          )}
+          {layerType === LAYER_TYPE.COMPONENT && children && (
+            <>
+              {children}
+            </>
+          )}
         </div>
         <div className={cx('button_area')}>
           <button className={cx('btn', 'btn_close')} onClick={handleClose}>취소</button>

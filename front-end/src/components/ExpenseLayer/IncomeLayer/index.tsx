@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import ExpenseInfo from '../ExpenseInfo';
 import IncomeInfo from '../IncomeInfo';
 import ExpenseInput from '../ExpenseInput';
+import ExpenseRateEdit from '../ExpenseRateEdit';
 import { EXPENSE_TYPE } from '@constants/type';
 import axios from 'axios';
 import { LAYER_TYPE } from '@components/Layer';
@@ -39,8 +40,10 @@ const IncomeLayer: React.FC<IOwnProps> = ({
   const [title, setTitle] = useState('');
   const [displayValue, setDisplayValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-  const [isOpenLayer, setIsOpenLayer] = useState(false);
-  const [layerState, setLayerState] = useState<any>({ openHandler: setIsOpenLayer });
+  const [isOpenSaveLayer, setIsOpenSaveLayer] = useState(false);
+  const [saveLayerState, setSaveLayerState] = useState<any>({ openHandler: setIsOpenSaveLayer });
+  const [isOpenRateLayer, setIsOpenRateLayer] = useState(false);
+  const [rateLayerState, setRateLayerState] = useState<any>({ openHandler: setIsOpenRateLayer });
 
   const getDday = () => {
     if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
@@ -74,20 +77,20 @@ const IncomeLayer: React.FC<IOwnProps> = ({
     setIsSaving(true);
 
     axios.post('/api/budget/save', { budgetInfo }).then(() => {
-      setIsOpenLayer(true);
+      setIsOpenSaveLayer(true);
       setIsSaving(false);
-      setLayerState({
-        ...layerState,
+      setSaveLayerState({
+        ...saveLayerState,
         layerType: LAYER_TYPE.TEXT,
         title: '저장을 성공하였습니다.',
         text: '즐거운 여행 되세요.',
         handler: handleSuccessSave
       });
     }).catch(() => {
-      setIsOpenLayer(true);
+      setIsOpenSaveLayer(true);
       setIsSaving(false);
-      setLayerState({
-        ...layerState,
+      setSaveLayerState({
+        ...saveLayerState,
         layerType: LAYER_TYPE.TEXT,
         title: '저장을 실패하였습니다.',
         text: '다시 시도해 주세요.',
@@ -100,6 +103,15 @@ const IncomeLayer: React.FC<IOwnProps> = ({
       dispatch(resetCurrentBudgetList());
     };
   };
+
+  const handleClickEdit = () => {
+    setIsOpenRateLayer(true);
+    setRateLayerState({
+      ...rateLayerState,
+      layerType: LAYER_TYPE.COMPONENT,
+      handler: () => { }
+    });
+  }
 
   useEffect(() => {
     const {
@@ -121,10 +133,10 @@ const IncomeLayer: React.FC<IOwnProps> = ({
         type={EXPENSE_TYPE.INCOME}
         country={currentTripInfo.country}
         displayValue={displayValue}
-        activeAmoutType={'activeAmoutType'}
-        onSetActiveAmountType={() => { }}
       />
-      <IncomeInfo />
+      <IncomeInfo
+        onClickEdit={handleClickEdit}
+      />
       <ExpenseInput
         type={EXPENSE_TYPE.INCOME}
         title={title}
@@ -136,8 +148,13 @@ const IncomeLayer: React.FC<IOwnProps> = ({
       {isSaving && (
         <p>저장중...</p>
       )}
-      {isOpenLayer && (
-        <Layer {...layerState} />
+      {isOpenSaveLayer && (
+        <Layer {...saveLayerState} />
+      )}
+      {isOpenRateLayer && (
+        <Layer {...rateLayerState}>
+          <ExpenseRateEdit />
+        </Layer>
       )}
     </div>
   );

@@ -45,8 +45,8 @@ const SpendingLayer: React.FC<IOwnProps> = ({
   const [activeCategory, setActiveCategory] = useState(EXPENSE_CATEGORY.FOOD.type);
   const [day, setDay] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-  const [isOpenLayer, setIsOpenLayer] = useState(false);
-  const [layerState, setLayerState] = useState<any>({ openHandler: setIsOpenLayer });
+  const [isOpenSaveLayer, setIsOpenSaveLayer] = useState(false);
+  const [saveLayerState, setSaveLayerState] = useState<any>({ openHandler: setIsOpenSaveLayer });
 
   const getDday = () => {
     if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
@@ -81,20 +81,20 @@ const SpendingLayer: React.FC<IOwnProps> = ({
     setIsSaving(true);
 
     axios.post('/api/budget/save', { budgetInfo }).then(() => {
-      setIsOpenLayer(true);
+      setIsOpenSaveLayer(true);
       setIsSaving(false);
-      setLayerState({
-        ...layerState,
+      setSaveLayerState({
+        ...saveLayerState,
         layerType: LAYER_TYPE.TEXT,
         title: '저장을 성공하였습니다.',
         text: '즐거운 여행 되세요.',
         handler: handleSuccessSave
       });
     }).catch(() => {
-      setIsOpenLayer(true);
+      setIsOpenSaveLayer(true);
       setIsSaving(false);
-      setLayerState({
-        ...layerState,
+      setSaveLayerState({
+        ...saveLayerState,
         layerType: LAYER_TYPE.TEXT,
         title: '저장을 실패하였습니다.',
         text: '다시 시도해 주세요.',
@@ -152,8 +152,8 @@ const SpendingLayer: React.FC<IOwnProps> = ({
       {isSaving && (
         <p>저장중...</p>
       )}
-      {isOpenLayer && (
-        <Layer {...layerState} />
+      {isOpenSaveLayer && (
+        <Layer {...saveLayerState} />
       )}
     </div>
   );

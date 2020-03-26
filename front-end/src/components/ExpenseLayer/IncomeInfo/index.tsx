@@ -6,16 +6,15 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-
+  onClickEdit: () => void
 }
 
 const IncomeInfo: React.FC<IOwnProps> = ({
-
+  onClickEdit
 }) => {
   const handleClickEdit = () => {
-    console.log('handleClickEdit');
+    onClickEdit();
   }
-
 
   return (
     <div className={cx('income_info')}>

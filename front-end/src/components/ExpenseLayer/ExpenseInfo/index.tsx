@@ -11,8 +11,8 @@ interface IOwnProps {
   type: string
   country: any
   displayValue: any
-  activeAmoutType: any
-  onSetActiveAmountType: any
+  activeAmoutType?: any
+  onSetActiveAmountType?: any
 }
 
 const ExpenseInfo: React.FC<IOwnProps> = ({
