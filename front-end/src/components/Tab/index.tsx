@@ -102,7 +102,7 @@ const Tab: React.FC<IOwnProps> = ({
     });
 
     setItems(itemArray);
-  }, [activeTab]);
+  }, [match, activeTab]);
 
   return (
     <div className={cx('tab')}>
