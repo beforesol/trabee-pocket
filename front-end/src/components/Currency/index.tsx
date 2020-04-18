@@ -1,22 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import { DetailHeader } from '@components/index.ts';
-import { Link } from 'react-router-dom';
+import {
+  Layer,
+  DetailHeader,
+  CurrencyLayer
+} from '@components/index.ts';
 import { LAYER_TYPE } from '@components/Layer';
-import { Layer } from '@components/index.ts';
-const style = require('./currency.scss');
+
+const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 const Currency = () => {
   const [openUpgradeLayer, setOpenUpgradeLayer] = useState(false);
+  const [openCurrencyLayer, setOpenCurrencyLayer] = useState(false);
+
+  const handleClickCurrency = (currency: string) => {
+    setOpenCurrencyLayer(true);
+    console.log('currency', currency);
+  }
 
   return (
     <div className={cx('currency')}>
       <DetailHeader title={'코타키나 발루'} />
       <ul className={cx('currency_area')}>
         <li className={cx('list')}>
-          <Link to='/' className={cx('link')}>
+          <button className={cx('link')} onClick={() => handleClickCurrency('MYR')}>
             <div className={cx('title_area')}>
               <strong className={cx('title')}>MYR</strong>
               <span className={cx('income')}>MYR 0.00</span>
@@ -28,22 +37,7 @@ const Currency = () => {
               <span className={cx('use')}>MYR 0.00 사용</span>
               <span className={cx('remain')}>MYR 0.00 남음</span>
             </div>
-          </Link>
-        </li>
-        <li className={cx('list')}>
-          <Link to='/' className={cx('link')}>
-            <div className={cx('title_area')}>
-              <strong className={cx('title')}>MYR</strong>
-              <span className={cx('income')}>MYR 0.00</span>
-            </div>
-            <div className={cx('usage_area')}>
-              <span className={cx('usage')} />
-            </div>
-            <div className={cx('use_info')}>
-              <span className={cx('use')}>MYR 0.00 사용</span>
-              <span className={cx('remain')}>MYR 0.00 남음</span>
-            </div>
-          </Link>
+          </button>
         </li>
       </ul>
       <div className={cx('btn_area')}>
@@ -57,6 +51,9 @@ const Currency = () => {
           openHandler={setOpenUpgradeLayer}
           handler={() => { }}
         />
+      )}
+      {!openCurrencyLayer && (
+        <CurrencyLayer />
       )}
     </div>
   )

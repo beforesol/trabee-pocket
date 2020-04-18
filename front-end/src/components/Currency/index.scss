@@ -7,6 +7,9 @@
   .list + .list {
     margin-top: 30px;
   }
+  .link {
+    width: 100%;
+  }
   .title_area {
     overflow: hidden;
     color: #3d3d3d;
@@ -31,6 +34,7 @@
     margin-top: 4px;
     background-color: #ebebeb;
     border-radius: 4px;
+    text-align: left;
     .usage {
       display: inline-block;
       width: 20%;

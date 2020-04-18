@@ -2,6 +2,7 @@ import Calculator from './Calculator';
 import Continent from './Continent';
 import Country from './Country';
 import Currency from './Currency';
+import CurrencyLayer from './CurrencyLayer';
 import Expense from './Expense';
 import IncomeLayer from './ExpenseLayer/IncomeLayer';
 import SpendingLayer from './ExpenseLayer/SpendingLayer';
@@ -20,6 +21,7 @@ export {
   Continent,
   Country,
   Currency,
+  CurrencyLayer,
   Expense,
   IncomeLayer,
   SpendingLayer,
