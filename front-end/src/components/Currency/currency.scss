@@ -1,3 +1,72 @@
+@import '~sprite/sp_currency';
+
 .currency {
-  
+  .currency_area {
+    padding: 50px 10px 0;
+  }
+  .list + .list {
+    margin-top: 30px;
+  }
+  .title_area {
+    overflow: hidden;
+    color: #3d3d3d;
+    height: 25px;
+    line-height: 25px;
+    .title {
+      float: left;
+      font-weight: normal;
+      &:before {
+        @include get-sprite-currency('icon_wallet_brown', 25);
+        margin-right: 5px;
+        content: '';
+      }
+    }
+    .income {
+      float: right;
+      font-size: 12px;
+    }
+  }
+  .usage_area {
+    height: 20px;
+    margin-top: 4px;
+    background-color: #ebebeb;
+    border-radius: 4px;
+    .usage {
+      display: inline-block;
+      width: 20%;
+      height: 100%;
+      border-radius: 4px;
+      background-color: #8ac2ea;
+      vertical-align: top;
+    }
+  }
+  .use_info {
+    overflow: hidden;
+    margin-top: 4px;
+    color: #a5a9af;
+    font-size: 12px;
+    .use {
+      float: left;
+    }
+    .remain {
+      float: right;
+    }
+  }
+  .btn_area {
+    margin-top: 50px;
+    text-align: center;
+    .add_currecy {
+      height: 35px;
+      padding: 0 10px;
+      border-radius: 15px;
+      background-color: #eff5ff;
+      color: #8ac2ea;
+      font-size: 11px;
+      &::before {
+        @include get-sprite-currency('icon_plus_blue', 14);
+        margin-right: 5px;
+        content: '';
+      }
+    }
+  }
 }

@@ -53,7 +53,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [id, setId] = useState(match.params.id);
-  const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
+  const [activeTab, setActiveTab] = useState(TAB_INFO.CURRENCY.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(false);
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);

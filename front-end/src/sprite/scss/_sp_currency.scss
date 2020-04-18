@@ -1,0 +1,54 @@
+
+$sprite-meta-currency: (
+  "name": "currency",
+  "width": 1064,
+  "height": 532
+);
+$sprite-map-currency: (
+  
+  "icon_plus_blue": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -10,
+  ),
+    
+  "icon_wallet_brown": (
+    "width": 512,
+    "height": 512,
+    "bg-top": -10,
+    "bg-left": -542,
+  ),
+    
+);
+
+@mixin get-sprite-currency($name, $width: null) {
+
+  $sp-w: map-get($sprite-meta-currency, "width");
+  $sp-h: map-get($sprite-meta-currency, "height");
+  $img: map-get($sprite-map-currency, $name);
+  $img-w: map-get($img, "width");
+  $img-h: map-get($img, "height");
+  $img-r: $img-w / $img-h;
+  $img-bgt: map-get($img, "bg-top");
+  $img-bgl: map-get($img, "bg-left");
+
+  @if $width == null {
+    $width: $img-w;
+  }
+
+  $height: $width / $img-r;
+
+  $bgw: floor($width * ($sp-w / $img-w));
+  $bgh: floor($height * ($sp-h / $img-h));
+  $bgl: ($bgw / $sp-w) * $img-bgl;
+  $bgt: ($bgh / $sp-h) * $img-bgt; 
+
+  display: inline-block;
+  width: #{$width}px;
+  height: #{$height}px;
+  background: url(public/img/sprite/_sp_currency.svg) no-repeat;
+  background-position: #{$bgl}#{"px"} #{$bgt}#{"px"};
+  background-size: #{$bgw}px #{$bgh}px;
+  vertical-align: top;
+}
