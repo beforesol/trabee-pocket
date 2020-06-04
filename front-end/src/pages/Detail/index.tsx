@@ -37,7 +37,7 @@ const {
 
 interface IOwnProps {
   match: any;
-  history: any;
+  history: History;
 }
 
 const Detail: React.FC<IOwnProps> = ({ match, history }) => {
@@ -53,7 +53,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const [id, setId] = useState(match.params.id);
-  const [activeTab, setActiveTab] = useState(TAB_INFO.CURRENCY.name);
+  const [activeTab, setActiveTab] = useState(TAB_INFO.PROFILE.name);
   const [isOpenLayer, setIsOpenLayer] = useState(false);
   const [isOpenSpendingLayer, setIsOpenSpendingLayer] = useState(false);
   const [isOpenIncomeLayer, setIsOpenIncomeLayer] = useState(false);
@@ -61,7 +61,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeDateFilter, setDateActiveFilter] = useState(EXPENSE_DATE_FILTER.ALL);
 
-  const updateTab = (tabName: any) => {
+  const updateTab = (tabName: string) => {
     setActiveTab(tabName);
   };
 
@@ -79,7 +79,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
     dispatch(resetCurrentBudgetInfo());
   };
 
-  const handleClickExpenseItem = (id: any) => {
+  const handleClickExpenseItem = (id: string) => {
     dispatch(getCurrentBudgetInfo({ id }));
     setIsOpenSpendingLayer(true);
   };
@@ -174,7 +174,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
             currentBudgetInfo={currentBudgetInfo}
           />
         )}
-        {!isOpenIncomeLayer && (
+        {isOpenIncomeLayer && (
           <IncomeLayer
             activeDateFilter={activeDateFilter}
             currentTripInfo={currentTripInfo}

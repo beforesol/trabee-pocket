@@ -14,6 +14,7 @@ import { HOME, homeActions } from '@modules/home';
 import { USER, userActions } from '@modules/users';
 
 import { ROUTE_PATH } from '@config/routes';
+import { ITrip } from '../../types/api';
 
 export const NEW_ROUTER_ID = 'new';
 
@@ -42,7 +43,7 @@ const Home = () => {
     }));
   }, []);
 
-  const handleChangeLayout = (type: any) => {
+  const handleChangeLayout = (type: string) => {
     setLayout(type);
   };
 
@@ -73,7 +74,7 @@ const Home = () => {
                 <p className={cx('title')}>다가오는 여행<em className={cx('num')}>{tripCount}</em></p>
                 {tripCount && (
                   <ul className={cx('trip_list', layoutClassName)}>
-                    {tripList.map((item: any) => (
+                    {tripList.map((item: ITrip) => (
                       <li className={cx('list')} key={item.id}>
                         <TripItem layoutType={layout} tripInfo={item} />
                       </li>
@@ -85,7 +86,7 @@ const Home = () => {
                 <p className={cx('title')}>지난 여행<em className={cx('num')}>{tripCount}</em></p>
                 {tripCount && (
                   <ul className={cx('trip_list', layoutClassName)}>
-                    {tripList.map((item: any) => (
+                    {tripList.map((item: ITrip) => (
                       <li className={cx('list')} key={item.id}>
                         <TripItem layoutType={layout} tripInfo={item} />
                       </li>

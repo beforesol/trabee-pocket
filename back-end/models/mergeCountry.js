@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
 var countrySchema = new Schema({
   continent: String,
   countries: Array,

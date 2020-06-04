@@ -4,36 +4,36 @@ import classNames from 'classnames/bind';
 import axios from 'axios';
 
 import { Search, Continent, Country } from '@components/index.ts';
-import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { tripActions } from '@modules/trips';
+import { ICountry, IContinent } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 const { setCurrentTripInfo } = tripActions;
 
 interface IOwnProps {
-  onSetShowSelect: any
+  onSetShowSelect: (isShow: boolean) => void;
 }
 
 const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
   const dispatch = useDispatch();
 
-  const [continents, setContinent] = useState<any>(null);
-  const [countries, setCountries] = useState<any>(null);
+  const [continents, setContinent] = useState<IContinent[]>([]);
+  const [countries, setCountries] = useState<ICountry[]>([]);
   const [activeCountry, setActiveCountry] = useState<any>(null);
   const [activeCountryData, setActiveCountryData] = useState<any>(null);
-  const [recommendCountries, setRecommendCounries] = useState(null);
+  const [recommendCountries, setRecommendCounries] = useState<ICountry[]>([]);
 
   const handleChangeInput = (text: string) => {
-    const recommendCountryArray = countries.filter((country: any) => country.name.indexOf(text) !== -1);
+    const recommendCountryArray = countries.filter((country: ICountry) => country.name.indexOf(text) !== -1);
 
     setRecommendCounries(recommendCountryArray);
   };
 
   const handleResetInput = () => {
-    setRecommendCounries(null);
+    setRecommendCounries([]);
   };
 
   const handleSubmit = (e: any) => {
@@ -48,12 +48,12 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
 
   useEffect(() => {
     axios.get('/api/select').then(response => {
-      const countriesArray: any[] = [];
+      const countriesArray: ICountry[] = [];
 
       setContinent(response.data);
 
-      response.data.forEach((continent: any) => {
-        continent.countries.forEach((country: any) => {
+      response.data.forEach((continent: IContinent) => {
+        continent.countries.forEach((country: ICountry) => {
           countriesArray.push(country);
 
           if (country.name === activeCountry) {
@@ -68,8 +68,8 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
 
   useEffect(() => {
     if (continents) {
-      continents.forEach((continent: any) => {
-        continent.countries.forEach((country: any) => {
+      continents.forEach((continent: IContinent) => {
+        continent.countries.forEach((country: ICountry) => {
           if (country.name === activeCountry) {
             setActiveCountryData(country);
           }
@@ -91,7 +91,7 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
           handleResetInput={handleResetInput}
         />
         <>
-          {recommendCountries ? (
+          {recommendCountries.length ? (
             <Country
               countries={recommendCountries}
               activeCountry={activeCountry}
@@ -117,10 +117,6 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
       </div>
     </div>
   );
-};
-
-Select.propTypes = {
-  onSetShowSelect: PropTypes.func
 };
 
 export default hot(Select);

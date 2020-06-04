@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
 var tripSchema = new Schema({
   userId: String,
   title: String,

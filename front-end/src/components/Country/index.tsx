@@ -1,21 +1,21 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
+import { ICountry } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  countries: any;
-  activeCountry: any;
-  setActiveCountry: any;
+  countries: ICountry[];
+  activeCountry: string;
+  setActiveCountry: (country: string) => void;
 }
 
 const Country: React.FC<IOwnProps> = ({ countries, activeCountry, setActiveCountry }) => (
   <ul className="country" role="radiogroup">
     {
-      countries && countries.map((item: any) => (
+      countries && countries.map((item: ICountry) => (
         <li className={cx('list')} role="presentation" key={item.id}>
           <img className={cx('country_image')} src={item.imgUrl} alt={item.name} />
           <label htmlFor={item.id} className={cx('country_title')}>{item.name}</label>

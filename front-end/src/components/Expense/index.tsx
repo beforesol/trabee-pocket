@@ -12,6 +12,7 @@ import {
 
 import { BUDGET, budgetActions, budget } from '@modules/budget';
 import { getDatesBetween } from '@utils/index';
+import { ITrip, IBudget } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -22,10 +23,15 @@ const {
 } = budgetActions;
 
 interface IOwnProps {
-  currentTripInfo: any;
-  onClickExpenseItem: any;
+  currentTripInfo: ITrip;
+  onClickExpenseItem: (id: string) => void;
   activeDateFilter: string;
   onSetDateActiveFilter: (date: string) => void;
+}
+
+interface IDateInfo {
+  dDay: any;
+  date: any;
 }
 
 const Expense: React.FC<IOwnProps> = ({
@@ -43,9 +49,9 @@ const Expense: React.FC<IOwnProps> = ({
   } = useSelector((state: any) => state[BUDGET]);
 
   const [activeCurrencyFilter, setCurrencyActiveFilter] = useState(EXPENSE_CURRENCY_FILTER.ALL);
-  const [currentBudgetList, setCurrentBudgetList] = useState<any[]>([]);
+  const [currentBudgetList, setCurrentBudgetList] = useState<IBudget[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [dateInfo, setDateInfo] = useState<any>({
+  const [dateInfo, setDateInfo] = useState<IDateInfo>({
     dDay: 1,
     date: new Date(currentTripInfo.startDate)
   })
@@ -59,7 +65,7 @@ const Expense: React.FC<IOwnProps> = ({
     if (activeCurrencyFilter === EXPENSE_CURRENCY_FILTER.ALL) {
       filteredBudgetList = [...budgetList];
     } else {
-      filteredBudgetList = [...budgetList].filter((budget: any) => budget.currency.en === activeCurrencyFilter)
+      filteredBudgetList = [...budgetList].filter((budget: IBudget) => budget.currency.en === activeCurrencyFilter)
     };
 
     if (activeDateFilter === EXPENSE_DATE_FILTER.ALL) {
@@ -67,10 +73,10 @@ const Expense: React.FC<IOwnProps> = ({
     }
 
     if (activeDateFilter === EXPENSE_DATE_FILTER.READY) {
-      return filteredBudgetList.filter((budget: any) => budget.day === EXPENSE_DATE_FILTER.READY);
+      return filteredBudgetList.filter((budget: IBudget) => budget.day === EXPENSE_DATE_FILTER.READY);
     }
 
-    return filteredBudgetList.filter((budget: any) => parseInt(budget.day) === dDay);
+    return filteredBudgetList.filter((budget: IBudget) => parseInt(budget.day) === dDay);
   }
 
   const getDate = () => {

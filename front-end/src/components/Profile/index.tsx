@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@config/routes';
 
 import axios from 'axios';
+import { ITrip, ICountry } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -28,12 +29,12 @@ const {
 } = tripActions;
 
 interface IOwnProps {
-  currentTripInfo: any
-  id: any
-  userId: any
+  currentTripInfo: ITrip
+  id: string
+  userId: string
   history: any
-  onUpdateTab: any
-  onSetShowSelect: any
+  onUpdateTab: (tab: string) => void
+  onSetShowSelect: (isShow: boolean) => void
 }
 
 const Profile: React.FC<IOwnProps> = ({
@@ -53,7 +54,7 @@ const Profile: React.FC<IOwnProps> = ({
   const [layerState, setLayerState] = useState<any>({ openHandler: setIsOpenLayer });
   const [title, setTitle] = useState('');
   const [memo, setMemo] = useState('');
-  const [imageUrl, setImageUrl] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const [country, setCountry] = useState<any>(null);
   const [startDate, setStartDate] = useState<any>('');
   const [endDate, setEndDate] = useState<any>('');

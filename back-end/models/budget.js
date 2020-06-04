@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
 var budgetSchema = new Schema({
   tripId: String,
   type: String,

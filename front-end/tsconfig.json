@@ -29,6 +29,9 @@
       "@utils/*": [
         "src/utils/*"
       ],
+      "@types/*": [
+        "src/types/*"
+      ],
       "@sprite/*": [
         "src/sprite/scss/*"
       ],

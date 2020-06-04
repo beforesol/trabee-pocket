@@ -8,11 +8,11 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  onChangeLayout: any;
+  onChangeLayout: (type: string) => void;
 }
 
 const Header: React.FC<IOwnProps> = ({ onChangeLayout }) => {
-  const handleClickViewType = (type: any) => {
+  const handleClickViewType = (type: string) => {
     onChangeLayout(type);
   };
 

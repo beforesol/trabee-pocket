@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
 import { EXPENSE_DATE_FILTER } from '@constants/type';
+import { ICurrency } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  id: any
+  id: string
   type: string
-  category: any
-  currency: any
-  amount: any
-  day: any
-  title: any
-  time: any
-  onClickExpenseItem: any
+  category: string
+  currency: ICurrency
+  amount: number
+  day: string
+  title: string
+  time: string
+  onClickExpenseItem: (id: string) => void
 }
 
 

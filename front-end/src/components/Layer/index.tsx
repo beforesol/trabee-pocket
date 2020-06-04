@@ -16,7 +16,7 @@ interface IOwnProps {
   layerType: string
   title?: any
   openHandler: (isOpen: boolean) => void
-  handler: any
+  handler: (text?: string) => void
   text?: any
   children?: any
 }

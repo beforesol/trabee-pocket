@@ -8,12 +8,12 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  type: string
-  title: any
-  onSetDisplayValue: any
-  onSetIsOpenLayer: any
-  onSetTitle: any
-  onSave: any
+  type: string;
+  title: string;
+  onSetDisplayValue: (value: string) => void;
+  onSetIsOpenLayer: (isOpen: boolean) => void;
+  onSetTitle: (title: string) => void;
+  onSave: () => void;
 }
 
 const ExpenseInput: React.FC<IOwnProps> = ({
@@ -24,7 +24,7 @@ const ExpenseInput: React.FC<IOwnProps> = ({
   onSetTitle,
   onSave
 }) => {
-  const setDisplayValue = (displayValue: any) => {
+  const setDisplayValue = (displayValue: string) => {
     onSetDisplayValue(displayValue);
   };
 

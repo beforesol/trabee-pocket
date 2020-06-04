@@ -6,8 +6,8 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  handleChangeInput: any
-  handleResetInput: any
+  handleChangeInput: (value: any) => void;
+  handleResetInput: (value: string) => void;
 }
 
 const Search: React.FC<IOwnProps> = ({ handleChangeInput, handleResetInput }) => {

@@ -31,10 +31,10 @@ export const TAB_INFO = {
 
 interface IOwnProps {
   match: any
-  activeTab: any
-  updateTab: any
-  onClickSpending: any
-  onClickIncome: any
+  activeTab: string
+  updateTab: (tab: string) => void
+  onClickSpending: (isSpending: boolean) => void
+  onClickIncome: (isIncome: boolean) => void
 }
 
 const Tab: React.FC<IOwnProps> = ({
@@ -44,7 +44,7 @@ const Tab: React.FC<IOwnProps> = ({
   onClickSpending,
   onClickIncome,
 }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<HTMLElement[]>([]);
   const [showLayer, setShowLayer] = useState(false);
 
   const handleAddExpense = () => {

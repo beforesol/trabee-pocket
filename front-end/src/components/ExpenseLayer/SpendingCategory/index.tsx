@@ -10,8 +10,8 @@ const cx = classNames.bind(style);
 const categoryList = Object.values(EXPENSE_CATEGORY);
 
 interface IOwnProps {
-  activeCategory: any
-  onSetActiveCategory: any
+  activeCategory: string
+  onSetActiveCategory: (category: string) => void
 }
 
 const SpendingCategory: React.FC<IOwnProps> = ({

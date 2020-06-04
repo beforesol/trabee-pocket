@@ -15,9 +15,8 @@ const Currency = () => {
   const [openUpgradeLayer, setOpenUpgradeLayer] = useState(false);
   const [openCurrencyLayer, setOpenCurrencyLayer] = useState(false);
 
-  const handleClickCurrency = (currency: string) => {
+  const handleClickCurrency = (_currency: string) => {
     setOpenCurrencyLayer(true);
-    console.log('currency', currency);
   }
 
   return (
@@ -52,7 +51,7 @@ const Currency = () => {
           handler={() => { }}
         />
       )}
-      {!openCurrencyLayer && (
+      {openCurrencyLayer && (
         <CurrencyLayer />
       )}
     </div>

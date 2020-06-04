@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
-// import PointTarget from 'react-point';
-
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
-const CalculatorOperations: any = {
-  '/': (prevValue: any, nextValue: any) => prevValue / nextValue,
-  '*': (prevValue: any, nextValue: any) => prevValue * nextValue,
-  '+': (prevValue: any, nextValue: any) => prevValue + nextValue,
-  '-': (prevValue: any, nextValue: any) => prevValue - nextValue,
-  '=': (nextValue: any) => nextValue
+interface Calculator {
+  [key: string]: any
+}
+
+const CalculatorOperations: Calculator = {
+  '/': (prevValue: number, nextValue: number) => prevValue / nextValue,
+  '*': (prevValue: number, nextValue: number) => prevValue * nextValue,
+  '+': (prevValue: number, nextValue: number) => prevValue + nextValue,
+  '-': (prevValue: number, nextValue: number) => prevValue - nextValue,
+  '=': (nextValue: number) => nextValue
 };
 
 interface ICalculatorKeyProps {
@@ -23,11 +24,7 @@ interface ICalculatorKeyProps {
 }
 
 const CalculatorKey: React.FC<ICalculatorKeyProps> = ({ handleClick, className, ...props }) => (
-  // <PointTarget onPoint={handleClick}>
-  //   <button className={cx(className)} {...props} />
-  // </PointTarget>
   <button className={cx(className)} {...props} onClick={handleClick} />
-
 );
 
 interface ICacluatorProps {
@@ -41,7 +38,7 @@ const Calculator: React.FC<ICacluatorProps> = ({
 }) => {
   const [value, setValue] = useState(null);
   const [displayValue, setDisplayValue] = useState('0');
-  const [operator, setOperator] = useState<any>('');
+  const [operator, setOperator] = useState<string>('');
   const [waitingForOperand, setWaitingForOperand] = useState(false);
 
   const clearAll = () => {

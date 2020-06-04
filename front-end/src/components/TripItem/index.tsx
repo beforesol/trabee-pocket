@@ -4,13 +4,14 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@config/routes';
+import { ITrip } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  tripInfo: any
-  layoutType: any
+  tripInfo: ITrip
+  layoutType: string
 }
 
 const TripItem: React.FC<IOwnProps> = ({ tripInfo, layoutType }) => {

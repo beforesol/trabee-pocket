@@ -1,18 +1,18 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
 import { AMOUNT_TYPE, EXPENSE_TYPE } from '@constants/type';
+import { ICountry } from '../../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
   type: string
-  country: any
-  displayValue: any
-  activeAmoutType?: any
-  onSetActiveAmountType?: any
+  country: ICountry
+  displayValue: string
+  activeAmoutType?: string
+  onSetActiveAmountType?: (type: string) => void;
 }
 
 const ExpenseInfo: React.FC<IOwnProps> = ({
@@ -20,7 +20,7 @@ const ExpenseInfo: React.FC<IOwnProps> = ({
   country,
   displayValue,
   activeAmoutType,
-  onSetActiveAmountType
+  onSetActiveAmountType = () => { }
 }) => {
   const { currency } = country;
   const rate = Number(displayValue) * currency.rate;

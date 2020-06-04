@@ -13,6 +13,7 @@ import { budgetActions } from '@modules/budget';
 import { Layer } from '@components/index';
 import { EXPENSE_DATE_FILTER } from '@constants/type';
 import { getDatesBetween } from '@utils/index';
+import { ITrip, IBudget } from '../../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -22,9 +23,9 @@ const {
 } = budgetActions;
 
 interface IOwnProps {
-  currentTripInfo: any
-  onSetIsOpenIncomeLayer: any
-  currentBudgetInfo: any
+  currentTripInfo: ITrip
+  onSetIsOpenIncomeLayer: (isOpen: boolean) => void
+  currentBudgetInfo: IBudget
   activeDateFilter: string
 }
 
@@ -123,7 +124,7 @@ const IncomeLayer: React.FC<IOwnProps> = ({
     if (id) {
       setId(id);
       setTitle(title);
-      setDisplayValue(amount);
+      setDisplayValue(amount.toString());
     }
   }, [currentBudgetInfo]);
 
