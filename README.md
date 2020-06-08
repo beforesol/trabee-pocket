@@ -2,7 +2,7 @@
 ```
 cd front-end/
 
-nvm use 10.5.0
+nvm use 10.16.0
 
 yarn dev
 ```
