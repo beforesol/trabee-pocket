@@ -6,11 +6,15 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  onClickEdit: () => void
+  currency: string;
+  onClickEdit: () => void;
+  rate: number;
 }
 
 const IncomeInfo: React.FC<IOwnProps> = ({
-  onClickEdit
+  currency,
+  onClickEdit,
+  rate
 }) => {
   const handleClickEdit = () => {
     onClickEdit();
@@ -24,7 +28,7 @@ const IncomeInfo: React.FC<IOwnProps> = ({
       <div className={cx('rate_area')}>
         <strong className={cx('name')}>환율</strong>
         <div className={cx('btn_area')}>
-          <p className={cx('rate')}>KRW 1 = KRW 1</p>
+          <p className={cx('rate')}>{currency} 1 = KRW {rate}</p>
           <button
             type="button"
             className={cx('btn_edit')}

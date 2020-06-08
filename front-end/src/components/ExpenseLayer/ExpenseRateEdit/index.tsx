@@ -6,18 +6,15 @@ const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-
+  rate: number;
+  setRate: (rate: number) => void;
 }
 
 const ExpenseRateEdit: React.FC<IOwnProps> = ({
-
+  rate,
+  setRate
 }) => {
-  const [useEdit, setUseEdit] = useState(false);
-  const [rate, setRate] = useState('');
-
-  const handleClickRate = (e: any) => {
-    if (!useEdit) e.preventDefault();
-  };
+  const [useEdit, setUseEdit] = useState(false); 
 
   const handleChangeRate = (e: any) => {
     setRate(e.currentTarget.value);

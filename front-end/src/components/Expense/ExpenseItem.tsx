@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import { EXPENSE_DATE_FILTER } from '@constants/type';
@@ -16,7 +16,7 @@ interface IOwnProps {
   day: string
   title: string
   time: string
-  onClickExpenseItem: (id: string) => void
+  onClickExpenseItem: ({id, type}:{id: string, type: string}) => void
 }
 
 
@@ -32,7 +32,7 @@ const ExpenseItem: React.FC<IOwnProps> = ({
   onClickExpenseItem
 }) => {
   const handleClick = () => {
-    onClickExpenseItem(id);
+    onClickExpenseItem({id, type});
   };
 
   return (

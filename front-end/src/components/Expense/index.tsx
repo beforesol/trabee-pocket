@@ -24,7 +24,7 @@ const {
 
 interface IOwnProps {
   currentTripInfo: ITrip;
-  onClickExpenseItem: (id: string) => void;
+  onClickExpenseItem: ({id, type} : {id: string, type: string}) => void;
   activeDateFilter: string;
   onSetDateActiveFilter: (date: string) => void;
 }

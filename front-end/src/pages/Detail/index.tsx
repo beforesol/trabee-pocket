@@ -21,7 +21,7 @@ import { TRIP, tripActions } from '@modules/trips';
 import { BUDGET, budgetActions } from '@modules/budget';
 import { NEW_ROUTER_ID } from '@pages/Home';
 
-import { EXPENSE_DATE_FILTER } from '@constants/type';
+import { EXPENSE_DATE_FILTER, EXPENSE_TYPE } from '@constants/type';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -79,9 +79,18 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
     dispatch(resetCurrentBudgetInfo());
   };
 
-  const handleClickExpenseItem = (id: string) => {
+  const handleClickExpenseItem = ({
+    id,
+    type
+  } : {
+    id: string,
+    type: string
+  }) => {
     dispatch(getCurrentBudgetInfo({ id }));
-    setIsOpenSpendingLayer(true);
+
+    if (type === EXPENSE_TYPE.SPENDING) setIsOpenSpendingLayer(true);
+    if (type === EXPENSE_TYPE.INCOME) setIsOpenIncomeLayer(true);
+
   };
 
   useEffect(() => {
@@ -180,6 +189,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
             currentTripInfo={currentTripInfo}
             onSetIsOpenIncomeLayer={setIsOpenIncomeLayer}
             currentBudgetInfo={currentBudgetInfo}
+            userId={userId}
           />
         )}
       </div>
