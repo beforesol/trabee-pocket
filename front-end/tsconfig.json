@@ -35,6 +35,9 @@
       "@sprite/*": [
         "src/sprite/scss/*"
       ],
+      "@public/*": [
+        "public/*"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,

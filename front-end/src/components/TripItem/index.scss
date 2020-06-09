@@ -3,6 +3,9 @@
   position: relative;
   &.type_1 {
     padding-top: 100%;
+    .trip_image {
+      height: 100%;
+    }
     .info {
       .title {
         font-size: 20px;
@@ -26,6 +29,9 @@
   }
   &.type_2, &.type_4 {
     height: 145px;
+    .trip_image {
+      width: 100%;
+    }
     .info {
       .title {
         font-size: 12px;
@@ -50,8 +56,12 @@
   &.type_4 {
     padding-top: 100%;
     height: auto;
+    .trip_image {
+      height: 100%;
+    }
   }
   .inner {
+    overflow: hidden;
     position: absolute;
     top: 0;
     right: 0;
@@ -60,6 +70,14 @@
     border-radius: 5px;
     background-size: cover;
     text-align: center;
+  }
+  .trip_image {
+    position: absolute;
+    top: -100%;
+    right: -100%;
+    bottom: -100%;
+    left: -100%;
+    margin: auto;
   }
   .info {
     position: absolute;

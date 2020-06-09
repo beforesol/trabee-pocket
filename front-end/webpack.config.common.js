@@ -43,7 +43,8 @@ module.exports = {
       '@pages': `${root}/src/pages`,
       '@utils': `${root}/src/utils`,
       '@types': `${root}/src/utils`,
-      'sprite': `${root}/src/sprite/scss`
+      'sprite': `${root}/src/sprite/scss`,
+      '@public': `${root}/public`
     },
   },
   module: {
