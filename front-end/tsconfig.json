@@ -51,7 +51,8 @@
     "target": "es2015",
     "module": "esnext",
     "strict": true,
-    "jsx": "react"
+    "jsx": "react",
+    "rootDirs": ["src", "stories"],
   },
   "include": [
     "src/**/*"

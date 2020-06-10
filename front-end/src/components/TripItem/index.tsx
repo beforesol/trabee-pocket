@@ -1,7 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@config/routes';
 import { ITrip } from '../../types/api';
