@@ -44,6 +44,7 @@ Trip_1.stroy = {
   name: 'type1'
 }
 
+
 export const Trip_2 = () => (
   <MemoryRouter>
     <TripItem
