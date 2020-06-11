@@ -1,4 +1,5 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'production',
@@ -18,5 +19,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'public/img/sprite', to: 'public/img/sprite' }
     ]),
+    new BundleAnalyzerPlugin({
+      defaultSizes: 'gzip',
+    })
   ]
 };
