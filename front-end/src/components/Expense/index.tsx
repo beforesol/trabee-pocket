@@ -24,7 +24,7 @@ const {
 
 interface IOwnProps {
   currentTripInfo: ITrip;
-  onClickExpenseItem: ({id, type} : {id: string, type: string}) => void;
+  onClickExpenseItem: ({ id, type }: { id: string, type: string }) => void;
   activeDateFilter: string;
   onSetDateActiveFilter: (date: string) => void;
 }
@@ -53,7 +53,7 @@ const Expense: React.FC<IOwnProps> = ({
   const [totalAmount, setTotalAmount] = useState(0);
   const [dateInfo, setDateInfo] = useState<IDateInfo>({
     dDay: 1,
-    date: new Date(currentTripInfo.startDate)
+    date: ''
   })
 
   const dateRange = getDatesBetween(new Date(currentTripInfo.startDate), new Date(currentTripInfo.endDate)).map(item => item.toLocaleDateString());

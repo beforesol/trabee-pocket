@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
+
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 

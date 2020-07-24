@@ -32,7 +32,8 @@ const {
 } = tripActions;
 const {
   getCurrentBudgetInfo,
-  resetCurrentBudgetInfo
+  resetCurrentBudgetInfo,
+  resetCurrentBudgetList
 } = budgetActions;
 
 interface IOwnProps {
@@ -82,7 +83,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   const handleClickExpenseItem = ({
     id,
     type
-  } : {
+  }: {
     id: string,
     type: string
   }) => {
@@ -100,6 +101,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
 
     return () => {
       dispatch(resetCurrentTripInfo());
+      dispatch(resetCurrentBudgetList());
     };
   }, []);
 
@@ -147,7 +149,9 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
           />
         )}
         {activeTab === TAB_INFO.CURRENCY.name && (
-          <Currency />
+          <Currency
+            currentTripInfo={currentTripInfo}
+          />
         )}
         {activeTab === TAB_INFO.EXPENSE.name && (
           <Expense

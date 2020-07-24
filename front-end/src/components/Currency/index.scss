@@ -4,8 +4,18 @@
   .currency_area {
     padding: 50px 10px 0;
   }
-  .list + .list {
-    margin-top: 30px;
+  .list {
+    &.exceed {
+      .usage {
+        background-color: #eebebd;
+      }
+      .remain {
+        color: #de7777;
+      }
+    }
+    & + .list {
+      margin-top: 30px;
+    }
   }
   .link {
     width: 100%;

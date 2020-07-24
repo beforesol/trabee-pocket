@@ -45,3 +45,8 @@ export const EXPENSE_DATE_FILTER = {
 export const EXPENSE_CURRENCY_FILTER = {
   ALL: 'ALL',
 };
+
+export const BALANCE_TYPE = {
+  LESS: '남음',
+  EXCEED: '초과'
+}
