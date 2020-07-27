@@ -363,7 +363,10 @@ const Profile: React.FC<IOwnProps> = ({
           src={imageUrl}
           alt="cover"
         />
-        <input type="file" className={cx('btn_change')} onChange={(e) => handleChangePhoto(e)} />
+        <div className={cx('btn_change')}>
+          커버 사진 변경
+          <input type="file" className={cx('input_change')} onChange={(e) => handleChangePhoto(e)} />
+        </div>
       </div>
       <div className={cx('contents')}>
         <div className={cx('title_area')}>
