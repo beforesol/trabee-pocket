@@ -188,6 +188,7 @@ const IncomeLayer: React.FC<IOwnProps> = ({
       {isOpenRateLayer && (
         <Layer {...rateLayerState}>
           <ExpenseRateEdit
+            countryImageUrl={currentTripInfo.country.imgUrl}
             rate={rate}
             setRate={setRate}
           />

@@ -21,10 +21,12 @@ const {
 } = budgetActions;
 
 interface IOwnProps {
+  userId: string;
   currentTripInfo: ITrip;
 }
 
 const Currency: React.FC<IOwnProps> = ({
+  userId,
   currentTripInfo
 }) => {
   const dispatch = useDispatch();
@@ -110,7 +112,7 @@ const Currency: React.FC<IOwnProps> = ({
                   <span className={cx('usage')} style={{ width: expenseRatio }} />
                 </div>
                 <div className={cx('use_info')}>
-                  <span className={cx('use')}>{currency.en}{totalSpending} 사용</span>
+                  <span className={cx('use')}>{currency.en} {totalSpending} 사용</span>
                   <span className={cx('remain')}>{currency.en} {balanceInfo.balance} {balanceInfo.text}</span>
                 </div>
               </button>
@@ -130,11 +132,14 @@ const Currency: React.FC<IOwnProps> = ({
               />
             )
           }
-          {
-            openCurrencyLayer && (
-              <CurrencyLayer />
-            )
-          }
+          {openCurrencyLayer && (
+            <CurrencyLayer
+              userId={userId}
+              currentTripInfo={currentTripInfo}
+              rate={currentTripInfo.country.currency.rate}
+              onSetOpenCurrencyLayer={setOpenCurrencyLayer}
+            />
+          )}
         </div >
       )
     )

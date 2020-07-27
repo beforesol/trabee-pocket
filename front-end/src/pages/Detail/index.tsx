@@ -150,6 +150,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
         )}
         {activeTab === TAB_INFO.CURRENCY.name && (
           <Currency
+            userId={userId}
             currentTripInfo={currentTripInfo}
           />
         )}

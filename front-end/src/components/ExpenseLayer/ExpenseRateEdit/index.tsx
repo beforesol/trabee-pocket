@@ -8,13 +8,15 @@ const cx = classNames.bind(style);
 interface IOwnProps {
   rate: number;
   setRate: (rate: number) => void;
+  countryImageUrl: string;
 }
 
 const ExpenseRateEdit: React.FC<IOwnProps> = ({
   rate,
-  setRate
+  setRate,
+  countryImageUrl
 }) => {
-  const [useEdit, setUseEdit] = useState(false); 
+  const [useEdit, setUseEdit] = useState(false);
 
   const handleChangeRate = (e: any) => {
     setRate(e.currentTarget.value);
@@ -35,7 +37,7 @@ const ExpenseRateEdit: React.FC<IOwnProps> = ({
       <ul className={cx('country_list')}>
         <li className={cx('list')}>
           <div className={cx('thumbnail')}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/108px-Flag_of_South_Korea.svg.png" alt="" />
+            <img src={countryImageUrl} alt="" />
           </div>
           <div className={cx('figure')}>
             <span className={cx('number')}>1</span>

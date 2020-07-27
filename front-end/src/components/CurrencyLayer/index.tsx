@@ -1,19 +1,93 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
+import { Layer } from '@components/index';
+import ExpenseRateEdit from '@components/ExpenseLayer/ExpenseRateEdit';
+import { LAYER_TYPE } from '@components/Layer';
+import axios from 'axios';
+import { ITrip } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
-const CurrencyLayer = () => {
+interface IOwnProps {
+  userId: string;
+  currentTripInfo: ITrip;
+  rate: number;
+  onSetOpenCurrencyLayer: (isOpen: boolean) => void;
+}
+
+const CurrencyLayer: React.FC<IOwnProps> = ({
+  userId,
+  currentTripInfo,
+  rate: currencyRate,
+  onSetOpenCurrencyLayer
+}) => {
+  const [isOpenRateLayer, setIsOpenRateLayer] = useState(false);
+  const [rateLayerState, setRateLayerState] = useState<any>({ openHandler: setIsOpenRateLayer });
+  const [rate, setRate] = useState(currencyRate);
+  const [isOpenSaveLayer, setIsOpenSaveLayer] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveLayerState, setSaveLayerState] = useState<any>({ openHandler: setIsOpenSaveLayer });
+
+  const handleClickEdit = () => {
+    setIsOpenRateLayer(true);
+    setRateLayerState({
+      ...rateLayerState,
+      layerType: LAYER_TYPE.COMPONENT,
+      handler: saveRate
+    });
+  }
+
+  const saveRate = () => {
+    // 저장하기 로직
+    const tripInfo = {
+      ...currentTripInfo,
+      country: {
+        ...currentTripInfo.country,
+        currency: {
+          ...currentTripInfo.country.currency,
+          rate
+        }
+      }
+    }
+
+    console.log(rate);
+
+    axios.post('/api/profile/save', { userId, tripInfo }).then(() => {
+      setIsOpenSaveLayer(true);
+      setIsSaving(false);
+      setSaveLayerState({
+        ...saveLayerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장을 성공하였습니다.',
+        text: '즐거운 여행 되세요.',
+        handler: () => { }
+      });
+    }).catch(() => {
+      setIsOpenSaveLayer(true);
+      setIsSaving(false);
+      setSaveLayerState({
+        ...saveLayerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '저장을 실패하였습니다.',
+        text: '다시 시도해 주세요.',
+        handler: () => { }
+      });
+    });
+  }
+
+  const { currency } = currentTripInfo.country;
 
   return (
     <div className={cx('currency_layer')}>
       <span className={cx('dimmed')} />
       <div className={cx('inner')}>
         <div className={cx('title_area')}>
-          <button className={cx('btn_close')}><span className="blind">닫기</span></button>
-          <strong className={cx('title')}>KWW</strong>
+          <button
+            className={cx('btn_close')}
+            onClick={() => onSetOpenCurrencyLayer(false)}><span className="blind">닫기</span></button>
+          <strong className={cx('title')}>{currency.en}</strong>
         </div>
         <div className={cx('currency_info')}>
           <strong className={cx('title')}>예산 정보</strong>
@@ -24,7 +98,8 @@ const CurrencyLayer = () => {
             </li>
             <li className={cx('detail_list')}>
               <span className={cx('detail_title')}>환율</span>
-              <button type="button" className={cx('detail_text')}>KRW 1 = KRW 1</button>
+              <button type="button" className={cx('detail_text')} onClick={handleClickEdit}>
+                {currency.en} 1 = KRW {rate}</button>
             </li>
           </ul>
         </div>
@@ -45,10 +120,22 @@ const CurrencyLayer = () => {
             </button>
           </div>
         </div>
-        <div className={cx('btn_delete_area')}>
-          <button className={cx('btn_delete')}>이 예산 삭제하기</button>
-        </div>
       </div>
+      {isSaving && (
+        <p>저장중...</p>
+      )}
+      {isOpenSaveLayer && (
+        <Layer {...saveLayerState} />
+      )}
+      {isOpenRateLayer && (
+        <Layer {...rateLayerState}>
+          <ExpenseRateEdit
+            countryImageUrl={currentTripInfo.country.imgUrl}
+            rate={rate}
+            setRate={setRate}
+          />
+        </Layer>
+      )}
     </div>
   )
 };
