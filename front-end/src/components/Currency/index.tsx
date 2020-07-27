@@ -11,14 +11,9 @@ import { ITrip, IBudget } from '../../types/api';
 import { BUDGET, budgetActions } from '@modules/budget';
 import { useSelector, useDispatch } from 'react-redux';
 import { EXPENSE_TYPE, BALANCE_TYPE } from '@constants/type';
-import { tripActions } from '@modules/trips';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
-
-const {
-  resetCurrentTripInfo
-} = tripActions;
 
 const {
   axiosGetCurrentBudgetApi,
@@ -28,11 +23,13 @@ const {
 interface IOwnProps {
   currentTripInfo: ITrip;
   onClickIncome: (isIncome: boolean) => void
+  onClickExpenseItem: ({ id, type }: { id: string, type: string }) => void;
 }
 
 const Currency: React.FC<IOwnProps> = ({
   currentTripInfo,
-  onClickIncome
+  onClickIncome,
+  onClickExpenseItem
 }) => {
   const dispatch = useDispatch();
 
@@ -58,7 +55,6 @@ const Currency: React.FC<IOwnProps> = ({
 
   useEffect(() => () => {
     dispatch(resetCurrentBudgetList());
-    // dispatch(resetCurrentTripInfo());
   }, []);
 
   useEffect(() => {
@@ -145,6 +141,7 @@ const Currency: React.FC<IOwnProps> = ({
               onClickIncome={onClickIncome}
               budgetList={budgetList}
               totalIncome={totalIncome}
+              onClickExpenseItem={onClickExpenseItem}
             />
           )}
         </div >

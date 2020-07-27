@@ -14,6 +14,7 @@ interface IOwnProps {
   onClickIncome: (isIncome: boolean) => void;
   budgetList: IBudget[];
   totalIncome: number;
+  onClickExpenseItem: ({ id, type }: { id: string, type: string }) => void;
 }
 
 const CurrencyLayer: React.FC<IOwnProps> = ({
@@ -22,7 +23,8 @@ const CurrencyLayer: React.FC<IOwnProps> = ({
   onSetOpenCurrencyLayer,
   onClickIncome,
   budgetList,
-  totalIncome
+  totalIncome,
+  onClickExpenseItem
 }) => {
   const [rate, setRate] = useState(currencyRate);
 
@@ -32,6 +34,10 @@ const CurrencyLayer: React.FC<IOwnProps> = ({
 
   const handleClickClose = () => {
     onSetOpenCurrencyLayer(false);
+  }
+
+  const handleClickBudget = (id: string, type: string) => {
+    onClickExpenseItem({ id, type });
   }
 
   const { currency } = currentTripInfo.country;
@@ -71,7 +77,7 @@ const CurrencyLayer: React.FC<IOwnProps> = ({
                 const date = budget.date.slice(0, 10);
 
                 return (
-                  <button type="button" className={cx('list_item')} key={budget.id}>
+                  <button type="button" className={cx('list_item')} key={budget.id} onClick={() => handleClickBudget(budget.id, budget.type)}>
                     <span className={cx('list_title')}>[{date}] {budget.title}</span>
                     <span className={cx('list_text')}>+ {budget.amount}</span>
                   </button>

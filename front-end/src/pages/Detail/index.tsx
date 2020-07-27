@@ -153,6 +153,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
           <Currency
             currentTripInfo={currentTripInfo}
             onClickIncome={handleClickIncome}
+            onClickExpenseItem={handleClickExpenseItem}
           />
         )}
         {activeTab === TAB_INFO.EXPENSE.name && (
