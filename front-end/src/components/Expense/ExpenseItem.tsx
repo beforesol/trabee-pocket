@@ -16,7 +16,7 @@ interface IOwnProps {
   day: string
   title: string
   time: string
-  onClickExpenseItem: ({id, type}:{id: string, type: string}) => void
+  onClickExpenseItem: ({ id, type }: { id: string, type: string }) => void
 }
 
 
@@ -32,7 +32,7 @@ const ExpenseItem: React.FC<IOwnProps> = ({
   onClickExpenseItem
 }) => {
   const handleClick = () => {
-    onClickExpenseItem({id, type});
+    onClickExpenseItem({ id, type });
   };
 
   return (

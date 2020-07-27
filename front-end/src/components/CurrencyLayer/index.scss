@@ -110,11 +110,21 @@
       height: 30px;
       font-size: 12px;
       .list_title {
+        overflow: hidden;
         float: left;
+        width: 60%;
         color: #949393;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: left;
       }
       .list_text {
+        overflow: hidden;
         float: right;
+        width: 40%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: right;
       }
     }
   }

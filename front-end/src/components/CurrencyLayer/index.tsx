@@ -1,80 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
-import { Layer } from '@components/index';
-import ExpenseRateEdit from '@components/ExpenseLayer/ExpenseRateEdit';
-import { LAYER_TYPE } from '@components/Layer';
-import axios from 'axios';
-import { ITrip } from '../../types/api';
+import { ITrip, IBudget } from '../../types/api';
+import { EXPENSE_TYPE } from '@constants/type';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
 interface IOwnProps {
-  userId: string;
   currentTripInfo: ITrip;
   rate: number;
   onSetOpenCurrencyLayer: (isOpen: boolean) => void;
+  onClickIncome: (isIncome: boolean) => void;
+  budgetList: IBudget[];
+  totalIncome: number;
 }
 
 const CurrencyLayer: React.FC<IOwnProps> = ({
-  userId,
   currentTripInfo,
   rate: currencyRate,
-  onSetOpenCurrencyLayer
+  onSetOpenCurrencyLayer,
+  onClickIncome,
+  budgetList,
+  totalIncome
 }) => {
-  const [isOpenRateLayer, setIsOpenRateLayer] = useState(false);
-  const [rateLayerState, setRateLayerState] = useState<any>({ openHandler: setIsOpenRateLayer });
   const [rate, setRate] = useState(currencyRate);
-  const [isOpenSaveLayer, setIsOpenSaveLayer] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveLayerState, setSaveLayerState] = useState<any>({ openHandler: setIsOpenSaveLayer });
 
-  const handleClickEdit = () => {
-    setIsOpenRateLayer(true);
-    setRateLayerState({
-      ...rateLayerState,
-      layerType: LAYER_TYPE.COMPONENT,
-      handler: saveRate
-    });
+  const handleClickAddIncome = () => {
+    onClickIncome(true);
   }
 
-  const saveRate = () => {
-    // 저장하기 로직
-    const tripInfo = {
-      ...currentTripInfo,
-      country: {
-        ...currentTripInfo.country,
-        currency: {
-          ...currentTripInfo.country.currency,
-          rate
-        }
-      }
-    }
-
-    console.log(rate);
-
-    axios.post('/api/profile/save', { userId, tripInfo }).then(() => {
-      setIsOpenSaveLayer(true);
-      setIsSaving(false);
-      setSaveLayerState({
-        ...saveLayerState,
-        layerType: LAYER_TYPE.TEXT,
-        title: '저장을 성공하였습니다.',
-        text: '즐거운 여행 되세요.',
-        handler: () => { }
-      });
-    }).catch(() => {
-      setIsOpenSaveLayer(true);
-      setIsSaving(false);
-      setSaveLayerState({
-        ...saveLayerState,
-        layerType: LAYER_TYPE.TEXT,
-        title: '저장을 실패하였습니다.',
-        text: '다시 시도해 주세요.',
-        handler: () => { }
-      });
-    });
+  const handleClickClose = () => {
+    onSetOpenCurrencyLayer(false);
   }
 
   const { currency } = currentTripInfo.country;
@@ -86,7 +43,7 @@ const CurrencyLayer: React.FC<IOwnProps> = ({
         <div className={cx('title_area')}>
           <button
             className={cx('btn_close')}
-            onClick={() => onSetOpenCurrencyLayer(false)}><span className="blind">닫기</span></button>
+            onClick={handleClickClose}><span className="blind">닫기</span></button>
           <strong className={cx('title')}>{currency.en}</strong>
         </div>
         <div className={cx('currency_info')}>
@@ -98,44 +55,33 @@ const CurrencyLayer: React.FC<IOwnProps> = ({
             </li>
             <li className={cx('detail_list')}>
               <span className={cx('detail_title')}>환율</span>
-              <button type="button" className={cx('detail_text')} onClick={handleClickEdit}>
-                {currency.en} 1 = KRW {rate}</button>
+              <span className={cx('detail_text')}>{currency.en} 1 = KRW {rate}</span>
             </li>
           </ul>
         </div>
         <div className={cx('currency_amount')}>
           <div className={cx('amount_title_area')}>
             <strong className={cx('title')}>예산 금액</strong>
-            <span className={cx('amount')}>#258</span>
+            <span className={cx('amount')}>{currency.en} {totalIncome}</span>
           </div>
-          <button className={cx('add_currency')}>예산 금액 추가하기</button>
+          <button className={cx('add_currency')} onClick={handleClickAddIncome}>예산 금액 추가하기</button>
           <div className={cx('curreny_list')}>
-            <button type="button" className={cx('list_item')}>
-              <span className={cx('list_title')}>[2020.4.18.] 예산</span>
-              <span className={cx('list_text')}>+ 8,888, 888.00</span>
-            </button>
-            <button type="button" className={cx('list_item')}>
-              <span className={cx('list_title')}>[2020.4.18.] 예산</span>
-              <span className={cx('list_text')}>+ 8,888, 888.00</span>
-            </button>
+            {budgetList.map((budget: IBudget) => {
+              if (budget.type === EXPENSE_TYPE.INCOME) {
+                const date = budget.date.slice(0, 10);
+
+                return (
+                  <button type="button" className={cx('list_item')} key={budget.id}>
+                    <span className={cx('list_title')}>[{date}] {budget.title}</span>
+                    <span className={cx('list_text')}>+ {budget.amount}</span>
+                  </button>
+                )
+              }
+              return;
+            })}
           </div>
         </div>
       </div>
-      {isSaving && (
-        <p>저장중...</p>
-      )}
-      {isOpenSaveLayer && (
-        <Layer {...saveLayerState} />
-      )}
-      {isOpenRateLayer && (
-        <Layer {...rateLayerState}>
-          <ExpenseRateEdit
-            countryImageUrl={currentTripInfo.country.imgUrl}
-            rate={rate}
-            setRate={setRate}
-          />
-        </Layer>
-      )}
     </div>
   )
 };

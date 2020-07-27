@@ -19,10 +19,11 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@config/routes';
 
 import axios from 'axios';
-import { ITrip, ICountry } from '../../types/api';
+import { ITrip } from '../../types/api';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
+
 const {
   setCurrentTripInfo,
   resetCurrentTripInfo

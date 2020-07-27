@@ -8,12 +8,17 @@ import {
 } from '@components/index.ts';
 import { LAYER_TYPE } from '@components/Layer';
 import { ITrip, IBudget } from '../../types/api';
-import { BUDGET, budgetActions, budget } from '@modules/budget';
+import { BUDGET, budgetActions } from '@modules/budget';
 import { useSelector, useDispatch } from 'react-redux';
 import { EXPENSE_TYPE, BALANCE_TYPE } from '@constants/type';
+import { tripActions } from '@modules/trips';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
+
+const {
+  resetCurrentTripInfo
+} = tripActions;
 
 const {
   axiosGetCurrentBudgetApi,
@@ -21,13 +26,13 @@ const {
 } = budgetActions;
 
 interface IOwnProps {
-  userId: string;
   currentTripInfo: ITrip;
+  onClickIncome: (isIncome: boolean) => void
 }
 
 const Currency: React.FC<IOwnProps> = ({
-  userId,
-  currentTripInfo
+  currentTripInfo,
+  onClickIncome
 }) => {
   const dispatch = useDispatch();
 
@@ -53,6 +58,7 @@ const Currency: React.FC<IOwnProps> = ({
 
   useEffect(() => () => {
     dispatch(resetCurrentBudgetList());
+    // dispatch(resetCurrentTripInfo());
   }, []);
 
   useEffect(() => {
@@ -93,7 +99,6 @@ const Currency: React.FC<IOwnProps> = ({
   }, [budgetList]);
 
   const { name, currency } = currentTripInfo.country;
-  const { } = currency;
 
   return (
     (!isBudgetLoaded ? (
@@ -134,10 +139,12 @@ const Currency: React.FC<IOwnProps> = ({
           }
           {openCurrencyLayer && (
             <CurrencyLayer
-              userId={userId}
               currentTripInfo={currentTripInfo}
               rate={currentTripInfo.country.currency.rate}
               onSetOpenCurrencyLayer={setOpenCurrencyLayer}
+              onClickIncome={onClickIncome}
+              budgetList={budgetList}
+              totalIncome={totalIncome}
             />
           )}
         </div >

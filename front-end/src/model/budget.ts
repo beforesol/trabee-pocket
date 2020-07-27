@@ -43,7 +43,7 @@ export default class Budget {
     this.tripId = info.tripId || '';
     this.type = info.type || '';
     this.title = info.title || '';
-    this.amount = info.amount || {};
+    this.amount = info.amount || '';
     this.amountType = info.amountType || '';
     this.currency = info.currency || null;
     this.category = info.category || null;

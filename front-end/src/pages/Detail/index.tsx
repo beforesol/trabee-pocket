@@ -25,6 +25,7 @@ import { EXPENSE_DATE_FILTER, EXPENSE_TYPE } from '@constants/type';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
+
 const { setUserId } = userActions;
 const {
   axiosGetCurrentTripApi,
@@ -150,8 +151,8 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
         )}
         {activeTab === TAB_INFO.CURRENCY.name && (
           <Currency
-            userId={userId}
             currentTripInfo={currentTripInfo}
+            onClickIncome={handleClickIncome}
           />
         )}
         {activeTab === TAB_INFO.EXPENSE.name && (
