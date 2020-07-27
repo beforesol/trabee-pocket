@@ -36,6 +36,8 @@ const Home = () => {
   } = useSelector((state: any) => state[HOME]);
   const [layout, setLayout] = useState(VIEW_TYPE.TYPE_1);
   const { userId } = useSelector((state: any) => state[USER]);
+  const [beforeTripList, setBeforeTripList] = useState<ITrip[]>([]);
+  const [afterTripList, setAfterTripList] = useState<ITrip[]>([]);
 
   useEffect(() => {
     dispatch(setUserId({
@@ -55,7 +57,28 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    userId && !isTripsLoaded && dispatch(axiosGetAllTripApi({ userId }));
+    if (userId) {
+      if (isTripsLoaded) {
+        const beforeTripList: ITrip[] = [];
+        const afterTripList: ITrip[] = [];
+        const nowDate = new Date().getTime();
+
+        tripList.forEach((trip: ITrip) => {
+          const endDate = new Date(trip.endDate).getTime();
+
+          if (nowDate > endDate) {
+            beforeTripList.push(trip);
+          } else {
+            afterTripList.push(trip);
+          }
+        });
+
+        setBeforeTripList([...beforeTripList]);
+        setAfterTripList([...afterTripList]);
+      } else {
+        dispatch(axiosGetAllTripApi({ userId }));
+      }
+    }
   }, [isTripsLoaded, userId]);
 
   const layoutClassName = layout.toLowerCase();
@@ -72,9 +95,9 @@ const Home = () => {
               <div className={cx('history_info')}>지금까지 <em className={cx('num')}>{tripCount}</em>개 나라를 여행 했습니다.</div>
               <div className={cx('section')}>
                 <p className={cx('title')}>다가오는 여행<em className={cx('num')}>{tripCount}</em></p>
-                {tripCount && (
+                {!!afterTripList.length && (
                   <ul className={cx('trip_list', layoutClassName)}>
-                    {tripList.map((item: ITrip) => (
+                    {afterTripList.map((item: ITrip) => (
                       <li className={cx('list')} key={item.id}>
                         <TripItem layoutType={layout} tripInfo={item} />
                       </li>
@@ -84,9 +107,9 @@ const Home = () => {
               </div>
               <div className={cx('section')}>
                 <p className={cx('title')}>지난 여행<em className={cx('num')}>{tripCount}</em></p>
-                {tripCount && (
+                {!!beforeTripList.length && (
                   <ul className={cx('trip_list', layoutClassName)}>
-                    {tripList.map((item: ITrip) => (
+                    {beforeTripList.map((item: ITrip) => (
                       <li className={cx('list')} key={item.id}>
                         <TripItem layoutType={layout} tripInfo={item} />
                       </li>
