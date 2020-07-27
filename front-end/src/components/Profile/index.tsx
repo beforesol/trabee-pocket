@@ -20,6 +20,7 @@ import { ROUTE_PATH } from '@config/routes';
 
 import axios from 'axios';
 import { ITrip } from '../../types/api';
+import { encodeImageFileAsURL } from '@utils/';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -37,6 +38,8 @@ interface IOwnProps {
   onUpdateTab: (tab: string) => void
   onSetShowSelect: (isShow: boolean) => void
 }
+
+const MAX_FILE_SIZE = 10; // MB
 
 const Profile: React.FC<IOwnProps> = ({
   currentTripInfo,
@@ -248,6 +251,51 @@ const Profile: React.FC<IOwnProps> = ({
     });
   };
 
+  const handleChangePhoto = (e: any) => {
+    const file = e.target.files[0];
+    const { type, size } = file;
+    const fileSize = size / 1024 / 1024; // MB
+
+    if (fileSize === MAX_FILE_SIZE) {
+      setIsOpenLayer(true);
+
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '파일 용량이 너무 큽니다.',
+        text: '10MB 이하의 사진을 사용해주세요.',
+        handler: () => { }
+      });
+
+      return;
+    }
+
+    if (
+      type.toLowerCase() === 'image/jpg' ||
+      type.toLowerCase() === 'image/jpeg' ||
+      type.toLowerCase() === 'image/png'
+    ) {
+      encodeImageFileAsURL(file).then((data: any) => {
+        dispatch(setCurrentTripInfo({
+          imageUrl: data
+        }));
+        console.log('result', data);
+      })
+    } else {
+      setIsOpenLayer(true);
+
+      setLayerState({
+        ...layerState,
+        layerType: LAYER_TYPE.TEXT,
+        title: '파일 포맷이 올바르지 않습ㄴ디ㅏ.',
+        text: 'jpg, jpeg, png 사진을 사용해주세요.',
+        handler: () => { }
+      });
+
+      return;
+    }
+  }
+
   const onClickDeleteBtn = (e: any) => {
     handleDeleteBtn(e, (state: any) => {
       setIsOpenLayer(true);
@@ -315,7 +363,7 @@ const Profile: React.FC<IOwnProps> = ({
           src={imageUrl}
           alt="cover"
         />
-        <button type="button" className={cx('btn_change')}>커버 사진 변경</button>
+        <input type="file" className={cx('btn_change')} onChange={(e) => handleChangePhoto(e)} />
       </div>
       <div className={cx('contents')}>
         <div className={cx('title_area')}>
@@ -325,22 +373,20 @@ const Profile: React.FC<IOwnProps> = ({
         <div className={cx('section')}>
           <strong className={cx('title')}>여행 국가</strong>
           <button onClick={() => onSetShowSelect(true)} className={cx('btn_select_country')}>
-            {
-              country ? (
-                <div className={cx('country')}>
-                  <div className={cx('thumbnail')}>
-                    <img
-                      src={country.imgUrl}
-                      className={cx('image')}
-                      alt={country.name}
-                    />
-                  </div>
-                  <span className={cx('name')}>{country.name}</span>
+            {country ? (
+              <div className={cx('country')}>
+                <div className={cx('thumbnail')}>
+                  <img
+                    src={country.imgUrl}
+                    className={cx('image')}
+                    alt={country.name}
+                  />
                 </div>
-              ) : (
-                  <div className={cx('select_country')}>국가를 선택해주세요.</div>
-                )
-            }
+                <span className={cx('name')}>{country.name}</span>
+              </div>
+            ) : (
+                <div className={cx('select_country')}>국가를 선택해주세요.</div>
+              )}
           </button>
         </div>
         <div className={cx('section')}>
@@ -382,10 +428,12 @@ const Profile: React.FC<IOwnProps> = ({
           <button type="button" className={cx('btn', 'btn_submit')} onClick={e => onClickSaveBtn(e)}>이 여행 저장하기</button>
         </div>
       </div>
-      {isOpenLayer && (
-        <Layer {...layerState} />
-      )}
-    </div>
+      {
+        isOpenLayer && (
+          <Layer {...layerState} />
+        )
+      }
+    </div >
   );
 };
 

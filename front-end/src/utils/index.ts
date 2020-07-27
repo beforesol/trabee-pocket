@@ -20,3 +20,18 @@ export const getDatesBetween = (startDate: any, endDate: any) => {
 
   return dates;
 };
+
+export const encodeImageFileAsURL = (file: any) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => {
+      resolve(reader.result);
+    }
+
+    reader.onerror = () => {
+      reject();
+    }
+  })
+}
