@@ -8,6 +8,7 @@ export interface ITripInfo {
   imageUrl: string;
   startDate: string
   endDate: string
+  totalAmount: string;
 }
 
 export default class Trip {
@@ -18,6 +19,7 @@ export default class Trip {
   imageUrl: string;
   startDate: string
   endDate: string
+  totalAmount: string
 
   constructor() {
     this.id = '';
@@ -27,6 +29,7 @@ export default class Trip {
     this.imageUrl = DUMMY_IMAGES[Math.floor(Math.random() * DUMMY_IMAGES.length)];
     this.startDate = '';
     this.endDate = '';
+    this.totalAmount = '';
 
     return this;
   }
@@ -39,6 +42,7 @@ export default class Trip {
     this.imageUrl = info.imageUrl || this.imageUrl;
     this.startDate = info.startDate || '';
     this.endDate = info.endDate || '';
+    this.totalAmount = info.totalAmount || '';
 
     return this;
   }

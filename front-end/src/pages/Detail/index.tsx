@@ -184,6 +184,7 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
         )}
         {isOpenSpendingLayer && (
           <SpendingLayer
+            userId={userId}
             activeDateFilter={activeDateFilter}
             currentTripInfo={currentTripInfo}
             onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}

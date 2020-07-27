@@ -9,7 +9,8 @@ var tripSchema = new Schema({
   country: Object,
   startDate: String,
   endDate: String,
-  budgets: Array
+  budgets: Array,
+  totalAmount: String
 });
 
 module.exports = mongoose.model('trip', tripSchema);

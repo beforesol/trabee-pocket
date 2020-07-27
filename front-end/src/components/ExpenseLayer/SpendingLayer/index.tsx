@@ -17,6 +17,7 @@ import axios from 'axios';
 import { getDatesBetween } from '@utils/index';
 import { EXPENSE_DATE_FILTER } from '@constants/type';
 import { ITrip, IBudget } from '../../../types/api';
+import { TRIP, tripActions } from '@modules/trips';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -24,18 +25,24 @@ const {
   resetCurrentBudgetList
 } = budgetActions;
 
+const {
+  axiosGetCurrentTripApi,
+} = tripActions;
+
 interface IOwnProps {
   currentTripInfo: ITrip
   onSetIsOpenSpendingLayer: (isOpen: boolean) => void
   currentBudgetInfo: IBudget
   activeDateFilter: string
+  userId: string
 }
 
 const SpendingLayer: React.FC<IOwnProps> = ({
   currentTripInfo,
   onSetIsOpenSpendingLayer,
   currentBudgetInfo,
-  activeDateFilter
+  activeDateFilter,
+  userId
 }) => {
   const dispatch = useDispatch();
 
@@ -82,14 +89,43 @@ const SpendingLayer: React.FC<IOwnProps> = ({
     setIsSaving(true);
 
     axios.post('/api/budget/save', { budgetInfo }).then(() => {
-      setIsOpenSaveLayer(true);
-      setIsSaving(false);
-      setSaveLayerState({
-        ...saveLayerState,
-        layerType: LAYER_TYPE.TEXT,
-        title: '저장을 성공하였습니다.',
-        text: '즐거운 여행 되세요.',
-        handler: handleSuccessSave
+      // setIsOpenSaveLayer(true);
+      // setIsSaving(false);
+      // setSaveLayerState({
+      //   ...saveLayerState,
+      //   layerType: LAYER_TYPE.TEXT,
+      //   title: '저장을 성공하였습니다.',
+      //   text: '즐거운 여행 되세요.',
+      //   handler: handleSuccessSave
+      // });
+
+      const tripInfo = {
+        ...currentTripInfo,
+        totalAmount: Number(currentTripInfo.totalAmount) + Number(displayValue)
+      }
+
+      axios.post('/api/profile/save', { userId, currentTripInfo: tripInfo }).then(() => {
+        setIsOpenSaveLayer(true);
+        setIsSaving(false);
+        setSaveLayerState({
+          ...saveLayerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '저장을 성공하였습니다.',
+          text: '즐거운 여행 되세요.',
+          handler: handleSuccessSave
+        });
+
+        dispatch(axiosGetCurrentTripApi({ userId, id: currentTripInfo.id }));
+      }).catch(() => {
+        setIsOpenSaveLayer(true);
+        setIsSaving(false);
+        setSaveLayerState({
+          ...saveLayerState,
+          layerType: LAYER_TYPE.TEXT,
+          title: '저장을 실패하였습니다.',
+          text: '다시 시도해 주세요.',
+          handler: () => { }
+        });
       });
     }).catch(() => {
       setIsOpenSaveLayer(true);

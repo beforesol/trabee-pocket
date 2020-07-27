@@ -37,6 +37,7 @@ router.post('/save', function (req, res, next) {
     tripDB.country = currentTripInfo.country;
     tripDB.startDate = currentTripInfo.startDate;
     tripDB.endDate = currentTripInfo.endDate;
+    tripDB.totalAmount = currentTripInfo.totalAmount;
     tripDB.budgets = {};
 
     tripDB.save(function (err, docsInserted) {

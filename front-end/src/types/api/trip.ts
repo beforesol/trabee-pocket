@@ -9,4 +9,5 @@ export default interface ITrip {
   startDate: string;
   endDate: string;
   status: string;
+  totalAmount: number;
 }
