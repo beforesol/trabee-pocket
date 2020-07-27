@@ -86,12 +86,12 @@ const IncomeLayer: React.FC<IOwnProps> = ({
     setIsSaving(true);
 
     axios.post('/api/budget/save', { budgetInfo }).then(() => {
-      const { currency } = currentTripInfo.country;
-
       dispatch(setCurrentTripInfo({
+        ...currentTripInfo,
         country: {
+          ...currentTripInfo.country,
           currency: {
-            ...currency,
+            ...currentTripInfo.country.currency,
             rate
           }
         }
