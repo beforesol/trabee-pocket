@@ -1,14 +1,14 @@
-import React, { Suspense } from 'react';
-import { Provider } from 'react-redux';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Provider, useSelector } from 'react-redux';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
-import { createHashHistory } from 'history';
 import configureStore from '@config/store';
 import createRoutes from '@config/routes';
+import Login from '@pages/Login';
+import { LOGIN } from '@modules/login';
 
 const initialState = {};
 
-const history = createHashHistory();
 const store = configureStore(initialState);
 const routes = createRoutes();
 
@@ -16,26 +16,37 @@ const Loading = () => (
   <div>로딩...</div>
 );
 
+const Main = () => {
+  const { isLogin } = useSelector((state: any) => state[LOGIN]);
+
+  return (
+    <>
+      {isLogin ? (
+        <HashRouter>
+          <Suspense fallback={Loading()}>
+            <Switch>
+              {
+                routes.map((item: any) => (
+                  <Route
+                    key={item.name}
+                    exact={item.exact}
+                    path={item.path}
+                    component={item.component}
+                  />))
+              }
+            </Switch>
+          </Suspense>
+        </HashRouter>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
+};
 const App = () => (
-  <>
-    <Provider store={store}>
-      <HashRouter>
-        <Suspense fallback={Loading()}>
-          <Switch>
-            {
-              routes.map((item: any) => (
-                <Route
-                  key={item.name}
-                  exact={item.exact}
-                  path={item.path}
-                  component={item.component}
-                />))
-            }
-          </Switch>
-        </Suspense>
-      </HashRouter>
-    </Provider>
-  </>
+  <Provider store={store}>
+    <Main />
+  </Provider>
 );
 
 

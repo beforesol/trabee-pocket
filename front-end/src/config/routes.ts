@@ -11,11 +11,6 @@ export const ROUTE_PATH = {
     url: '/detail',
     name: 'Detail'
   },
-  LOGIN: {
-    path: '/login',
-    url: '/login',
-    name: 'LOGIN'
-  }
 };
 
 export default function createRoutes() {
@@ -30,10 +25,5 @@ export default function createRoutes() {
       exact: true,
       component: lazy(() => import('@pages/Detail/index.tsx'))
     },
-    {
-      ...ROUTE_PATH.LOGIN,
-      exact: true,
-      component: lazy(() => import('@pages/Login/index.tsx'))
-    }
   ];
 }

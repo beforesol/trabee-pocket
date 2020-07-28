@@ -16,7 +16,7 @@ import { TAB_INFO } from '@components/Tab';
 import classNames from 'classnames/bind';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { USER, userActions } from '@modules/users';
+import { USER } from '@modules/users';
 import { TRIP, tripActions } from '@modules/trips';
 import { BUDGET, budgetActions } from '@modules/budget';
 import { NEW_ROUTER_ID } from '@pages/Home';
@@ -26,7 +26,6 @@ import { EXPENSE_DATE_FILTER, EXPENSE_TYPE } from '@constants/type';
 const style = require('./index.scss');
 const cx = classNames.bind(style);
 
-const { setUserId } = userActions;
 const {
   axiosGetCurrentTripApi,
   resetCurrentTripInfo,
@@ -92,18 +91,11 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
 
     if (type === EXPENSE_TYPE.SPENDING) setIsOpenSpendingLayer(true);
     if (type === EXPENSE_TYPE.INCOME) setIsOpenIncomeLayer(true);
-
   };
 
-  useEffect(() => {
-    dispatch(setUserId({
-      userId: 'jeonsol'
-    }));
-
-    return () => {
-      dispatch(resetCurrentTripInfo());
-      dispatch(resetCurrentBudgetList());
-    };
+  useEffect(() => () => {
+    dispatch(resetCurrentTripInfo());
+    dispatch(resetCurrentBudgetList());
   }, []);
 
   useEffect(() => {
@@ -131,40 +123,40 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
   return (!isLoaded ? (
     isFailed ? (<p>실패하였습니다</p>) : (<p>로딩중...</p>)
   ) : (
-      <div className={cx('detail')}>
-        <Tab
-          match={match}
-          updateTab={updateTab}
-          activeTab={activeTab}
-          onClickSpending={handleClickSpending}
-          onClickIncome={handleClickIncome}
+    <div className={cx('detail')}>
+      <Tab
+        match={match}
+        updateTab={updateTab}
+        activeTab={activeTab}
+        onClickSpending={handleClickSpending}
+        onClickIncome={handleClickIncome}
+      />
+      {activeTab === TAB_INFO.PROFILE.name && (
+        <Profile
+          currentTripInfo={currentTripInfo}
+          id={id}
+          history={history}
+          onUpdateTab={updateTab}
+          userId={userId}
+          onSetShowSelect={setShowSelect}
         />
-        {activeTab === TAB_INFO.PROFILE.name && (
-          <Profile
-            currentTripInfo={currentTripInfo}
-            id={id}
-            history={history}
-            onUpdateTab={updateTab}
-            userId={userId}
-            onSetShowSelect={setShowSelect}
-          />
-        )}
-        {activeTab === TAB_INFO.CURRENCY.name && (
-          <Currency
-            currentTripInfo={currentTripInfo}
-            onClickIncome={handleClickIncome}
-            onClickExpenseItem={handleClickExpenseItem}
-          />
-        )}
-        {activeTab === TAB_INFO.EXPENSE.name && (
-          <Expense
-            activeDateFilter={activeDateFilter}
-            onSetDateActiveFilter={setDateActiveFilter}
-            currentTripInfo={currentTripInfo}
-            onClickExpenseItem={handleClickExpenseItem}
-          />
-        )}
-        {activeTab === TAB_INFO.REPORT.name && (
+      )}
+      {activeTab === TAB_INFO.CURRENCY.name && (
+        <Currency
+          currentTripInfo={currentTripInfo}
+          onClickIncome={handleClickIncome}
+          onClickExpenseItem={handleClickExpenseItem}
+        />
+      )}
+      {activeTab === TAB_INFO.EXPENSE.name && (
+        <Expense
+          activeDateFilter={activeDateFilter}
+          onSetDateActiveFilter={setDateActiveFilter}
+          currentTripInfo={currentTripInfo}
+          onClickExpenseItem={handleClickExpenseItem}
+        />
+      )}
+      {activeTab === TAB_INFO.REPORT.name && (
           <>
             {isOpenLayer && (
               <Layer
@@ -176,32 +168,32 @@ const Detail: React.FC<IOwnProps> = ({ match, history }) => {
               />
             )}
           </>
-        )}
-        {showSelect && (
-          <Select
-            onSetShowSelect={setShowSelect}
-          />
-        )}
-        {isOpenSpendingLayer && (
-          <SpendingLayer
-            userId={userId}
-            activeDateFilter={activeDateFilter}
-            currentTripInfo={currentTripInfo}
-            onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
-            currentBudgetInfo={currentBudgetInfo}
-          />
-        )}
-        {isOpenIncomeLayer && (
-          <IncomeLayer
-            activeDateFilter={activeDateFilter}
-            currentTripInfo={currentTripInfo}
-            onSetIsOpenIncomeLayer={setIsOpenIncomeLayer}
-            currentBudgetInfo={currentBudgetInfo}
-            userId={userId}
-          />
-        )}
-      </div>
-    ));
+      )}
+      {showSelect && (
+        <Select
+          onSetShowSelect={setShowSelect}
+        />
+      )}
+      {isOpenSpendingLayer && (
+        <SpendingLayer
+          userId={userId}
+          activeDateFilter={activeDateFilter}
+          currentTripInfo={currentTripInfo}
+          onSetIsOpenSpendingLayer={setIsOpenSpendingLayer}
+          currentBudgetInfo={currentBudgetInfo}
+        />
+      )}
+      {isOpenIncomeLayer && (
+        <IncomeLayer
+          activeDateFilter={activeDateFilter}
+          currentTripInfo={currentTripInfo}
+          onSetIsOpenIncomeLayer={setIsOpenIncomeLayer}
+          currentBudgetInfo={currentBudgetInfo}
+          userId={userId}
+        />
+      )}
+    </div>
+  ));
 };
 
 export default hot(Detail);
