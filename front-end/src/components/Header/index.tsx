@@ -3,6 +3,8 @@ import { hot } from 'react-hot-loader/root';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { VIEW_TYPE } from '@constants/type';
+import { Link } from 'react-router-dom';
+import { ROUTE_PATH } from '@config/routes';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -19,7 +21,7 @@ const Header: React.FC<IOwnProps> = ({ onChangeLayout }) => {
   return (
     <div className={cx('header')}>
       <div className={cx('header_area')}>
-        <button className={cx('btn_login')}><span className={cx('blind')}>로그인</span></button>
+        <Link to={ROUTE_PATH.LOGIN.url} className={cx('btn_login')}><span className={cx('blind')}>로그인</span></Link>
         <h1 className={cx('title')}>TRABEE POCKET</h1>
         <div className={cx('right_area')}>
           <button className={cx('btn', 'btn_upgrade')}><span className={cx('blind')}>업그레이드</span></button>
