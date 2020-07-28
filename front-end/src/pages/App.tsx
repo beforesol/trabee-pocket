@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense } from 'react';
 import { Provider, useSelector } from 'react-redux';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import configureStore from '@config/store';
 import createRoutes from '@config/routes';
@@ -22,7 +22,7 @@ const Main = () => {
   return (
     <>
       {isLogin ? (
-        <HashRouter>
+        <BrowserRouter>
           <Suspense fallback={Loading()}>
             <Switch>
               {
@@ -36,7 +36,7 @@ const Main = () => {
               }
             </Switch>
           </Suspense>
-        </HashRouter>
+        </BrowserRouter>
       ) : (
         <Login />
       )}

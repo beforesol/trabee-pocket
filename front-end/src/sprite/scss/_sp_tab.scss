@@ -82,7 +82,7 @@ $sprite-map-tab: (
   display: inline-block;
   width: #{$width}px;
   height: #{$height}px;
-  background: url(public/img/sprite/_sp_tab.svg) no-repeat;
+  background: url(/public/img/sprite/_sp_tab.svg) no-repeat;
   background-position: #{$bgl}#{"px"} #{$bgt}#{"px"};
   background-size: #{$bgw}px #{$bgh}px;
   vertical-align: top;

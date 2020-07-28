@@ -24,7 +24,7 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [autoprefixer(),],
+  plugins: () => [autoprefixer(), ],
 };
 
 module.exports = {
@@ -49,16 +49,9 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   enforce: 'pre',
-      //   include: path.resolve(__dirname, './src'),
-      //   test: /\.(js|jsx)$/,
-      //   loader: 'eslint-loader',
-      //   exclude: /node_module/,
-      // },
       {
         test: /\.(ts|tsx)$/,
-        use: [{ loader: 'ts-loader' },]
+        use: [{ loader: 'ts-loader' }, ]
       },
       {
         test: /\.(css)$/,
