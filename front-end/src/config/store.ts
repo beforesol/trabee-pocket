@@ -4,7 +4,6 @@ import {
   compose,
 } from 'redux';
 import {
-  routerReducer,
   routerMiddleware,
 } from 'react-router-redux';
 import createReducer from './rootReducers';
@@ -20,10 +19,9 @@ declare global {
 const devTools =
   process.env.NODE_ENV === 'development' && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : (f: any) => f;
 
-export default function configureStore(initialState: any, history: any) {
+export default function configureStore(initialState: any) {
   const middlewares = [
     middleware,
-    routerMiddleware(history),
   ];
 
   const enhancer = compose(applyMiddleware(...middlewares), devTools);

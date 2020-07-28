@@ -5,7 +5,7 @@ var tripSchema = new Schema({
   userId: String,
   title: String,
   memo: String,
-  imageUrl: String,
+  imageUrl: Object,
   country: Object,
   startDate: String,
   endDate: String,

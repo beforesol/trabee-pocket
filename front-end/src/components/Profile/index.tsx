@@ -20,7 +20,8 @@ import { ROUTE_PATH } from '@config/routes';
 
 import axios from 'axios';
 import { ITrip } from '../../types/api';
-import { encodeImageFileAsURL } from '@utils/';
+import { encodeImageFileAsURL, getImageSrc } from '@utils/index';
+import { DUMMY_IMAGES } from '../../dummy/images';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -39,7 +40,7 @@ interface IOwnProps {
   onSetShowSelect: (isShow: boolean) => void
 }
 
-const MAX_FILE_SIZE = 10; // MB
+const MAX_FILE_SIZE = 50; // KB
 
 const Profile: React.FC<IOwnProps> = ({
   currentTripInfo,
@@ -64,10 +65,12 @@ const Profile: React.FC<IOwnProps> = ({
   const [endDate, setEndDate] = useState<any>('');
 
   const setAllTripData = (data: any) => {
+    const imageUrl = getImageSrc(data.imageUrl.type, data.imageUrl.fileData);
+
     setTitle(data.title);
     setMemo(data.memo);
     setCountry(data.country);
-    setImageUrl(data.imageUrl);
+    setImageUrl(imageUrl);
     setStartDate(data.startDate);
     setEndDate(data.endDate);
   };
@@ -251,19 +254,28 @@ const Profile: React.FC<IOwnProps> = ({
     });
   };
 
+  const handleClickPhotoDefault = () => {
+    dispatch(setCurrentTripInfo({
+      imageUrl: {
+        type: 'DEFAULT',
+        fileData: DUMMY_IMAGES[Math.floor(Math.random() * DUMMY_IMAGES.length)]
+      }
+    }));
+  }
+
   const handleChangePhoto = (e: any) => {
     const file = e.target.files[0];
     const { type, size } = file;
-    const fileSize = size / 1024 / 1024; // MB
+    const fileSize = size / 1024; // KB
 
-    if (fileSize === MAX_FILE_SIZE) {
+    if (fileSize > MAX_FILE_SIZE) {
       setIsOpenLayer(true);
 
       setLayerState({
         ...layerState,
         layerType: LAYER_TYPE.TEXT,
         title: '파일 용량이 너무 큽니다.',
-        text: '10MB 이하의 사진을 사용해주세요.',
+        text: '50KB 이하의 사진을 사용해주세요. 뎨뎡..ㅠ',
         handler: () => { }
       });
 
@@ -276,10 +288,14 @@ const Profile: React.FC<IOwnProps> = ({
       type.toLowerCase() === 'image/png'
     ) {
       encodeImageFileAsURL(file).then((data: any) => {
+        const imageFile = data.split(',');
+
         dispatch(setCurrentTripInfo({
-          imageUrl: data
+          imageUrl: {
+            type: imageFile[0],
+            fileData: imageFile[1]
+          }
         }));
-        console.log('result', data);
       })
     } else {
       setIsOpenLayer(true);
@@ -287,7 +303,7 @@ const Profile: React.FC<IOwnProps> = ({
       setLayerState({
         ...layerState,
         layerType: LAYER_TYPE.TEXT,
-        title: '파일 포맷이 올바르지 않습ㄴ디ㅏ.',
+        title: '파일 포맷이 올바르지 않습니다.',
         text: 'jpg, jpeg, png 사진을 사용해주세요.',
         handler: () => { }
       });
@@ -337,7 +353,7 @@ const Profile: React.FC<IOwnProps> = ({
           ...layerState,
           layerType: LAYER_TYPE.TEXT,
           title: '저장을 실패하였습니다.',
-          text: '다시 시도해 주세요.',
+          text: '용량이 작고 소중해서리..이미지 사이즈를 줄여주세요...',
           handler: handleFailSave
         });
       }
@@ -363,9 +379,12 @@ const Profile: React.FC<IOwnProps> = ({
           src={imageUrl}
           alt="cover"
         />
-        <div className={cx('btn_change')}>
-          커버 사진 변경
+        <div className={cx('btn_change_area')}>
+          <button type="button" className={cx('btn_change')} onClick={handleClickPhotoDefault}>기본 사진</button>
+          <div className={cx('btn_change')}>
+            커버 사진 변경
           <input type="file" className={cx('input_change')} onChange={(e) => handleChangePhoto(e)} />
+          </div>
         </div>
       </div>
       <div className={cx('contents')}>

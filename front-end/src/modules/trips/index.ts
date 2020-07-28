@@ -57,13 +57,11 @@ const tripReducer = {
   }),
   [SET_CURRENT_TRIP_INFO]: (state: any, action: any) => {
     const { payload } = action;
-    let { currentTripInfo } = state;
-
-    currentTripInfo = { ...currentTripInfo, ...payload };
+    const tripInfo = { ...state.currentTripInfo, ...payload };
 
     return {
       ...state,
-      currentTripInfo
+      currentTripInfo: tripInfo
     };
   },
   [RESET_CURRENT_TRIP_INTO]: (state: any) => ({

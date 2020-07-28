@@ -6,10 +6,12 @@
     position: relative;
     overflow: hidden;
     height: 152px;
+    background-color: #d5d2d2;
     .btn_home {
       position: absolute;
       top: 7px;
       left: 10px;
+      z-index: 1;
       &:before {
         display: inline-block;
         @include get-sprite-profile('icon_home', 20);
@@ -18,16 +20,39 @@
       }
     }
     .cover_image {
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      bottom: -50%;
+      left: -50%;
       width: 100%;
-      vertical-align: top;
+      height: auto;
+      margin: auto;
     }
-    .btn_change {
+    .btn_change_area {
       position: absolute;
       right: 9px;
       bottom: 7px;
-      width: 80px;
       font-size: 13px;
+    }
+    .btn_change {
+      display: inline-block;
+      position: relative;
       color: #fff;
+      text-shadow: 1px 1px 2px #ababab;
+      vertical-align: top;
+      & + .btn_change {
+        margin-left: 5px;
+        &:before {
+          display: inline-block;
+          width: 1px;
+          height: 10px;
+          margin: 2px 8px 0 0;
+          background-color: #fff;
+          vertical-align: top;
+          content: '';
+        }
+      }
       .input_change {
         position: absolute;
         top: 0;

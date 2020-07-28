@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@config/routes';
 import { ITrip } from '../../types/api';
 import Img from '@components/Img';
+import { getImageSrc } from '@utils/index';
 
 const style = require('./index.scss');
 const cx = classNames.bind(style);
@@ -20,7 +21,7 @@ const TripItem: React.FC<IOwnProps> = ({ tripInfo, layoutType }) => {
   return (
     <Link to={`${ROUTE_PATH.DETAIL.url}/${tripInfo.id}`} className={cx('trip_item', layoutClassName)}>
       <div className={cx('inner')}>
-        <Img src={tripInfo.imageUrl} useLazyLoad={true} className={cx('trip_image')} />
+        <Img src={getImageSrc(tripInfo.imageUrl.type, tripInfo.imageUrl.fileData)} useLazyLoad={true} className={cx('trip_image')} />
         <div className={cx('info')}>
           <strong className={cx('title')}>{tripInfo.title}</strong>
           <p className={cx('date')}>{tripInfo.startDate} ~ {tripInfo.endDate}</p>

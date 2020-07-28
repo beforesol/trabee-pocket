@@ -5,9 +5,14 @@ export default interface ITrip {
   title: string;
   memo: string;
   country: ICountry;
-  imageUrl: string;
+  imageUrl: ITripImage;
   startDate: string;
   endDate: string;
   status: string;
   totalAmount: number;
+}
+
+export interface ITripImage {
+  type: string;
+  fileData: string;
 }

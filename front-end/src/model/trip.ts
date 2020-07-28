@@ -5,7 +5,7 @@ export interface ITripInfo {
   title: string
   memo: string
   country: any
-  imageUrl: string;
+  imageUrl: any;
   startDate: string
   endDate: string
   totalAmount: string;
@@ -16,7 +16,7 @@ export default class Trip {
   title: string
   memo: string
   country: any
-  imageUrl: string;
+  imageUrl: any;
   startDate: string
   endDate: string
   totalAmount: string
@@ -26,7 +26,10 @@ export default class Trip {
     this.title = '';
     this.memo = '';
     this.country = null;
-    this.imageUrl = DUMMY_IMAGES[Math.floor(Math.random() * DUMMY_IMAGES.length)];
+    this.imageUrl = {
+      type: 'DEFAULT',
+      fileData: DUMMY_IMAGES[Math.floor(Math.random() * DUMMY_IMAGES.length)]
+    };
     this.startDate = '';
     this.endDate = '';
     this.totalAmount = '';
@@ -40,6 +43,7 @@ export default class Trip {
     this.memo = info.memo || '';
     this.country = info.country || {};
     this.imageUrl = info.imageUrl || this.imageUrl;
+    this.imageUrl = info.imageUrl || null;
     this.startDate = info.startDate || '';
     this.endDate = info.endDate || '';
     this.totalAmount = info.totalAmount || '';

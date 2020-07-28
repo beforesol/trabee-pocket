@@ -17,7 +17,6 @@ router.post('/', function (req, res, next) {
 
 router.post('/save', function (req, res, next) {
   const { currentTripInfo, userId } = req.body;
-
   if (currentTripInfo.id) {
     // edit
     Trip.findByIdAndUpdate(currentTripInfo.id, currentTripInfo, { new: false }, function (err, docsInserted) {

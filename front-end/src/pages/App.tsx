@@ -9,12 +9,12 @@ import createRoutes from '@config/routes';
 const initialState = {};
 
 const history = createHashHistory();
-const store = configureStore(initialState, history);
+const store = configureStore(initialState);
 const routes = createRoutes();
 
 const Loading = () => (
   <div>로딩...</div>
-)
+);
 
 const App = () => (
   <>
