@@ -6,12 +6,12 @@ const spriter = new SuperEasySpriter({
   entry: path.resolve(__dirname, 'sprites'),
   publicPath: '/',
   output: {
-    sprite: '/public/img/sprite',
+    sprite: '/assets/img/sprite',
     scss: path.resolve(__dirname, 'scss')
   },
   options: {
     filePrefix: '_sp_',
-    bgRootUrl: '/public/img/sprite'
+    bgRootUrl: '/assets/img/sprite'
   }
 });
 

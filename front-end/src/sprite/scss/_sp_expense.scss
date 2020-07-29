@@ -145,7 +145,7 @@ $sprite-map-expense: (
   display: inline-block;
   width: #{$width}px;
   height: #{$height}px;
-  background: url(/public/img/sprite/_sp_expense.svg) no-repeat;
+  background: url(/assets/img/sprite/_sp_expense.svg) no-repeat;
   background-position: #{$bgl}#{"px"} #{$bgt}#{"px"};
   background-size: #{$bgw}px #{$bgh}px;
   vertical-align: top;

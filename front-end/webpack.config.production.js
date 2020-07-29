@@ -16,9 +16,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'public/img/sprite', to: 'public/img/sprite' }
-    ]),
+    new CopyWebpackPlugin([{ from: 'assets', to: 'dist/assets' }]),
     new BundleAnalyzerPlugin({
       defaultSizes: 'gzip',
     })

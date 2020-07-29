@@ -56,15 +56,16 @@ const Img: React.FC<IOwnProps> = ({
         lazyLoadingIO.observe(imgRef.current);
       }
     }, [imgRef]);
-  }lazyLoadOptions
+  } lazyLoadOptions;
 
   const imageSrc = useCustomDefaultBackground ? (src) : (src || fallbackSrc);
 
   const onError = () => {
     if (!useCustomDefaultBackground) imgRef.current.src = LAZY_LOAD_DEFAULT_IMAGE;
-  }
+  };
 
-  const defaultImageSrc = useCustomDefaultBackground ? `/public/img/transparent.png` : LAZY_LOAD_DEFAULT_IMAGE;
+  const defaultImageSrc = useCustomDefaultBackground ? '/assets/img/transparent.png' : LAZY_LOAD_DEFAULT_IMAGE;
+
   return (
     <img
       ref={imgRef}
