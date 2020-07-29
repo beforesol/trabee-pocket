@@ -47,7 +47,7 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
   };
 
   useEffect(() => {
-    axios.get('/api/select').then(response => {
+    axios.post('/api/select').then(response => {
       const countriesArray: ICountry[] = [];
 
       setContinent(response.data);

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Trip = require('../models/trip');
+const path = require('path');
+const Trip = require(path.join(__dirname, '../models/trip'));
 
 router.post('/', function (req, res, next) {
   const userId = req.body.userId;

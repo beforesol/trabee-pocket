@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const MergeCountry = require('../models/mergeCountry');
-const Country = require('../models/Country');
+
+const path = require('path');
+const Country = require(path.join(__dirname, '../models/country'));
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.post('/', function (req, res, next) {
   Country.find({}, function (err, countries) {
     if (err) return res.status(500).json({ error: err });
     if (!countries) return res.json({ error: 'countries not found' });

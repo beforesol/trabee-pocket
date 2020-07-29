@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const path = require('path');
+const User = require(path.join(__dirname, '../models/user'));
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

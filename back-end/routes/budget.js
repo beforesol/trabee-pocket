@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Budget = require('../models/budget');
+
+const path = require('path');
+const Budget = require(path.join(__dirname, '../models/budget'));
 
 router.post('/save', function (req, res, next) {
   const { budgetInfo } = req.body;

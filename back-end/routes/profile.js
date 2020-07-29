@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Trip = require('../models/trip');
+const path = require('path');
+const Trip = require(path.join(__dirname, '../models/trip'));
 
 router.post('/', function (req, res, next) {
+
   const id = req.body.id;
   const userId = req.body.userId;
+  console.log('id', id);
 
   Trip.findOne({ _id: id, userId }, function (err, tripData) {
     if (err) return res.status(500).json({ error: err });

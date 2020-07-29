@@ -9,7 +9,6 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const tests = require('./routes/test'); //add
 const selectRouter = require('./routes/select');
 const profileRouter = require('./routes/profile');
 const homeRouter = require('./routes/home');
@@ -36,7 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/tests', tests); //add
 app.use('/api/select', selectRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/home', homeRouter);
@@ -55,7 +53,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('errors');
 });
 
 module.exports = app;
