@@ -24,7 +24,7 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [autoprefixer(),],
+  plugins: () => [autoprefixer(), ],
 };
 
 module.exports = {
@@ -55,7 +55,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: [{ loader: 'ts-loader' },]
+        use: [{ loader: 'ts-loader' }, ]
       },
       {
         test: /\.(css)$/,
@@ -90,6 +90,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      favicon: 'public/favicon.ico'
     })
   ],
 };
