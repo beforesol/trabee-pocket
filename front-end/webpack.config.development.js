@@ -5,10 +5,6 @@ const port = process.env.PORT || 8080;
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  output: {
-    filename: 'bundle.[hash].js',
-    publicPath: '/'
-  },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     host: '0.0.0.0',

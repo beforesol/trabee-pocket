@@ -19,17 +19,18 @@ const app = express();
 
 // mongoose.connect('mongodb://localhost:270217/trabee-web');
 // mongoose.connect('mongodb://localhost:27918/trabee-web');
-mongoose.connect('mongodb+srv://user:2017@cluster0-hqi94.mongodb.net/trabee-web?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://user:2017@cluster0-hqi94.mongodb.net/trabee-web?retryWrites=true&w=majority', { useNewUrlParser: true });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

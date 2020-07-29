@@ -4,9 +4,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
-  output: {
-    filename: 'bundle.js',
-  },
   module: {
     rules: [
       {
@@ -16,7 +13,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([{ from: 'assets', to: 'dist/assets' }]),
+    new CopyWebpackPlugin([{ from: 'assets', to: 'assets' }]),
     new BundleAnalyzerPlugin({
       defaultSizes: 'gzip',
     })

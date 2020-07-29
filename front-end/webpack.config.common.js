@@ -24,12 +24,16 @@ const scssLoaderOptions = {
 
 const postCssLoaderOptions = {
   ident: 'postcss',
-  plugins: () => [autoprefixer(), ],
+  plugins: () => [autoprefixer(),],
 };
 
 module.exports = {
   mode: 'development',
   entry: ['@babel/polyfill', './src/index.tsx', './assets/css/base.css'],
+  output: {
+    filename: 'bundle.[hash].js',
+    publicPath: '/'
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', 'scss'],
     alias: {
@@ -51,7 +55,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: [{ loader: 'ts-loader' }, ]
+        use: [{ loader: 'ts-loader' },]
       },
       {
         test: /\.(css)$/,
