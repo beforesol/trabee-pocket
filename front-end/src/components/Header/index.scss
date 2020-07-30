@@ -14,11 +14,11 @@
     text-align: center;
     .btn_login {
       position: absolute;
-      top: 15px;
+      top: 13px;
       left: 0;
       width: 15px;
       &:before {
-        @include get-sprite-header('icon_user', 15);
+        @include get-sprite-header('icon_logout', 17);
         content: '';
       }
     }

@@ -6,7 +6,7 @@ const spriter = new SuperEasySpriter({
   entry: path.resolve(__dirname, 'sprites'),
   publicPath: '/',
   output: {
-    sprite: '/assets/img/sprite',
+    sprite: path.resolve(__dirname, '../../assets/img/sprite'),
     scss: path.resolve(__dirname, 'scss')
   },
   options: {
