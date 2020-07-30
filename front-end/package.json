@@ -12,7 +12,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@storybook/cli": "^5.3.19",
     "@types/classnames": "^2.2.9",
     "@types/js-cookie": "^2.2.4",
@@ -41,9 +42,7 @@
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "reselect": "^4.0.0",
-    "xml2js": "^0.4.22"
-  },
-  "devDependencies": {
+    "xml2js": "^0.4.22",
     "@babel/core": "7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/polyfill": "^7.6.0",
