@@ -4,6 +4,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
+  output: {
+    publicPath: './'
+  },
   module: {
     rules: [
       {

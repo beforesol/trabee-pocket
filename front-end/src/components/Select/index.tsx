@@ -98,12 +98,12 @@ const Select: React.FC<IOwnProps> = ({ onSetShowSelect }) => {
               setActiveCountry={setActiveCountry}
             />
           ) : (
-              <Continent
-                continents={continents}
-                activeCountry={activeCountry}
-                setActiveCountry={setActiveCountry}
-              />
-            )}
+            <Continent
+              continents={continents}
+              activeCountry={activeCountry}
+              setActiveCountry={setActiveCountry}
+            />
+          )}
         </>
       </div>
       <div className={cx('selected_area')}>

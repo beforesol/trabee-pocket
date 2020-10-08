@@ -5,6 +5,9 @@ const port = process.env.PORT || 8080;
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
+  output: {
+    publicPath: '/'
+  },
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     host: '0.0.0.0',

@@ -32,7 +32,6 @@ module.exports = {
   entry: ['@babel/polyfill', './src/index.tsx', './assets/css/base.css'],
   output: {
     filename: 'bundle.[hash].js',
-    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', 'scss'],
