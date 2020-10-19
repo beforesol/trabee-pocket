@@ -10,7 +10,8 @@
     "sprite": "node src/sprite/sprite.js",
     "test": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "postbuild": "react-snap"
   },
   "dependencies": {},
   "devDependencies": {
@@ -83,6 +84,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
+    "react-snap": "^1.23.0",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "reselect": "^4.0.0",
